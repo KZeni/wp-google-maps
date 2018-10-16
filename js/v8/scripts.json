@@ -18,6 +18,13 @@
         "pro": false,
         "dependencies": []
     },
+    "wpgmza-wpgmza-css": {
+        "src": "js\/v8\/css-escape.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
     "wpgmza-distance": {
         "src": "js\/v8\/distance.js",
         "pro": false,
@@ -48,6 +55,13 @@
     },
     "wpgmza-geocoder": {
         "src": "js\/v8\/geocoder.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-google-api-error-handler": {
+        "src": "js\/v8\/google-api-error-handler.js",
         "pro": false,
         "dependencies": [
             "wpgmza"
@@ -109,6 +123,13 @@
             "wpgmza"
         ]
     },
+    "wpgmza-marker-filter": {
+        "src": "js\/v8\/marker-filter.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
     "wpgmza-marker": {
         "src": "js\/v8\/marker.js",
         "pro": false,
@@ -144,8 +165,47 @@
             "wpgmza-map-object"
         ]
     },
+    "wpgmza-wpgmza-rest-api": {
+        "src": "js\/v8\/rest-api.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-store-locator": {
+        "src": "js\/v8\/store-locator.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
     "wpgmza-version": {
         "src": "js\/v8\/version.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-integration": {
+        "src": "js\/v8\/3rd-party-integration\/integration.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-gutenberg": {
+        "src": "js\/v8\/3rd-party-integration\/gutenberg\/dist\/gutenberg.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-integration",
+            "wp-i18n",
+            "wp-blocks",
+            "wp-editor",
+            "wp-components"
+        ]
+    },
+    "wpgmza-google-ui-compatibility": {
+        "src": "js\/v8\/compatibility\/google-ui-compatibility.js",
         "pro": false,
         "dependencies": [
             "wpgmza"
@@ -282,6 +342,20 @@
         "pro": false,
         "dependencies": [
             "wpgmza-polyline"
+        ]
+    },
+    "wpgmza-admin-marker-data-table": {
+        "src": "js\/v8\/tables\/admin-marker-datatable.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-data-table"
+        ]
+    },
+    "wpgmza-data-table": {
+        "src": "js\/v8\/tables\/datatable.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
         ]
     }
 }

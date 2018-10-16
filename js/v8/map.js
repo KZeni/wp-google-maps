@@ -3,7 +3,7 @@
  * @module Map
  * @requires WPGMZA.EventDispatcher
  */
-(function($) {
+jQuery(function($) {
 	
 	/**
 	 * Constructor
@@ -35,7 +35,11 @@
 		this.polylines = [];
 		this.circles = [];
 		
-		this.loadSettings();
+		this.loadSettings(options);
+		
+		this.initStoreLocator();
+		
+		this.markerFilter = WPGMZA.MarkerFilter.createInstance(this);
 	}
 	
 	WPGMZA.Map.prototype = Object.create(WPGMZA.EventDispatcher.prototype);
@@ -71,10 +75,29 @@
 	 * Loads the maps settings and sets some defaults
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.loadSettings = function()
+	WPGMZA.Map.prototype.loadSettings = function(options)
 	{
 		var settings = new WPGMZA.MapSettings(this.element);
-		this.settings = $.extend({}, WPGMZA.settings, settings);
+		var other_settings = settings.other_settings;
+		
+		delete settings.other_settings;
+		
+		if(other_settings)
+			for(var key in other_settings)
+				settings[key] = other_settings[key];
+			
+		if(options)
+			for(var key in options)
+				settings[key] = options[key];
+			
+		this.settings = settings;
+	}
+	
+	WPGMZA.Map.prototype.initStoreLocator = function()
+	{
+		var storeLocatorElement = $(".wpgmza_sl_main_div");
+		if(storeLocatorElement.length)
+			this.storeLocator = WPGMZA.StoreLocator.createInstance(this, storeLocatorElement[0]);
 	}
 	
 	/**
@@ -427,36 +450,14 @@
 	{
 		// Native events
 		this.trigger("boundschanged");
-		$(this.element).trigger("boundschanged.wpgmza");
 		
 		// Google / legacy compatibility events
 		this.trigger("bounds_changed");
-		$(this.element).trigger("bounds_changed");
 	}
 	
 	WPGMZA.Map.prototype.onIdle = function(event)
 	{
 		$(this.element).trigger("idle");
-		$(this.element).trigger("idle.wpgmza");
 	}
 	
-	/*$(document).ready(function() {
-		function createMaps()
-		{
-			// TODO: Test that this works for maps off screen (which borks google)
-			$(".wpgmza-map").each(function(index, el) {
-				if(!el.wpgmzaMap)
-				{
-					WPGMZA.runCatchableTask(function() {
-						WPGMZA.Map.createInstance(el);
-					}, el);
-				}
-			});
-		}
-		
-		createMaps();
-		
-		// Call again each second to load AJAX maps
-		setInterval(createMaps, 1000);
-	});*/
-})(jQuery);
+});

@@ -1,4 +1,4 @@
-(function($) {
+jQuery(function($) {
 	$(document).ready(function(){
 		
 		$("button[data-fit-bounds-to-shape]").each(function(index, el) {
@@ -156,4 +156,4 @@
 		
 	});
 	
-})(jQuery);
+});

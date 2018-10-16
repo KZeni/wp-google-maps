@@ -3,7 +3,7 @@
  * @module LatLng
  * @requires WPGMZA
  */
-(function($) {
+jQuery(function($) {
 
 	/**
 	 * Constructor
@@ -88,6 +88,22 @@
 		return this._lat + ", " + this._lng;
 	}
 	
+	WPGMZA.LatLng.prototype.toLatLngLiteral = function()
+	{
+		return {
+			lat: this.lat,
+			lng: this.lng
+		};
+	}
+	
+	WPGMZA.LatLng.fromGoogleLatLng = function(googleLatLng)
+	{
+		return new WPGMZA.LatLng(
+			googleLatLng.lat(),
+			googleLatLng.lng()
+		);
+	}
+	
 	WPGMZA.LatLng.prototype.toGoogleLatLng = function()
 	{
 		return new google.maps.LatLng({
@@ -126,4 +142,43 @@
 		this.lng		= lambda2 * 180 / Math.PI;
 	}
 	
-})(jQuery);
+	/**
+	 * @function getGreatCircleDistance
+	 * @summary Uses the haversine formula to get the great circle distance between this and another LatLng / lat & lng pair
+	 * @param arg1 [WPGMZA.LatLng|Object|Number] Either a WPGMZA.LatLng, an object representing a lat/lng literal, or a latitude
+	 * @param arg2 (optional) If arg1 is a Number representing latitude, pass arg2 to represent the longitude
+	 * @return number The distance "as the crow files" between this point and the other
+	 */
+	WPGMZA.LatLng.prototype.getGreatCircleDistance = function(arg1, arg2)
+	{
+		var lat1 = this.lat;
+		var lon1 = this.lng;
+		var other;
+		
+		if(arguments.length == 1)
+			other = new WPGMZA.LatLng(arg1);
+		else if(arguments.length == 2)
+			other = new WPGMZA.LatLng(arg1, arg2);
+		else
+			throw new Error("Invalid number of arguments");
+		
+		var lat2 = other.lat;
+		var lon2 = other.lng;
+		
+		var R = 6371; // Kilometers
+		var phi1 = lat1.toRadians();
+		var phi2 = lat2.toRadians();
+		var deltaPhi = (lat2-lat1).toRadians();
+		var deltaLambda = (lon2-lon1).toRadians();
+
+		var a = Math.sin(deltaPhi/2) * Math.sin(deltaPhi/2) +
+				Math.cos(phi1) * Math.cos(phi2) *
+				Math.sin(deltaLambda/2) * Math.sin(deltaLambda/2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+		var d = R * c;
+		
+		return d;
+	}
+	
+});

@@ -21,12 +21,11 @@ class GoogleMapsAPILoader
 	
 	public function __construct()
 	{
-		if(!$this->isIncludeAllowed($status))
-		{
-			// NB: This is seperate from the normal localized data, as it can be set after initialization, eg in footer events
-			echo "<script>var wpgmza_google_api_status = " . json_encode($status) . "</script>";
-			return '';
-		}
+		$include_allowed = $this->isIncludeAllowed($status);
+		$isAllowed = $this->isIncludeAllowed($status);
+		
+		wp_enqueue_script('wpgmza_data', plugin_dir_url(__DIR__) . 'wpgmza_data.js');
+		wp_localize_script('wpgmza_data', 'wpgmza_google_api_status', (array)$status);
 	}
 	
 	public static function _createInstance()
@@ -69,7 +68,7 @@ class GoogleMapsAPILoader
 		
 		// Default params for google maps
 		$params = array(
-			'v' 		=> '3.31',
+			'v' 		=> '3.34',
 			'language'	=> $locale,
 			'suffix'	=> $suffix
 		);
@@ -85,8 +84,8 @@ class GoogleMapsAPILoader
 		// API Version
 		$settings = (array)$wpgmza->settings;
 		
-		if(!empty($settings['wpgmza_api_version']))
-			$params['v'] = $settings['wpgmza_api_version'];
+		//if(!empty($settings['wpgmza_api_version']))
+			//$params['v'] = $settings['wpgmza_api_version'];
 		
 		// Libraries
 		$libraries = array('geometry', 'places', 'visualization');
@@ -137,6 +136,9 @@ class GoogleMapsAPILoader
 	
 	public function enqueueGoogleMaps()
 	{
+		if(!$this->isIncludeAllowed())
+			return;
+		
 		wp_enqueue_script('wpgmza_api_call');
 	}
 	
@@ -206,7 +208,6 @@ class GoogleMapsAPILoader
 		}
 		
 		if(!is_admin() && 
-			!empty($settings['wpgmza_gdpr_enabled']) && 
 			!empty($settings['wpgmza_gdpr_require_consent_before_load']) && 
 			!isset($_COOKIE['wpgmza-api-consent-given']))
 		{

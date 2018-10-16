@@ -13,11 +13,17 @@ class Plugin extends Factory
 	const PAGE_ADVANCED			= "advanced";
 	const PAGE_CUSTOM_FIELDS	= "custom-fields";
 	
+	private static $enqueueScriptActions = array(
+		'wp_enqueue_scripts',
+		'admin_enqueue_scripts',
+		'enqueue_block_assets'
+	);
 	public static $enqueueScriptsFired = false;
 	
 	private $_settings;
 	private $_gdprCompliance;
 	private $_restAPI;
+	private $_spatialFunctionPrefix = '';
 	
 	protected $scriptLoader;
 	
@@ -29,7 +35,13 @@ class Plugin extends Factory
 	{
 		global $wpdb;
 		
+		add_filter('load_textdomain_mofile', array($this, 'onLoadTextDomainMOFile'), 10, 2);
+		
 		$this->mysqlVersion = $wpdb->get_var('SELECT VERSION()');
+		
+		// TODO: Could / should cache this above
+		if(!empty($this->mysqlVersion) && preg_match('/^\d+/', $this->mysqlVersion, $majorVersion) && (int)$majorVersion[0] > 8)
+			$this->_spatialFunctionPrefix = 'ST_';
 		
 		$this->legacySettings = get_option('WPGMZA_OTHER_SETTINGS');
 		if(!$this->legacySettings)
@@ -39,7 +51,8 @@ class Plugin extends Factory
 		global $wpgmza_pro_version;
 		
 		$this->_settings = new GlobalSettings();
-		$this->_restAPI = new RestAPI();
+		$this->_restAPI = RestAPI::createInstance();
+		$this->gutenbergIntegration = Integration\Gutenberg::createInstance();
 		
 		// TODO: This should be in default settings, this code is duplicaetd
 		if(!empty($wpgmza_pro_version) && version_compare(trim($wpgmza_pro_version), '7.10.00', '<'))
@@ -69,13 +82,12 @@ class Plugin extends Factory
 		
 		add_action('init', array($this, 'onInit'));
 		
-		add_action('wp_enqueue_scripts', function() {
-			Plugin::$enqueueScriptsFired = true;
-		});
-		
-		add_action('admin_enqueue_scripts', function() {
-			Plugin::$enqueueScriptsFired = true;
-		});
+		foreach(Plugin::$enqueueScriptActions as $action)
+		{
+			add_action($action, function() use ($action) {
+				Plugin::$enqueueScriptsFired = true;
+			}, 1);
+		}
 		
 		if($this->settings->engine == 'open-layers')
 			require_once(plugin_dir_path(__FILE__) . 'open-layers/class.nominatim-geocode-cache.php');
@@ -83,14 +95,8 @@ class Plugin extends Factory
 	
 	public function __set($name, $value)
 	{
-		switch($name)
-		{
-			case 'settings':
-			case 'gdprCompliance':
-			case 'restAPI':
-				throw new \Exception('Property is read only');
-				break;
-		}
+		if(isset($this->{"_$name"}))
+			throw new \Exception('Property is read only');
 		
 		$this->{$name} = $value;
 	}
@@ -102,18 +108,8 @@ class Plugin extends Factory
 			case 'settings':
 			case 'gdprCompliance':
 			case 'restAPI':
-				return $this->{'_' . $name};
-				break;
-				
 			case 'spatialFunctionPrefix':
-				$result = '';
-				
-				// TODO: Could / should cache this above
-				if(!empty($this->mysqlVersion))
-				{
-					if(preg_match('/^\d+/', $this->mysqlVersion, $majorVersion) && (int)$majorVersion[0] >= 8)
-						$result = 'ST_';
-				}
+				return $this->{'_' . $name};
 				break;
 		}
 		
@@ -140,29 +136,46 @@ class Plugin extends Factory
 		}
 		else
 		{
-			add_action('wp_enqueue_scripts', function() {
-				$this->scriptLoader->enqueueScripts();
-				$this->scriptLoader->enqueueStyles();
-			});
-			
-			add_action('admin_enqueue_scripts', function() {
-				$this->scriptLoader->enqueueScripts();
-				$this->scriptLoader->enqueueStyles();
-			});
+			foreach(Plugin::$enqueueScriptActions as $action)
+			{
+				add_action($action, function() {
+					$this->scriptLoader->enqueueScripts();
+					$this->scriptLoader->enqueueStyles();
+				});
+			}
 		}
 	}
 	
 	public function getLocalizedData()
 	{
+		$document = new DOMDocument();
+		$document->loadPHPFile(plugin_dir_path(__DIR__) . 'html/google-maps-api-error-dialog.html.php');
+		$googleMapsAPIErrorDialogHTML = $document->saveInnerBody();
+		
 		$strings = new Strings();
+		
+		$settings = clone $this->settings;
+		if(isset($settings->wpgmza_settings_ugm_email_address))
+			unset($settings->wpgmza_settings_ugm_email_address);
 		
 		return apply_filters('wpgmza_plugin_get_localized_data', array(
 			'ajaxurl' 				=> admin_url('admin-ajax.php'),
-			'settings' 				=> $this->settings,
+
+			'html'					=> array(
+				'googleMapsAPIErrorDialog' => $googleMapsAPIErrorDialogHTML
+			),
+			
+			'resturl'				=> get_rest_url(null, 'wpgmza/v1'),
+			'restnonce'				=> wp_create_nonce('wp_rest'),
+			'userCanAdministrator'	=> (current_user_can('administrator') ? 1 : 0),			
+
+			'settings' 				=> $settings,
 			'localized_strings'		=> $strings->getLocalizedStrings(),
 			'api_consent_html'		=> $this->gdprCompliance->getConsentPromptHTML(),
 			'basic_version'			=> $this->getBasicVersion(),
-			'_isProVersion'			=> $this->isProVersion()
+			'_isProVersion'			=> $this->isProVersion(),
+
+			'is_admin'				=> (is_admin() ? 1 : 0)
 		));
 	}
 	
@@ -209,6 +222,11 @@ class Plugin extends Factory
 		return empty($this->settings->developer_mode);
 	}
 	
+	public function isInDeveloperMode()
+	{
+		return !(empty($this->settings->developer_mode) && !isset($_COOKIE['wpgmza-developer-mode']));
+	}
+	
 	public function isProVersion()
 	{
 		return false;
@@ -224,6 +242,14 @@ class Plugin extends Factory
 			$this->cachedVersion = $m[1];
 		
 		return $this->cachedVersion;
+	}
+	
+	public function onLoadTextDomainMOFile($mofile, $domain)
+	{
+		if($domain == 'wp-google-maps')
+			$mofile = plugin_dir_path(__DIR__) . 'languages/wp-google-maps-' . get_locale() . '.mo';
+		
+		return $mofile;
 	}
 }
 

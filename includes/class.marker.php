@@ -6,6 +6,8 @@ require_once(plugin_dir_path(__FILE__) . '/class.crud.php');
 
 class Marker extends Crud implements \JsonSerializable
 {
+	const DEFAULT_ICON = "//maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png";
+	
 	protected $custom_fields;
 	
 	public function __construct($id_or_fields=-1)
@@ -23,9 +25,15 @@ class Marker extends Crud implements \JsonSerializable
 		return apply_filters('wpgmza_create_marker_instance', $id_or_fields);
 	}
 	
+	public static function get_table_name_static()
+	{
+		global $wpdb;
+		return "{$wpdb->prefix}wpgmza";
+	}
+	
 	public function jsonSerialize()
 	{
-		$json = Parent::jsonSerialize();
+		$json = Crud::jsonSerialize();
 		
 		unset($json['latlng']);
 		
@@ -55,6 +63,13 @@ class Marker extends Crud implements \JsonSerializable
 	protected function get_arbitrary_data_column_name()
 	{
 		return 'other_data';
+	}
+	
+	public function update()
+	{
+		Crud::update();
+		
+		// TODO: Update markers-has-categories
 	}
 	
 	protected function update_latlng()

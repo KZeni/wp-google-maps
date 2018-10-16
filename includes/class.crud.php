@@ -2,8 +2,11 @@
 
 namespace WPGMZA;
 
-class Crud implements \IteratorAggregate, \JsonSerializable
+class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 {
+	const SINGLE_READ		= "single-read";
+	const BULK_READ			= "bulk-read";
+	
 	private static $cached_columns_by_table_name;
 	private static $cached_column_name_map_by_table_name;
 
@@ -18,7 +21,7 @@ class Crud implements \IteratorAggregate, \JsonSerializable
 	 * Constructor
 	 * @constructor
 	 */
-	public function __construct($table_name, $id_or_fields=-1)
+	public function __construct($table_name, $id_or_fields=-1, $read_mode=Crud::SINGLE_READ)
 	{
 		global $wpdb;
 		
@@ -28,8 +31,19 @@ class Crud implements \IteratorAggregate, \JsonSerializable
 		{
 			foreach($id_or_fields as $key => $value)
 				$this->fields[$key] = $value;
+			
+			if($read_mode == Crud::BULK_READ)
+			{
+				$obj = (object)$id_or_fields;
 				
-			$id = -1;
+				if(!isset($obj->id))
+					throw new \Exception('Cannot bulk read without ID');
+				
+				$this->id = $obj->id;
+			}
+				
+			if($read_mode != Crud::BULK_READ)
+				$id = -1;
 		}
 		else if(preg_match('/^-?\d+$/', $id_or_fields))
 			$id = (int)$id_or_fields;
@@ -57,7 +71,38 @@ class Crud implements \IteratorAggregate, \JsonSerializable
 		if($this->id == -1)
 			$this->create();
 		else
-			$this->read();
+			$this->read(Marker::SINGLE_READ);
+	}
+	
+	public static function bulk_read($data, $constructor)
+	{
+		if(!is_array($data))
+			throw new \Exception('Argument must be an array of objects');
+		
+		$result = array();
+		
+		foreach($data as $row)
+			$result[] = new $constructor($row, Crud::BULK_READ);
+		
+		return $result;
+	}
+	
+	public static function bulk_trash($ids)
+	{
+		global $wpdb;
+		
+		if(!is_array($ids))
+			throw new \Exception('Arugment must be an array of integer IDs');
+		
+		if(empty($ids))
+			return;
+		
+		$table_name = static::get_table_name_static();
+		
+		$count = count($ids);
+		$placeholders = implode(',', array_fill(0, $count, '%d'));
+		$stmt = $wpdb->prepare("DELETE FROM `{$table_name}` WHERE id IN ($placeholders)", $ids);
+		$wpdb->query($stmt);
 	}
 	
 	/**
@@ -265,7 +310,7 @@ class Crud implements \IteratorAggregate, \JsonSerializable
 	 * Reads the data from the database into this object
 	 * @return void
 	 */
-	protected function read()
+	protected function read($mode)
 	{
 		global $wpdb;
 		

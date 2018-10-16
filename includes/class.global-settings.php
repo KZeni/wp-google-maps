@@ -38,6 +38,14 @@ class GlobalSettings extends \codecabin\Settings
 		}, 10, 2);
 	}
 	
+	public function __get($name)
+	{
+		if($name == 'useLegacyHTML')
+			return true;
+		
+		return \codecabin\Settings::__get($name);
+	}
+	
 	// TODO: This should inherit from Factory when traits are available
 	public static function createInstance()
 	{
@@ -67,7 +75,7 @@ class GlobalSettings extends \codecabin\Settings
 		$settings = apply_filters('wpgmza_plugin_get_default_settings', array(
 			'engine' 				=> 'google-maps',
 			'google_maps_api_key'	=> get_option('wpgmza_google_maps_api_key'),
-			'default_marker_icon'	=> "//maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png",
+			'default_marker_icon'	=> Marker::DEFAULT_ICON,
 			'developer_mode'		=> !empty($this->legacySettings['developer_mode'])
 		));
 		
@@ -118,5 +126,27 @@ class GlobalSettings extends \codecabin\Settings
 		$json = json_encode($legacy);
 		
 		update_option(GlobalSettings::TABLE_NAME, $json);
+	}
+	
+	public function jsonSerialize()
+	{
+		$src = \codecabin\Settings::jsonSerialize();
+		$data = clone $src;
+		
+		if(isset($data->wpgmza_settings_ugm_email_address))
+			unset($data->wpgmza_settings_ugm_email_address);
+		
+		return $data;
+	}
+	
+	public function toArray()
+	{
+		$src = \codecabin\Settings::toArray();
+		$data = (array)$src;
+		
+		if(isset($data['wpgmza_settings_ugm_email_address']))
+			unset($data['wpgmza_settings_ugm_email_address']);
+		
+		return $data;
 	}
 }

@@ -3,27 +3,40 @@
  * @module MapSettings
  * @requires WPGMZA
  */
-(function($) {
+jQuery(function($) {
 	
 	WPGMZA.MapSettings = function(element)
 	{
 		var str = element.getAttribute("data-settings");
 		var json = JSON.parse(str);
 		
-		//var id = $(element).attr("data-map-id");
-		//var json = JSON.parse(window["wpgmza_map_settings_" + id]);
-		
 		WPGMZA.assertInstanceOf(this, "MapSettings");
 		
-		for(var key in json)
+		function addSettings(input)
 		{
-			var value = json[key];
+			if(!input)
+				return;
 			
-			if(String(value).match(/^-?\d+$/))
-				value = parseInt(value);
+			for(var key in input)
+			{
+				if(key == "other_settings")
+					continue; // Ignore other_settings
 				
-			this[key] = value;
+				var value = input[key];
+				
+				if(String(value).match(/^-?\d+$/))
+					value = parseInt(value);
+					
+				this[key] = value;
+			}
 		}
+		
+		addSettings(WPGMZA.settings);
+		
+		addSettings(json);
+		
+		if(json && json.other_settings)
+			addSettings(json.other_settings);
 	}
 	
 	WPGMZA.MapSettings.prototype.toOLViewOptions = function()
@@ -136,8 +149,10 @@
         options.disableDoubleClickZoom	= !(this.wpgmza_settings_map_clickzoom == 'yes');
         options.scrollwheel				= !(this.wpgmza_settings_map_scroll == 'yes');
 		
-		if(this.force_greedy_gestures)
+		if(this.wpgmza_force_greedy_gestures == "greedy" || this.wpgmza_force_greedy_gestures == "yes")
 			options.gestureHandling = "greedy";
+		else
+			options.gestureHandling = "cooperative";
 		
 		switch(parseInt(this.map_type))
 		{
@@ -169,4 +184,4 @@
 		
 		return options;
 	}
-})(jQuery);
+});
