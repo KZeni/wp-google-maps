@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class NominatimGeocodeCache
 {
@@ -8,7 +8,7 @@ class NominatimGeocodeCache
 	{
 		global $wpdb;
 		
-		$this->table = $wpdb->prefix . "wpgmza_nominatim_geocode_cache";
+		$this->table = $wpdb->prefix . "map-block_nominatim_geocode_cache";
 		
 		if(!$wpdb->get_var("SHOW TABLES LIKE '{$this->table}'"))
 		{
@@ -30,7 +30,7 @@ class NominatimGeocodeCache
 		// Check the cache first, as per the nominatim usage policy
 		$stmt = $wpdb->prepare("SELECT response FROM {$this->table} WHERE query=%s LIMIT 1", array($query));
 		
-		$stmt = apply_filters( 'wpgmza_ol_nomination_cache_query_get', $stmt, $query );
+		$stmt = apply_filters( 'map-block_ol_nomination_cache_query_get', $stmt, $query );
 
 		$string = $wpdb->get_var($stmt);
 		$json = null;
@@ -53,7 +53,7 @@ class NominatimGeocodeCache
 			$response
 		));
 
-		$stmt = apply_filters( 'wpgmza_ol_nomination_cache_query_set', $stmt, $query, $response );
+		$stmt = apply_filters( 'map-block_ol_nomination_cache_query_set', $stmt, $query, $response );
 
 		$wpdb->query($stmt);
 	}
@@ -83,8 +83,8 @@ function store_nominatim_cache()
 	exit;
 }
 
-add_action('wp_ajax_wpgmza_query_nominatim_cache', 			'WPGMZA\\query_nominatim_cache');
-add_action('wp_ajax_nopriv_wpgmza_query_nominatim_cache', 	'WPGMZA\\query_nominatim_cache');
+add_action('wp_ajax_map-block_query_nominatim_cache', 			'map-block\\query_nominatim_cache');
+add_action('wp_ajax_nopriv_map-block_query_nominatim_cache', 	'map-block\\query_nominatim_cache');
 
-add_action('wp_ajax_wpgmza_store_nominatim_cache', 			'WPGMZA\\store_nominatim_cache');
-add_action('wp_ajax_nopriv_wpgmza_store_nominatim_cache', 	'WPGMZA\\store_nominatim_cache');
+add_action('wp_ajax_map-block_store_nominatim_cache', 			'map-block\\store_nominatim_cache');
+add_action('wp_ajax_nopriv_map-block_store_nominatim_cache', 	'map-block\\store_nominatim_cache');

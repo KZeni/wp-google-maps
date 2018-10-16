@@ -1,15 +1,15 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleModernStoreLocatorCircle
- * @requires WPGMZA.ModernStoreLocatorCircle
+ * @requires map-block.ModernStoreLocatorCircle
  */
 jQuery(function($) {
 	
-	WPGMZA.GoogleModernStoreLocatorCircle = function(map, settings)
+	map-block.GoogleModernStoreLocatorCircle = function(map, settings)
 	{
 		var self = this;
 		
-		WPGMZA.ModernStoreLocatorCircle.call(this, map, settings);
+		map-block.ModernStoreLocatorCircle.call(this, map, settings);
 		
 		this.intervalID = setInterval(function() {
 			
@@ -36,10 +36,10 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype = Object.create(WPGMZA.ModernStoreLocatorCircle.prototype);
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.constructor = WPGMZA.GoogleModernStoreLocatorCircle;
+	map-block.GoogleModernStoreLocatorCircle.prototype = Object.create(map-block.ModernStoreLocatorCircle.prototype);
+	map-block.GoogleModernStoreLocatorCircle.prototype.constructor = map-block.GoogleModernStoreLocatorCircle;
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.initCanvasLayer = function()
+	map-block.GoogleModernStoreLocatorCircle.prototype.initCanvasLayer = function()
 	{
 		var self = this;
 		
@@ -62,38 +62,38 @@ jQuery(function($) {
         });
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setOptions = function(options)
+	map-block.GoogleModernStoreLocatorCircle.prototype.setOptions = function(options)
 	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setOptions.call(this, options);
+		map-block.ModernStoreLocatorCircle.prototype.setOptions.call(this, options);
 		
 		this.canvasLayer.scheduleUpdate();
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setPosition = function(position)
+	map-block.GoogleModernStoreLocatorCircle.prototype.setPosition = function(position)
 	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setPosition.call(this, position);
+		map-block.ModernStoreLocatorCircle.prototype.setPosition.call(this, position);
 		
 		this.canvasLayer.scheduleUpdate();
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setRadius = function(radius)
+	map-block.GoogleModernStoreLocatorCircle.prototype.setRadius = function(radius)
 	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setRadius.call(this, radius);
+		map-block.ModernStoreLocatorCircle.prototype.setRadius.call(this, radius);
 		
 		this.canvasLayer.scheduleUpdate();
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
+	map-block.GoogleModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
 	{
 		var multiplierAtEquator = 0.006395;
 		var spherical = google.maps.geometry.spherical;
 		
 		var center = this.settings.center;
-		var equator = new WPGMZA.LatLng({
+		var equator = new map-block.LatLng({
 			lat: 0.0,
 			lng: 0.0
 		});
-		var latitude = new WPGMZA.LatLng({
+		var latitude = new map-block.LatLng({
 			lat: center.lat,
 			lng: 0.0
 		});
@@ -110,7 +110,7 @@ jQuery(function($) {
 		return result;
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
+	map-block.GoogleModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
 	{
 		return {
 			width: this.canvasLayer.canvas.width,
@@ -118,7 +118,7 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getWorldOriginOffset = function()
+	map-block.GoogleModernStoreLocatorCircle.prototype.getWorldOriginOffset = function()
 	{
 		var projection = this.map.googleMap.getProjection();
 		var position = projection.fromLatLngToPoint(this.canvasLayer.getTopLeft());
@@ -129,31 +129,31 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getCenterPixels = function()
+	map-block.GoogleModernStoreLocatorCircle.prototype.getCenterPixels = function()
 	{
-		var center = new WPGMZA.LatLng(this.settings.center);
+		var center = new map-block.LatLng(this.settings.center);
 		var projection = this.map.googleMap.getProjection();
 		return projection.fromLatLngToPoint(center.toGoogleLatLng());
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getContext = function(type)
+	map-block.GoogleModernStoreLocatorCircle.prototype.getContext = function(type)
 	{
 		return this.canvasLayer.canvas.getContext("2d");
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.getScale = function()
+	map-block.GoogleModernStoreLocatorCircle.prototype.getScale = function()
 	{
 		return Math.pow(2, this.map.getZoom()) * this.getResolutionScale();
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.setVisible = function(visible)
+	map-block.GoogleModernStoreLocatorCircle.prototype.setVisible = function(visible)
 	{
-		WPGMZA.ModernStoreLocatorCircle.prototype.setVisible.call(this, visible);
+		map-block.ModernStoreLocatorCircle.prototype.setVisible.call(this, visible);
 		
 		this.canvasLayer.scheduleUpdate();
 	}
 	
-	WPGMZA.GoogleModernStoreLocatorCircle.prototype.destroy = function()
+	map-block.GoogleModernStoreLocatorCircle.prototype.destroy = function()
 	{
 		this.canvasLayer.setMap(null);
 		this.canvasLayer = null;

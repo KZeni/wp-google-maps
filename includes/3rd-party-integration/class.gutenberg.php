@@ -1,12 +1,12 @@
 <?php
 
-namespace WPGMZA\Integration;
+namespace map-block\Integration;
 
-class Gutenberg extends \WPGMZA\Factory
+class Gutenberg extends \map-block\Factory
 {
 	public function __construct()
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		add_action('enqueue_block_assets', array(
 			$this,
@@ -19,7 +19,7 @@ class Gutenberg extends \WPGMZA\Factory
 		));
 		
 		if(function_exists('register_block_type'))
-			register_block_type('gutenberg-wpgmza/block', array(
+			register_block_type('gutenberg-map-block/block', array(
 				'render_callback' => array(
 					$this,
 					'onRender'
@@ -29,27 +29,27 @@ class Gutenberg extends \WPGMZA\Factory
 	
 	public function onEnqueueBlockAssets()
 	{
-		global $wpgmza;
+		global $map-block;
 		
-		$wpgmza->loadScripts();
+		$map-block->loadScripts();
 		
 		wp_enqueue_style(
-			'wpgmza-gutenberg-integration', 
-			plugin_dir_url(WPGMZA_FILE) . 'css/gutenberg.css', 
+			'map-block-gutenberg-integration', 
+			plugin_dir_url(map-block_FILE) . 'css/gutenberg.css', 
 			'', 
-			WPGMZA_VERSION
+			map-block_VERSION
 		);
 	}
 	
 	public function onInit()
 	{
-		global $wpgmza;
+		global $map-block;
 		
-		if(empty($wpgmza->settings->developer_mode))
+		if(empty($map-block->settings->developer_mode))
 			return;
 		
 		// Strip out JS module code for browser compatibility
-		$filename = plugin_dir_path(WPGMZA_FILE) . 'js/v8/3rd-party-integration/gutenberg/dist/gutenberg.js';
+		$filename = plugin_dir_path(map-block_FILE) . 'js/v8/3rd-party-integration/gutenberg/dist/gutenberg.js';
 		
 		$contents = file_get_contents($filename);
 		
@@ -64,6 +64,6 @@ class Gutenberg extends \WPGMZA\Factory
 	{
 		extract($attr);
 		
-		return '[wpgmza id="1"]';
+		return '[map-block id="1"]';
 	}
 }

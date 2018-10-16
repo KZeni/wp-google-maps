@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 require_once(plugin_dir_path(__FILE__) . 'google-maps/class.google-maps-loader.php');
 require_once(plugin_dir_path(__FILE__) . 'open-layers/class.ol-loader.php');
@@ -17,7 +17,7 @@ class ScriptLoader
 		$this->proMode = $proMode;
 		
 		if($this->proMode)
-			$this->scriptsFileLocation = plugin_dir_path(WPGMZA_PRO_FILE) . 'js/v8/pro-scripts.json';
+			$this->scriptsFileLocation = plugin_dir_path(map-block_PRO_FILE) . 'js/v8/pro-scripts.json';
 		else
 			$this->scriptsFileLocation = plugin_dir_path(__DIR__) . 'js/v8/scripts.json';
 	}
@@ -48,7 +48,7 @@ class ScriptLoader
 	
 	protected function getHandleFromModuleName($module)
 	{
-		return trim(preg_replace('/^wpgmza\./', 'wpgmza-',
+		return trim(preg_replace('/^map-block\./', 'map-block-',
 			strtolower(
 				preg_replace('/(?<=[A-Za-z])(?=[A-Z][a-z])|(?<=[a-z0-9])(?=[0-9]?[A-Z])/', '-', $module)
 			)
@@ -57,7 +57,7 @@ class ScriptLoader
 	
 	protected function getLibraryScripts()
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		$plugin_dir_url = plugin_dir_url(__DIR__);
 		
@@ -65,24 +65,24 @@ class ScriptLoader
 			'datatables'		=> $plugin_dir_url . 'js/jquery.dataTables.min.js',
 			'jquery-cookie'		=> $plugin_dir_url . 'lib/jquery-cookie.js',
 			// 'modernizr-custom'	=> $plugin_dir_url . 'lib/modernizr-custom.js',
-			'remodal'			=> $plugin_dir_url . 'lib/' . ($wpgmza->isUsingMinifiedScripts() ? 'remodal.min.js' : 'remodal.js'),
+			'remodal'			=> $plugin_dir_url . 'lib/' . ($map-block->isUsingMinifiedScripts() ? 'remodal.min.js' : 'remodal.js'),
 			// 'resize-sensor'		=> $plugin_dir_url . 'lib/ResizeSensor.js',
 			'spectrum'			=> $plugin_dir_url . 'lib/spectrum.js'
 		);
 		
-		/*if($wpgmza->isProVersion())
+		/*if($map-block->isProVersion())
 		{
-			$pro_dir = plugin_dir_url(WPGMZA_PRO_FILE);
+			$pro_dir = plugin_dir_url(map-block_PRO_FILE);
 			
 			$libraryDependencies = array_merge($libraryDependencies, array(
-				'jstree'				=> $pro_dir . ($wpgmza->isUsingMinifiedScripts() ? 'lib/jstree.min.js' : 'lib/jstree.js'),
+				'jstree'				=> $pro_dir . ($map-block->isUsingMinifiedScripts() ? 'lib/jstree.min.js' : 'lib/jstree.js'),
 				'jszip'					=> $pro_dir . 'lib/jszip.min.js',
 				'jquery-multiselect'	=> $pro_dir . 'lib/jquery.multiselect.js',
 				'owl-carousel'			=> $pro_dir . 'lib/owl.carousel.min.js'
 			));
 		}*/
 		
-		if($wpgmza->getCurrentPage() && is_admin())
+		if($map-block->getCurrentPage() && is_admin())
 		{
 			wp_enqueue_script('jquery-ui-core');
 			wp_enqueue_script('jquery-ui-dialog');
@@ -94,7 +94,7 @@ class ScriptLoader
 			wp_enqueue_script('jquery-ui-draggable');
 		}
 		
-		return apply_filters('wpgmza-get-library-dependencies', $libraryDependencies);
+		return apply_filters('map-block-get-library-dependencies', $libraryDependencies);
 	}
 	
 	protected function getScanDirectories()
@@ -104,7 +104,7 @@ class ScriptLoader
 		);
 		
 		if($this->proMode)
-			$result[plugin_dir_path(WPGMZA_PRO_FILE) . 'js/v8'] = plugin_dir_url(WPGMZA_PRO_FILE) . 'js/v8';
+			$result[plugin_dir_path(map-block_PRO_FILE) . 'js/v8'] = plugin_dir_url(map-block_PRO_FILE) . 'js/v8';
 		
 		return $result;
 	}
@@ -146,8 +146,8 @@ class ScriptLoader
 				$module = trim($m[1]);
 				
 				$handle = $this->getHandleFromModuleName($module);
-				if($handle != 'wpgmza')
-					$handle = 'wpgmza-' . $handle;
+				if($handle != 'map-block')
+					$handle = 'map-block-' . $handle;
 				
 				$dependencies = array();
 				
@@ -163,8 +163,8 @@ class ScriptLoader
 
 						$dependencyModule = $m[2][$i];
 						
-						$dependencyHandle = preg_replace('/^wpgmza\./',
-							'wpgmza-',
+						$dependencyHandle = preg_replace('/^map-block\./',
+							'map-block-',
 							$this->getHandleFromModuleName($dependencyModule)
 						);
 						
@@ -210,7 +210,7 @@ class ScriptLoader
 		$combineOrder = array();
 		
 		$ignoreDependencyHandles = array(
-			'wpgmza_api_call'
+			'map-block_api_call'
 		);
 		$unresolvedDependencyHandles = array();
 		
@@ -259,7 +259,7 @@ class ScriptLoader
 					}
 					
 					// External handles not handled by us. This module only handles internal dependencies
-					if(!preg_match('/^wpgmza-/i', $dependency) && $dependency != 'wpgmza')
+					if(!preg_match('/^map-block-/i', $dependency) && $dependency != 'map-block')
 					{
 						//echo "Ignoring external handle $dependency\r\n";
 						continue;
@@ -288,12 +288,12 @@ class ScriptLoader
 	
 	public function buildCombinedFile()
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		$order = $this->getCombineOrder();
 		
 		$combined = array();
-		$dest = plugin_dir_path(($this->proMode ? WPGMZA_PRO_FILE : __DIR__)) . 'js/v8/wp-google-maps' . ($this->proMode ? '-pro' : '') . '.combined.js';
+		$dest = plugin_dir_path(($this->proMode ? map-block_PRO_FILE : __DIR__)) . 'js/v8/map-block' . ($this->proMode ? '-pro' : '') . '.combined.js';
 		
 		foreach($order as $file)
 		{
@@ -303,7 +303,7 @@ class ScriptLoader
 			$src = plugin_dir_path(__DIR__) . $file;
 			
 			if(!file_exists($src))
-				$src = plugin_dir_path(WPGMZA_PRO_FILE) . $file;
+				$src = plugin_dir_path(map-block_PRO_FILE) . $file;
 			
 			$contents = "\r\n// $file\r\n" . file_get_contents($src);
 			$combined[] = $contents;
@@ -326,9 +326,9 @@ class ScriptLoader
 	
 	public function enqueueStyles()
 	{	
-		global $wpgmza;
+		global $map-block;
 	
-		// wp_enqueue_style('wpgmza-color-picker', plugin_dir_url(__DIR__) . 'lib/spectrum.css');
+		// wp_enqueue_style('map-block-color-picker', plugin_dir_url(__DIR__) . 'lib/spectrum.css');
 		// wp_enqueue_style('datatables', '//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css');
 		
 		wp_enqueue_style('remodal', plugin_dir_url(__DIR__) . 'lib/remodal.css');
@@ -341,14 +341,14 @@ class ScriptLoader
 	 */
 	public function getPluginScripts()
 	{
-		global $wpgmza;
+		global $map-block;
 		
-		if($wpgmza->isUsingMinifiedScripts())
+		if($map-block->isUsingMinifiedScripts())
 		{
-			$dir = ($this->proMode ? plugin_dir_path(WPGMZA_PRO_FILE) : plugin_dir_path(__DIR__));
+			$dir = ($this->proMode ? plugin_dir_path(map-block_PRO_FILE) : plugin_dir_path(__DIR__));
 			
-			$combined = 'js/v8/wp-google-maps' . ($this->proMode ? '-pro' : '') . '.combined.js';
-			$minified = 'js/v8/wp-google-maps' . ($this->proMode ? '-pro' : '') . '.min.js';
+			$combined = 'js/v8/map-block' . ($this->proMode ? '-pro' : '') . '.combined.js';
+			$minified = 'js/v8/map-block' . ($this->proMode ? '-pro' : '') . '.min.js';
 			
 			$src = $minified;
 			
@@ -363,7 +363,7 @@ class ScriptLoader
 			// TODO: Remove this, fix errors
 			// $src = $combined;
 			
-			$scripts = array('wpgmza' => 
+			$scripts = array('map-block' => 
 				(object)array(
 					'src'	=> $src,
 					'pro'	=> $this->proMode
@@ -381,16 +381,16 @@ class ScriptLoader
 	
 	public function enqueueScripts()
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		// Get library scripts
 		$libraries = $this->getLibraryScripts();
 		
 		// Enqueue Google API call if necessary
-		switch($wpgmza->settings->engine)
+		switch($map-block->settings->engine)
 		{
 			case 'google-maps':
-				$loader = ($wpgmza->isProVersion() ? new GoogleProMapsLoader() : new GoogleMapsLoader());
+				$loader = ($map-block->isProVersion() ? new GoogleProMapsLoader() : new GoogleMapsLoader());
 				$loader->loadGoogleMaps();
 				break;
 				
@@ -407,7 +407,7 @@ class ScriptLoader
 		}
 		
 		// FontAwesome?
-		$version = (empty($wpgmza->settings->use_fontawesome) ? '4.*' : $wpgmza->settings->use_fontawesome);
+		$version = (empty($map-block->settings->use_fontawesome) ? '4.*' : $map-block->settings->use_fontawesome);
 		
 		switch($version)
 		{
@@ -435,18 +435,18 @@ class ScriptLoader
 		// Sometimes we need to load the plugin JS files but not the maps API. The following code stops the API being loaded as a dependency of the plugin JS files when that is the case.
 		$apiLoader = new GoogleMapsAPILoader();
 		if($apiLoader->isIncludeAllowed())
-			$dependencies[] = 'wpgmza_api_call';
+			$dependencies[] = 'map-block_api_call';
 		
-		$this->scripts['wpgmza']->dependencies = $dependencies;
+		$this->scripts['map-block']->dependencies = $dependencies;
 		
-		$version_string = $wpgmza->getBasicVersion();
-		if(method_exists($wpgmza, 'getProVersion'))
-			$version_string .= '+pro-' . $wpgmza->getProVersion();
+		$version_string = $map-block->getBasicVersion();
+		if(method_exists($map-block, 'getProVersion'))
+			$version_string .= '+pro-' . $map-block->getProVersion();
 		
 		// Enqueue other scripts
 		foreach($this->scripts as $handle => $script)
 		{
-			$fullpath = plugin_dir_url(($script->pro ? WPGMZA_PRO_FILE : __DIR__)) . $script->src;
+			$fullpath = plugin_dir_url(($script->pro ? map-block_PRO_FILE : __DIR__)) . $script->src;
 			
 			wp_enqueue_script($handle, $fullpath, $script->dependencies, $version_string);
 		}
@@ -459,10 +459,10 @@ class ScriptLoader
 	
 	public function enqueueLocalizedData()
 	{
-		global $wpgmza;
+		global $map-block;
 		
-		$data = $wpgmza->getLocalizedData();
+		$data = $map-block->getLocalizedData();
 		
-		wp_localize_script('wpgmza', 'WPGMZA_localized_data', (array)$data);
+		wp_localize_script('map-block', 'map-block_localized_data', (array)$data);
 	}
 }

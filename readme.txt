@@ -1,7 +1,7 @@
-=== WP Google Maps ===
-Contributors: WPGMaps, NickDuncan, CodeCabin_, DylanAuty, PerryRylance
-Donate link: http://www.wpgmaps.com
-Tags: google maps, maps, map, map markers, google map, google maps plugin, wp google maps, wp google map, map plugin, directions, google map plugin, map widget
+=== Map Block ===
+Contributors: map-blockaps, NickDuncan, CodeCabin_, DylanAuty, PerryRylance
+Donate link: http://www.map-blockaps.com
+Tags: google maps, maps, map, map markers, google map, google maps plugin, Map Block, wp google map, map plugin, directions, google map plugin, map widget
 Requires at least: 3.5
 Tested up to: 4.9.8
 Requires PHP: 5.3
@@ -14,9 +14,9 @@ The easiest to use Google maps plugin! Create a custom Google map with high qual
 
 The easiest to use Google maps plugin! Add a customized Google map to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss. No iFrames and super easy to use! Perfect for contact page maps, routes, maps showing delivery areas and any other use you can think of!
 
-While the free version of WP Google Maps allows you to create a Google map with as many markers as you like, the Pro version allows you to do so much more! 
+While the free version of Map Block allows you to create a Google map with as many markers as you like, the Pro version allows you to do so much more! 
 
-The [WP Google Maps Pro Version](http://www.wpgmaps.com/purchase-professional-version/) version allows you create custom Google maps with high quality markers containing locations, descriptions, images, categories, links and directions. 
+The [Map Block Pro Version](http://www.map-blockaps.com/purchase-professional-version/) version allows you create custom Google maps with high quality markers containing locations, descriptions, images, categories, links and directions. 
 
 = Lite Version (Free) =
 * The most popular Google Maps plugin on WordPress
@@ -74,11 +74,11 @@ The [WP Google Maps Pro Version](http://www.wpgmaps.com/purchase-professional-ve
 * Multiple map widget functionality
 * Add retina-ready map marker icons
 * WordPress Network friendly
-* Get the [WP Google Maps Professional Edition](http://www.wpgmaps.com/purchase-professional-version/) for only $39.99
+* Get the [Map Block Professional Edition](http://www.map-blockaps.com/purchase-professional-version/) for only $39.99
 
 
 = Translations =
-Get a free copy of the WP Google Maps Pro version in exchange for translating our plugin!
+Get a free copy of the Map Block Pro version in exchange for translating our plugin!
 
 * English - default
 * Russian (Alexandra Bondareva)
@@ -107,112 +107,112 @@ Get a free copy of the WP Google Maps Pro version in exchange for translating ou
 ^Language file needs to be updated
 
 = Demos =
-WP Google Maps Lite
+Map Block Lite
 
-* [Basic Google Map with Markers](http://www.wpgmaps.com/demo/basic-google-map-with-markers/)
-* [Store Locator](http://www.wpgmaps.com/demo/wp-google-maps-store-locator-free-version/)
-* [Polygons & Polyines/Routes](http://www.wpgmaps.com/demo/polygons-and-polylines/)
-* [Google Maps Transit Layer](http://www.wpgmaps.com/demo/google-maps-transit-layer/)
-* [Google Maps Traffic Layer](http://www.wpgmaps.com/demo/google-maps-traffic-layer/)
-* [Google Maps Bicycle Layer](http://www.wpgmaps.com/demo/google-maps-bicycle-layer/)
+* [Basic Google Map with Markers](http://www.map-blockaps.com/demo/basic-google-map-with-markers/)
+* [Store Locator](http://www.map-blockaps.com/demo/map-block-store-locator-free-version/)
+* [Polygons & Polyines/Routes](http://www.map-blockaps.com/demo/polygons-and-polylines/)
+* [Google Maps Transit Layer](http://www.map-blockaps.com/demo/google-maps-transit-layer/)
+* [Google Maps Traffic Layer](http://www.map-blockaps.com/demo/google-maps-traffic-layer/)
+* [Google Maps Bicycle Layer](http://www.map-blockaps.com/demo/google-maps-bicycle-layer/)
 
-WP Google Maps Pro
+Map Block Pro
 
-* [Google map with advanced markers](http://www.wpgmaps.com/demo/basic-map-and-markers/)
-* [Marker listings - Simple](http://www.wpgmaps.com/demo/list-markers/)
-* [Marker listings - Advanced](http://www.wpgmaps.com/demo/map-with-markers-listed-below-advanced/)
-* [Google Maps Directions](http://www.wpgmaps.com/demo/directions/)
-* [Resposive Map](http://www.wpgmaps.com/demo/responsive-maps/)
-* [Marker Categories](http://www.wpgmaps.com/demo/marker-categories/) (Filtering)
-* [Advanced Store Locator](http://www.wpgmaps.com/demo/store-locator/)
-* [WP Google Maps Editor](http://www.wpgmaps.com/demo/screenshots-back-end/) (Back-end Screenshots)
-* [Visitor Generated Markers](http://www.wpgmaps.com/demo/visitor-generated-markers/) - (WP Google Maps VGM Add-on)
-* [Custom Map Styling](http://www.wpgmaps.com/demo/custom-map-styling/) (WP Google Maps Gold Add-on)
+* [Google map with advanced markers](http://www.map-blockaps.com/demo/basic-map-and-markers/)
+* [Marker listings - Simple](http://www.map-blockaps.com/demo/list-markers/)
+* [Marker listings - Advanced](http://www.map-blockaps.com/demo/map-with-markers-listed-below-advanced/)
+* [Google Maps Directions](http://www.map-blockaps.com/demo/directions/)
+* [Resposive Map](http://www.map-blockaps.com/demo/responsive-maps/)
+* [Marker Categories](http://www.map-blockaps.com/demo/marker-categories/) (Filtering)
+* [Advanced Store Locator](http://www.map-blockaps.com/demo/store-locator/)
+* [Map Block Editor](http://www.map-blockaps.com/demo/screenshots-back-end/) (Back-end Screenshots)
+* [Visitor Generated Markers](http://www.map-blockaps.com/demo/visitor-generated-markers/) - (Map Block VGM Add-on)
+* [Custom Map Styling](http://www.map-blockaps.com/demo/custom-map-styling/) (Map Block Gold Add-on)
 
 = Documentation =
-* [Installing WP Google Maps](http://www.wpgmaps.com/documentation/installing-the-plugin/)
-* [Creating your first map](http://www.wpgmaps.com/documentation/creating-your-first-map/)
-* [Google Maps mashup (Pro)](http://www.wpgmaps.com/documentation/advanced-map-options/map-mashup/)
-* [Exporting and importing map markers (Pro)](http://www.wpgmaps.com/documentation/exporting-and-importing-your-markers/)
-* [Changing the Google Maps language](http://www.wpgmaps.com/documentation/changing-the-google-maps-language/)
-* [Create a google map and marker using custom fields (Pro)](http://www.wpgmaps.com/introducing-maps-by-custom-fields/)
-* [View all documentation](http://www.wpgmaps.com/documentation/)
+* [Installing Map Block](http://www.map-blockaps.com/documentation/installing-the-plugin/)
+* [Creating your first map](http://www.map-blockaps.com/documentation/creating-your-first-map/)
+* [Google Maps mashup (Pro)](http://www.map-blockaps.com/documentation/advanced-map-options/map-mashup/)
+* [Exporting and importing map markers (Pro)](http://www.map-blockaps.com/documentation/exporting-and-importing-your-markers/)
+* [Changing the Google Maps language](http://www.map-blockaps.com/documentation/changing-the-google-maps-language/)
+* [Create a google map and marker using custom fields (Pro)](http://www.map-blockaps.com/introducing-maps-by-custom-fields/)
+* [View all documentation](http://www.map-blockaps.com/documentation/)
 
 = Troubleshooting =
-* [My Google Map is not showing on my website](http://www.wpgmaps.com/documentation/troubleshooting/my-map-is-not-showing-on-my-website/)
-* [My markers are not showing](http://www.wpgmaps.com/documentation/troubleshooting/my-markers-are-not-showing-on-my-map/)
-* [View all troubleshooting articles](http://www.wpgmaps.com/documentation/troubleshooting/)
+* [My Google Map is not showing on my website](http://www.map-blockaps.com/documentation/troubleshooting/my-map-is-not-showing-on-my-website/)
+* [My markers are not showing](http://www.map-blockaps.com/documentation/troubleshooting/my-markers-are-not-showing-on-my-map/)
+* [View all troubleshooting articles](http://www.map-blockaps.com/documentation/troubleshooting/)
 
 == Installation ==
 
-= First time WP Google Maps user =
-Thank you for choosing WP Google Maps! In order to create your Google map, simply activate the plugin and click on "Maps" in your left navigation menu.
-Once the WP Google Maps page loads, set the options for your map (height, width, map type, zoom level etc) and then use your mouse to drag your Google map to your desired location and press the "Save map" button.
-Copy and paste the shortcode into your post or page and WP Google Maps will automatically create the map on your page using the settings you chose above.
+= First time Map Block user =
+Thank you for choosing Map Block! In order to create your Google map, simply activate the plugin and click on "Maps" in your left navigation menu.
+Once the Map Block page loads, set the options for your map (height, width, map type, zoom level etc) and then use your mouse to drag your Google map to your desired location and press the "Save map" button.
+Copy and paste the shortcode into your post or page and Map Block will automatically create the map on your page using the settings you chose above.
 
 = Adding your first map marker =
-To add a marker to your Google map, scroll to below the map in your admin section and enter the address or GPS location in the Address input field. Click "Add Marker" and WP Google Maps will add your marker to the address you specified.
+To add a marker to your Google map, scroll to below the map in your admin section and enter the address or GPS location in the Address input field. Click "Add Marker" and Map Block will add your marker to the address you specified.
 
 = Setting up a Google Maps Store Locator =
-In order to make use of WP Google Maps Store Locator functionality, simply click on the "Store Locator" tab in the map creation page and select "Yes"
+In order to make use of Map Block Store Locator functionality, simply click on the "Store Locator" tab in the map creation page and select "Yes"
 
 
 
 == Frequently Asked Questions ==
 
-= How do I get WP Google Maps Pro? =
-Simply visit http://www.wpgmaps.com and purchase the WP Google Maps Professional Edition for $39.99 once off. Free updates and support included forever.
+= How do I get Map Block Pro? =
+Simply visit http://www.map-blockaps.com and purchase the Map Block Professional Edition for $39.99 once off. Free updates and support included forever.
 
 = I've installed the plugin, now what? =
-Once installed and activated, a link should appear in your left navigation panel within your WP-ADMIN section. Click on the "WP Google Maps" link and follow the on screen instructions.
+Once installed and activated, a link should appear in your left navigation panel within your WP-ADMIN section. Click on the "Map Block" link and follow the on screen instructions.
 
 = How do I put a Google map on my page/post? =
-In order to show your custom Google map on your page or post, simply copy the shortcode supplied and paste it into your page or post. WP Google Maps will automatically configure the map to the settings you selected in the map edit page.
+In order to show your custom Google map on your page or post, simply copy the shortcode supplied and paste it into your page or post. Map Block will automatically configure the map to the settings you selected in the map edit page.
 
 = How do I add a map widget to my widget area? =
-To add your map to your widgets area, simply go to Appearance->Widgets and drag the "WP Google Maps" Map Widget to your sidebar. You then edit the map widget to reflect the correct map.
+To add your map to your widgets area, simply go to Appearance->Widgets and drag the "Map Block" Map Widget to your sidebar. You then edit the map widget to reflect the correct map.
 
 = I want to use this but I dont have WordPress =
 Try [Nifty Maps](http://www.niftymaps.co) - Comprehensive Map Builder for all websites
 
 == Screenshots ==
 
-1. The "Lite" version of WP Google Maps.
-2. The "Pro" version of WP Google Maps.
-3. WP Google Maps Pro version: Users can get directions to your map markers
-4. WP Google Maps Pro version: Add custom markers to your Google map
-5. WP Google Maps Lite version: General settings page
-6. WP Google Maps Pro version: General settings page
-7. WP Google Maps Pro version: InfoWindow settings page
-8. WP Google Maps Pro version: Advanced Google map options.
-9. WP Google Maps Pro version: Map marker listing options
-10. WP Google Maps Pro version: Export/Import your map markers
-11. WP Google Maps Pro version: Responsive carousel map marker listing
-12. WP Google Maps Lite version: Store Locator Settings
-13. WP Google Maps Lite version: Store Locator Map
-14. WP Google Maps Lite version: Map Widget
+1. The "Lite" version of Map Block.
+2. The "Pro" version of Map Block.
+3. Map Block Pro version: Users can get directions to your map markers
+4. Map Block Pro version: Add custom markers to your Google map
+5. Map Block Lite version: General settings page
+6. Map Block Pro version: General settings page
+7. Map Block Pro version: InfoWindow settings page
+8. Map Block Pro version: Advanced Google map options.
+9. Map Block Pro version: Map marker listing options
+10. Map Block Pro version: Export/Import your map markers
+11. Map Block Pro version: Responsive carousel map marker listing
+12. Map Block Lite version: Store Locator Settings
+13. Map Block Lite version: Store Locator Map
+14. Map Block Lite version: Map Widget
 15. Select a theme for your map, or choose a theme from our theme library
 
 
 == Upgrade Notice ==
 
 = 6.3.15 =
-Please update your WP Google Maps version to 6.3.15 to ensure you are using the latest security enhancements.
+Please update your Map Block version to 6.3.15 to ensure you are using the latest security enhancements.
 
 = 6.3.14 =
-Please update your WP Google Maps version to 6.3.14 to ensure you are using the latest security enhancements.
+Please update your Map Block version to 6.3.14 to ensure you are using the latest security enhancements.
 
 = 6.2.1 =
-Please update your WP Google Maps version to 6.2.1 to ensure you are using the latest security enhancements.
+Please update your Map Block version to 6.2.1 to ensure you are using the latest security enhancements.
 
 = 6.1.10 =
-Please update WP Google Maps to version 6.1.10 to enable our latest security enhancements.
+Please update Map Block to version 6.1.10 to enable our latest security enhancements.
 
 = 6.1.5 =
-We no longer support timthumb and we have opted to remove it from WP Google Maps. Please update to 6.1.5 to ensure the removal of the timthumb script.
+We no longer support timthumb and we have opted to remove it from Map Block. Please update to 6.1.5 to ensure the removal of the timthumb script.
 
 = 6.0.27 =
-Please upgrade your version of WP Google Maps to version 6.0.27 as it includes multiple security improvements.
+Please upgrade your version of Map Block to version 6.0.27 as it includes multiple security improvements.
 
 == Changelog ==
 
@@ -226,7 +226,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Modules added to pave the way for Gutenberg integration
 * Adjusted script loader to support external dependencies
 * Fixed trailing slash breaking rest API routes on some setups
-* Fixed wpgmza_basic_get_admin_path causing URL wrapper not supported
+* Fixed map-block_basic_get_admin_path causing URL wrapper not supported
 *
 = 7.10.37 :- 2018-09-27 :- Medium priority =
 * Fixed undefined variable on iOS breaking store locator
@@ -251,15 +251,15 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Added "I agree" translation to German files
 * Added getPluginScripts to Scriptloader module
 * jQuery 3.x document ready compatibility
-* Changed wpgmza_google_api_status to be passed via wp_localize_script to prevent redirection issues in some circumstances
-* Prevented UGM e-mail address being transmitted in WPGMZA_localized_data
+* Changed map-block_google_api_status to be passed via wp_localize_script to prevent redirection issues in some circumstances
+* Prevented UGM e-mail address being transmitted in map-block_localized_data
 * Removed redundant locationSelect dropdown
 
 = 7.10.33 :- 2018-09-05 :- Medium priority =
 * Fixed OpenLayers InfoWindow not opening
 
 = 7.10.32 :- 2018-08-31 :- Medium priority =
-* Fixed redundant setting wpgmza_gdpr_enabled causing "user consent not given" to be flagged erroneously
+* Fixed redundant setting map-block_gdpr_enabled causing "user consent not given" to be flagged erroneously
 
 = 7.10.31 :- 2018-08-30 :- Medium priority =
 * Fixed NaN zoom level causing Google Maps to hang
@@ -271,24 +271,24 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 = 7.10.29 :- 2018-08-28 :- Medium priority =
 * Improved return_polygon_array function making edit polygon page more robust
 * Improved GoogleAPIErrorHandler, modal dialog with documentation links is now shown back end and front end for administrators
-* Implemented setOptions for generic marker module and WPGMZA.GoogleMarker module
+* Implemented setOptions for generic marker module and map-block.GoogleMarker module
 * Added load_textdomain_mofile to fix translation issues
-* Added event storelocatorgeocodecomplete (native) and storelocatorgeocodecomplete.wpgmza
-* Added event storelocatorresult (native) and storelocatorresult.wpgmza
+* Added event storelocatorgeocodecomplete (native) and storelocatorgeocodecomplete.map-block
+* Added event storelocatorresult (native) and storelocatorresult.map-block
 * Fixed map controls not applied without toggling developer mode
 * Fixed white border around new Google logo
 * Fixed Google API handling change blocking infowindow creation
 * Fixed some global settings not respected (zoom controls, etc.)
-* Fixed can't change wpgmza_maps_engine in WPGMZA_OTHER_SETTINGS when engine is set
-* Removed suffixed .wpgmza events being explicitly dispatched, WPGMZA.EventDispatcher now dispatches these automatically
+* Fixed can't change map-block_maps_engine in map-block_OTHER_SETTINGS when engine is set
+* Removed suffixed .map-block events being explicitly dispatched, map-block.EventDispatcher now dispatches these automatically
 
 = 7.10.28 :- 2018-08-20 :- Low priority =
 * Fixed engine being switched to OpenLayers following saving settings on a fresh install
 * Added CSS fix for recent Google UI changes for MacOS / iOS + Safari
 
 = 7.10.27 :- 2018-08-17 :- Low priority =
-* Added wpgmza_xml_cache_generated filter
-* Added wpgmza_xml_cache_saved action
+* Added map-block_xml_cache_generated filter
+* Added map-block_xml_cache_saved action
 * Improved return_polyline_array function making edit polyline page more robust
 * Fixed Google API loading before consent given when "Require consent before load" checked
 
@@ -313,7 +313,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Added PHP version requirement 5.3 to readme.txt
 
 = 7.10.22 :- 2018-07-18 :- Medium priority =
-* Added filter wpgmza_localized_strings
+* Added filter map-block_localized_strings
 * Added beginnings for REST API
 * Added scroll animation when edit marker is clicked
 * Fixed UTF-8 characters not being decoded into PHPs native charset before passing them to loadHTML in GDPR compliance module
@@ -326,10 +326,10 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 = 7.10.20 :- 2018-07-05 :- Low priority =
 * Added hook for new GDPR tab content
 * Added JavaScript for VGM GDPR controls
-* Fixed WPGMZA\DOMDocument::saveInnerBody not saving text nodes
+* Fixed map-block\DOMDocument::saveInnerBody not saving text nodes
 
 = 7.10.19 - 2018-07-05 :- Medium Priority =
-* Added new event "userlocationfound" dispatched from WPGMZA.events
+* Added new event "userlocationfound" dispatched from map-block.events
 * Added fall back to convert UTF-8 to HTML entities on installations without multibyte functions available
 * Changed GDPR settings UI, removed redundant compliance setting, added default notice
 * Fixed media="1" attribute not validating
@@ -368,7 +368,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 
 = 7.10.12 - 2018-06-12 :- Low priority =
 * Handed FontAwesome loading over to ScriptLoader module
-* Deprecated global function wpgmza_enqueue_fontawesome
+* Deprecated global function map-block_enqueue_fontawesome
 * Fixed circles and rectangles only working on map ID 1
  
 = 7.10.11 - 2018-06-08 :- Low priority =
@@ -521,7 +521,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * When a marker is deleted, the view does not reset
 * User javascript has been ported over to a JavaScript file
 * A minimifed and unminified version of the user-side JS file is now included - The minifed version is used by default
-* You can now set the google map zoom level via the shortcode. Example: [wpgmza id='1' zoom=8]
+* You can now set the google map zoom level via the shortcode. Example: [map-block id='1' zoom=8]
 * Fixed a PHP warning on the error log page
 
 = 6.3.17 - 2016-08-07 - Medium priority =
@@ -600,7 +600,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Corrected internationalization
 * iPhone map marker styling fix
 * Fixed an autocomplete bug
-* All WP Google Maps language files have been updated
+* All Map Block language files have been updated
 
 = 6.3.0 - 2015-09-04 - Low priority =
 * Added 5 map themes to the map editor
@@ -612,7 +612,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Included the latest version of datatables to fix the bug experienced with the new jQuery being included in WordPress 4.3
 * Updated datatables.responsive to 1.0.7 and included the minified version of the file instead
 * Fixed a few styling bugs in the map editor
-* WP Google Maps tested with WordPress 4.3
+* Map Block tested with WordPress 4.3
 
 = 6.2.2 - Security Update - 2015-07-27 - High Priority =
 * Security patch
@@ -769,7 +769,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Fixed a google map marker XML file location bug
 
 = 6.0.11 =
-* Small bug fix on the WP Google Maps welcome page
+* Small bug fix on the Map Block welcome page
 
 = 6.0.10 =
 * Tested on WP 3.9
@@ -785,7 +785,7 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Added a warning when users want to use % for the map height
 
 = 6.0.8 =
-* Fixed a Mac Firefox style issue with the WP Google Maps Store Locator
+* Fixed a Mac Firefox style issue with the Map Block Store Locator
 * Fixed a function error in the polyline functions file
 
 = 6.0.7 =
@@ -878,4 +878,4 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 * Added SSL bug fixes
 * Fixed a bug that wasnt allowing users to edit the exact location
 
-For more, please view the WP Google Maps site
+For more, please view the Map Block site

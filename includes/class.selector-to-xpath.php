@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA\Selector;
+namespace map-block\Selector;
 
 function trace($str)
 {

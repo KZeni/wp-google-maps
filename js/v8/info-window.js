@@ -1,17 +1,17 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module InfoWindow
- * @requires WPGMZA.EventDispatcher
+ * @requires map-block.EventDispatcher
  */
 jQuery(function($) {
 	
-	WPGMZA.InfoWindow = function(mapObject)
+	map-block.InfoWindow = function(mapObject)
 	{
 		var self = this;
 		
-		WPGMZA.EventDispatcher.call(this);
+		map-block.EventDispatcher.call(this);
 		
-		WPGMZA.assertInstanceOf(this, "InfoWindow");
+		map-block.assertInstanceOf(this, "InfoWindow");
 		
 		if(!mapObject)
 			return;
@@ -31,31 +31,31 @@ jQuery(function($) {
 			});		
 	}
 	
-	WPGMZA.InfoWindow.prototype = Object.create(WPGMZA.EventDispatcher.prototype);
-	WPGMZA.InfoWindow.prototype.constructor = WPGMZA.InfoWindow;
+	map-block.InfoWindow.prototype = Object.create(map-block.EventDispatcher.prototype);
+	map-block.InfoWindow.prototype.constructor = map-block.InfoWindow;
 	
-	WPGMZA.InfoWindow.OPEN_BY_CLICK = 1;
-	WPGMZA.InfoWindow.OPEN_BY_HOVER = 2;
+	map-block.InfoWindow.OPEN_BY_CLICK = 1;
+	map-block.InfoWindow.OPEN_BY_HOVER = 2;
 	
-	WPGMZA.InfoWindow.getConstructor = function()
+	map-block.InfoWindow.getConstructor = function()
 	{
-		switch(WPGMZA.settings.engine)
+		switch(map-block.settings.engine)
 		{
 			case "open-layers":
-				if(WPGMZA.isProVersion())
-					return WPGMZA.OLProInfoWindow;
-				return WPGMZA.OLInfoWindow;
+				if(map-block.isProVersion())
+					return map-block.OLProInfoWindow;
+				return map-block.OLInfoWindow;
 				break;
 			
 			default:
-				if(WPGMZA.isProVersion())
-					return WPGMZA.GoogleProInfoWindow;
-				return WPGMZA.GoogleInfoWindow;
+				if(map-block.isProVersion())
+					return map-block.GoogleProInfoWindow;
+				return map-block.GoogleInfoWindow;
 				break;
 		}
 	}
 	
-	WPGMZA.InfoWindow.createInstance = function(mapObject)
+	map-block.InfoWindow.createInstance = function(mapObject)
 	{
 		var constructor = this.getConstructor();
 		return new constructor(mapObject);
@@ -65,11 +65,11 @@ jQuery(function($) {
 	 * Gets the content for the info window and passes it to the specified callback - this allows for delayed loading (eg AJAX) as well as instant content
 	 * @return void
 	 */
-	WPGMZA.InfoWindow.prototype.getContent = function(callback)
+	map-block.InfoWindow.prototype.getContent = function(callback)
 	{
 		var html = "";
 		
-		if(this.mapObject instanceof WPGMZA.Marker)
+		if(this.mapObject instanceof map-block.Marker)
 			html = this.mapObject.address;
 		
 		callback(html);
@@ -79,29 +79,29 @@ jQuery(function($) {
 	 * Opens the info window
 	 * @return boolean FALSE if the info window should not & will not open, TRUE if it will
 	 */
-	WPGMZA.InfoWindow.prototype.open = function(map, mapObject)
+	map-block.InfoWindow.prototype.open = function(map, mapObject)
 	{
 		var self = this;
 		
 		this.mapObject = mapObject;
 		
-		if(WPGMZA.settings.disable_infowindows)
+		if(map-block.settings.disable_infowindows)
 			return false;
 		
 		return true;
 	}
 	
-	WPGMZA.InfoWindow.prototype.close = function()
+	map-block.InfoWindow.prototype.close = function()
 	{
 		
 	}
 	
-	WPGMZA.InfoWindow.prototype.setContent = function(options)
+	map-block.InfoWindow.prototype.setContent = function(options)
 	{
 		
 	}
 	
-	WPGMZA.InfoWindow.prototype.setOptions = function(options)
+	map-block.InfoWindow.prototype.setOptions = function(options)
 	{
 		
 	}
@@ -110,7 +110,7 @@ jQuery(function($) {
 	 * Event listener for when the map object is added. This will cause the info window to open if the map object has infoopen set
 	 * @return void
 	 */
-	WPGMZA.InfoWindow.prototype.onMapObjectAdded = function()
+	map-block.InfoWindow.prototype.onMapObjectAdded = function()
 	{
 		if(this.mapObject.settings.infoopen == 1)
 			this.open();

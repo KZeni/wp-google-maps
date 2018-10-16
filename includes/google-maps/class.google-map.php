@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 require_once(plugin_dir_path(__DIR__) . 'google-maps/class.google-maps-loader.php');
 

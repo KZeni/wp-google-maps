@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 // header('Content-type: text/plain');
 
@@ -52,7 +52,7 @@ foreach($marker as $key => $value)
 	echo "$key\t\t= " . print_r($value, true) . PHP_EOL;
 	
 // Save POST data to marker, without handling it!!
-if(isset($_POST['action']) && $_POST['action'] == 'wpgmza_save_marker')
+if(isset($_POST['action']) && $_POST['action'] == 'map-block_save_marker')
 {
 	$marker_id = $_POST['marker_id'];
 	

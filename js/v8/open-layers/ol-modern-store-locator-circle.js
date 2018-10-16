@@ -1,26 +1,26 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLModernStoreLocatorCircle
- * @requires WPGMZA.ModernStoreLocatorCircle
+ * @requires map-block.ModernStoreLocatorCircle
  */
 jQuery(function($) {
 	
-	WPGMZA.OLModernStoreLocatorCircle = function(map, settings)
+	map-block.OLModernStoreLocatorCircle = function(map, settings)
 	{
-		WPGMZA.ModernStoreLocatorCircle.call(this, map, settings);
+		map-block.ModernStoreLocatorCircle.call(this, map, settings);
 	}
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype = Object.create(WPGMZA.ModernStoreLocatorCircle.prototype);
-	WPGMZA.OLModernStoreLocatorCircle.prototype.constructor = WPGMZA.OLModernStoreLocatorCircle;
+	map-block.OLModernStoreLocatorCircle.prototype = Object.create(map-block.ModernStoreLocatorCircle.prototype);
+	map-block.OLModernStoreLocatorCircle.prototype.constructor = map-block.OLModernStoreLocatorCircle;
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype.initCanvasLayer = function()
+	map-block.OLModernStoreLocatorCircle.prototype.initCanvasLayer = function()
 	{
 		var self = this;
 		var mapElement = $(this.map.element);
 		var olViewportElement = mapElement.children(".ol-viewport");
 		
 		this.canvas = document.createElement("canvas");
-		this.canvas.className = "wpgmza-ol-canvas-overlay";
+		this.canvas.className = "map-block-ol-canvas-overlay";
 		mapElement.append(this.canvas);
 		
 		this.renderFunction = function(event) {
@@ -42,12 +42,12 @@ jQuery(function($) {
 		this.map.olMap.on("postrender", this.renderFunction);
 	}
 
-	WPGMZA.OLModernStoreLocatorCircle.prototype.getContext = function(type)
+	map-block.OLModernStoreLocatorCircle.prototype.getContext = function(type)
 	{
 		return this.canvas.getContext(type);
 	}
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
+	map-block.OLModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
 	{
 		return {
 			width: this.canvas.width,
@@ -55,14 +55,14 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype.getCenterPixels = function()
+	map-block.OLModernStoreLocatorCircle.prototype.getCenterPixels = function()
 	{
 		var center = this.map.latLngToPixels(this.settings.center);
 		
 		return center;
 	}
 		
-	WPGMZA.OLModernStoreLocatorCircle.prototype.getWorldOriginOffset = function()
+	map-block.OLModernStoreLocatorCircle.prototype.getWorldOriginOffset = function()
 	{
 		return {
 			x: 0,
@@ -70,10 +70,10 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
+	map-block.OLModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
 	{
-		var center = new WPGMZA.LatLng(this.settings.center);
-		var outer = new WPGMZA.LatLng(center);
+		var center = new map-block.LatLng(this.settings.center);
+		var outer = new map-block.LatLng(center);
 		
 		outer.moveByDistance(km, 90);
 		
@@ -83,21 +83,21 @@ jQuery(function($) {
 		return Math.abs(outerPixels.x - centerPixels.x);
 
 		if(!window.testMarker){
-			window.testMarker = WPGMZA.Marker.createInstance({
+			window.testMarker = map-block.Marker.createInstance({
 				position: outer
 			});
-			WPGMZA.maps[0].addMarker(window.testMarker);
+			map-block.maps[0].addMarker(window.testMarker);
 		}
 		
 		return 100;
 	}
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype.getScale = function()
+	map-block.OLModernStoreLocatorCircle.prototype.getScale = function()
 	{
 		return 1;
 	}
 	
-	WPGMZA.OLModernStoreLocatorCircle.prototype.destroy = function()
+	map-block.OLModernStoreLocatorCircle.prototype.destroy = function()
 	{
 		$(this.canvas).remove();
 		

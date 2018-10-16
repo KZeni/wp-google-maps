@@ -1,5 +1,5 @@
 /**
- * @module WPGMZA
+ * @module map-block
  * @summary This is the core Javascript module. Some code exists in ../core.js, the functionality there will slowly be handed over to this module.
  */
 jQuery(function($) {
@@ -8,14 +8,14 @@ jQuery(function($) {
 		events: null,
 		settings: null,
 		
-		loadingHTML: '<div class="wpgmza-preloader"><div class="wpgmza-loader">...</div></div>',
+		loadingHTML: '<div class="map-block-preloader"><div class="map-block-loader">...</div></div>',
 		
 		/**
 		 * Override this method to add a scroll offset when using animated scroll
 		 * @return number
 		 */
 		getScrollAnimationOffset: function() {
-			return (WPGMZA.settings.scroll_animation_offset || 0);
+			return (map-block.settings.scroll_animation_offset || 0);
 		},
 		
 		/**
@@ -24,12 +24,12 @@ jQuery(function($) {
 		 */
 		animateScroll: function(element, milliseconds) {
 			
-			var offset = WPGMZA.getScrollAnimationOffset();
+			var offset = map-block.getScrollAnimationOffset();
 			
 			if(!milliseconds)
 			{
-				if(WPGMZA.settings.scroll_animation_milliseconds)
-					milliseconds = WPGMZA.settings.scroll_animation_milliseconds;
+				if(map-block.settings.scroll_animation_milliseconds)
+					milliseconds = map-block.settings.scroll_animation_milliseconds;
 				else
 					milliseconds = 500;
 			}
@@ -95,7 +95,7 @@ jQuery(function($) {
 			if(str.match(/^\(.+\)$/))
 				str = str.replace(/^\(|\)$/, "");
 			
-			var m = str.match(WPGMZA.latLngRegexp);
+			var m = str.match(map-block.latLngRegexp);
 			
 			if(!m)
 				return null;
@@ -115,7 +115,7 @@ jQuery(function($) {
 		 */
 		stringToLatLng: function(str)
 		{
-			var result = WPGMZA.isLatLngString(str);
+			var result = map-block.isLatLngString(str);
 			
 			if(!result)
 				throw new Error("Not a valid latLng");
@@ -149,9 +149,9 @@ jQuery(function($) {
 		imageDimensionsCache: {},
 		getImageDimensions: function(src, callback)
 		{
-			if(WPGMZA.imageDimensionsCache[src])
+			if(map-block.imageDimensionsCache[src])
 			{
-				callback(WPGMZA.imageDimensionsCache[src]);
+				callback(map-block.imageDimensionsCache[src]);
 				return;
 			}
 			
@@ -161,7 +161,7 @@ jQuery(function($) {
 					width: image.width,
 					height: image.height
 				};
-				WPGMZA.imageDimensionsCache[src] = result;
+				map-block.imageDimensionsCache[src] = result;
 				callback(result);
 			};
 			img.src = src;
@@ -175,7 +175,7 @@ jQuery(function($) {
 		 */
 		isDeveloperMode: function()
 		{
-			return this.developer_mode || (window.Cookies && window.Cookies.get("wpgmza-developer-mode"));
+			return this.developer_mode || (window.Cookies && window.Cookies.get("map-block-developer-mode"));
 		},
 		
 		/**
@@ -255,7 +255,7 @@ jQuery(function($) {
 				if(callback)
 					callback(position);
 				
-				WPGMZA.events.trigger("userlocationfound");
+				map-block.events.trigger("userlocationfound");
 			},
 			function(error) {
 				
@@ -265,7 +265,7 @@ jQuery(function($) {
 					if(callback)
 						callback(position);
 					
-					WPGMZA.events.trigger("userlocationfound");
+					map-block.events.trigger("userlocationfound");
 				},
 				function(error) {
 					console.warn(error.code, error.message);
@@ -286,13 +286,13 @@ jQuery(function($) {
 		 */
 		runCatchableTask: function(callback, friendlyErrorContainer) {
 			
-			if(WPGMZA.isDeveloperMode())
+			if(map-block.isDeveloperMode())
 				callback();
 			else
 				try{
 					callback();
 				}catch(e) {
-					var friendlyError = new WPGMZA.FriendlyError(e);
+					var friendlyError = new map-block.FriendlyError(e);
 					$(friendlyErrorContainer).html("");
 					$(friendlyErrorContainer).append(friendlyError.element);
 					$(friendlyErrorContainer).show();
@@ -318,9 +318,9 @@ jQuery(function($) {
 		 */
 		assertInstanceOf: function(instance, instanceName) {
 			var engine, fullInstanceName, assert;
-			var pro = WPGMZA.isProVersion() ? "Pro" : "";
+			var pro = map-block.isProVersion() ? "Pro" : "";
 			
-			switch(WPGMZA.settings.engine)
+			switch(map-block.settings.engine)
 			{
 				case "open-layers":
 					engine = "OL";
@@ -331,16 +331,16 @@ jQuery(function($) {
 					break;
 			}
 			
-			if(WPGMZA[engine + pro + instanceName])
+			if(map-block[engine + pro + instanceName])
 				fullInstanceName = engine + pro + instanceName;
-			else if(WPGMZA[pro + instanceName])
+			else if(map-block[pro + instanceName])
 				fullInstanceName = pro + instanceName;
-			else if(WPGMZA[engine + instanceName])
+			else if(map-block[engine + instanceName])
 				fullInstanceName = engine + instanceName;
 			else
 				fullInstanceName = instanceName;
 			
-			assert = instance instanceof WPGMZA[fullInstanceName];
+			assert = instance instanceof map-block[fullInstanceName];
 			
 			if(!assert)
 				throw new Error("Object must be an instance of " + fullInstanceName + " (did you call a constructor directly, rather than createInstance?)");
@@ -353,9 +353,9 @@ jQuery(function($) {
 		 * @return {object} The map object, or null if no such map exists
 		 */
 		getMapByID: function(id) {
-			for(var i = 0; i < WPGMZA.maps.length; i++) {
-				if(WPGMZA.maps[i].id == id)
-					return WPGMZA.maps[i];
+			for(var i = 0; i < map-block.maps.length; i++) {
+				if(map-block.maps[i].id == id)
+					return map-block.maps[i];
 			}
 			
 			return null;
@@ -371,7 +371,7 @@ jQuery(function($) {
 			return typeof google === 'object' && typeof google.maps === 'object' && typeof google.maps.places === 'object' && typeof google.maps.places.Autocomplete === 'function';
 		},
 		
-		googleAPIStatus: window.wpgmza_google_api_status,
+		googleAPIStatus: window.map-block_google_api_status,
 		
 		isDeviceiOS: function() {
 			
@@ -388,21 +388,21 @@ jQuery(function($) {
 		}
 	};
 	
-	if(window.WPGMZA)
-		window.WPGMZA = $.extend(window.WPGMZA, core);
+	if(window.map-block)
+		window.map-block = $.extend(window.map-block, core);
 	else
-		window.WPGMZA = core;
+		window.map-block = core;
 	
-	for(var key in WPGMZA_localized_data)
+	for(var key in map-block_localized_data)
 	{
-		var value = WPGMZA_localized_data[key];
-		WPGMZA[key] = value;
+		var value = map-block_localized_data[key];
+		map-block[key] = value;
 	}
 	
 	jQuery(function($) {
 		
 		// Combined script warning
-		if($("script[src*='wp-google-maps.combined.js'], script[src*='wp-google-maps-pro.combined.js']").length)
+		if($("script[src*='map-block.combined.js'], script[src*='map-block-pro.combined.js']").length)
 			console.warn("Minified script is out of date, using combined script instead.");
 		
 		// Check for multiple jQuery versions
@@ -414,12 +414,12 @@ jQuery(function($) {
 			console.warn("Multiple jQuery versions detected: ", elements);
 		
 		// Rest API
-		WPGMZA.restAPI = WPGMZA.RestAPI.createInstance();
+		map-block.restAPI = map-block.RestAPI.createInstance();
 		
 		// TODO: Move to map edit page JS
-		$(document).on("click", ".wpgmza_edit_btn", function() {
+		$(document).on("click", ".map-block_edit_btn", function() {
 			
-			WPGMZA.animateScroll("#wpgmaps_tabs_markers");
+			map-block.animateScroll("#map-blockaps_tabs_markers");
 			
 		});
 		
@@ -430,9 +430,9 @@ jQuery(function($) {
 		// Geolocation warnings
 		if(window.location.protocol != 'https:')
 		{
-			var warning = '<div class="notice notice-warning"><p>' + WPGMZA.localized_strings.unsecure_geolocation + "</p></div>";
+			var warning = '<div class="notice notice-warning"><p>' + map-block.localized_strings.unsecure_geolocation + "</p></div>";
 			
-			$(".wpgmza-geolocation-setting").each(function(index, el) {
+			$(".map-block-geolocation-setting").each(function(index, el) {
 				$(el).after( $(warning) );
 			});
 		}

@@ -1,7 +1,7 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLGeocoder
- * @requires WPGMZA.Geocoder
+ * @requires map-block.Geocoder
  */
 jQuery(function($) {
 	
@@ -10,13 +10,13 @@ jQuery(function($) {
 	 * @extends Geocoder
 	 * @summary OpenLayers geocoder - uses Nominatim by default
 	 */
-	WPGMZA.OLGeocoder = function()
+	map-block.OLGeocoder = function()
 	{
 		
 	}
 	
-	WPGMZA.OLGeocoder.prototype = Object.create(WPGMZA.Geocoder.prototype);
-	WPGMZA.OLGeocoder.prototype.constructor = WPGMZA.OLGeocoder;
+	map-block.OLGeocoder.prototype = Object.create(map-block.Geocoder.prototype);
+	map-block.OLGeocoder.prototype.constructor = map-block.OLGeocoder;
 	
 	/**
 	 * @function getResponseFromCache
@@ -26,11 +26,11 @@ jQuery(function($) {
 	 * @param {function} callback Where to send the results, as an array
 	 * @return {void}
 	 */
-	WPGMZA.OLGeocoder.prototype.getResponseFromCache = function(address, callback)
+	map-block.OLGeocoder.prototype.getResponseFromCache = function(address, callback)
 	{
-		$.ajax(WPGMZA.ajaxurl, {
+		$.ajax(map-block.ajaxurl, {
 			data: {
-				action: "wpgmza_query_nominatim_cache",
+				action: "map-block_query_nominatim_cache",
 				query: address
 			},
 			success: function(response, xhr, status) {
@@ -49,7 +49,7 @@ jQuery(function($) {
 	 * @param {object} options An object containing the options for geocoding, address is a mandatory field
 	 * @param {function} callback The function to send the results to, as an array
 	 */
-	WPGMZA.OLGeocoder.prototype.getResponseFromNominatim = function(options, callback)
+	map-block.OLGeocoder.prototype.getResponseFromNominatim = function(options, callback)
 	{
 		var data = {
 			q: options.address,
@@ -65,7 +65,7 @@ jQuery(function($) {
 				callback(response);
 			},
 			error: function(response, xhr, status) {
-				callback(null, WPGMZA.Geocoder.FAIL)
+				callback(null, map-block.Geocoder.FAIL)
 			}
 		});
 	}
@@ -78,11 +78,11 @@ jQuery(function($) {
 	 * @param {object|array} response The response to cache
 	 * @returns {void}
 	 */
-	WPGMZA.OLGeocoder.prototype.cacheResponse = function(address, response)
+	map-block.OLGeocoder.prototype.cacheResponse = function(address, response)
 	{
-		$.ajax(WPGMZA.ajaxurl, {
+		$.ajax(map-block.ajaxurl, {
 			data: {
-				action: "wpgmza_store_nominatim_cache",
+				action: "map-block_store_nominatim_cache",
 				query: address,
 				response: JSON.stringify(response)
 			},
@@ -90,17 +90,17 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.OLGeocoder.prototype.getLatLngFromAddress = function(options, callback)
+	map-block.OLGeocoder.prototype.getLatLngFromAddress = function(options, callback)
 	{
-		return WPGMZA.OLGeocoder.prototype.geocode(options, callback);
+		return map-block.OLGeocoder.prototype.geocode(options, callback);
 	}
 	
-	WPGMZA.OLGeocoder.prototype.getAddressFromLatLng = function(options, callback)
+	map-block.OLGeocoder.prototype.getAddressFromLatLng = function(options, callback)
 	{
-		return WPGMZA.OLGeocoder.prototype.geocode(options, callback);
+		return map-block.OLGeocoder.prototype.geocode(options, callback);
 	}
 	
-	WPGMZA.OLGeocoder.prototype.geocode = function(options, callback)
+	map-block.OLGeocoder.prototype.geocode = function(options, callback)
 	{
 		var self = this;
 		
@@ -108,7 +108,7 @@ jQuery(function($) {
 			throw new Error("Invalid options");
 		
 		if(options.location)
-			options.latLng = new WPGMZA.LatLng(options.location);
+			options.latLng = new map-block.LatLng(options.location);
 		
 		var finish, location;
 		
@@ -121,7 +121,7 @@ jQuery(function($) {
 				for(var i = 0; i < response.length; i++)
 				{
 					response[i].geometry = {
-						location: new WPGMZA.LatLng({
+						location: new map-block.LatLng({
 							lat: parseFloat(response[i].lat),
 							lng: parseFloat(response[i].lon)
 						})
@@ -155,24 +155,24 @@ jQuery(function($) {
 		this.getResponseFromCache(location, function(response) {
 			if(response.length)
 			{
-				finish(response, WPGMZA.Geocoder.SUCCESS);
+				finish(response, map-block.Geocoder.SUCCESS);
 				return;
 			}
 			
 			self.getResponseFromNominatim($.extend(options, {address: location}), function(response, status) {
-				if(status == WPGMZA.Geocoder.FAIL)
+				if(status == map-block.Geocoder.FAIL)
 				{
-					callback(null, WPGMZA.Geocoder.FAIL);
+					callback(null, map-block.Geocoder.FAIL);
 					return;
 				}
 				
 				if(response.length == 0)
 				{
-					callback([], WPGMZA.Geocoder.ZERO_RESULTS);
+					callback([], map-block.Geocoder.ZERO_RESULTS);
 					return;
 				}
 				
-				finish(response, WPGMZA.Geocoder.SUCCESS);
+				finish(response, map-block.Geocoder.SUCCESS);
 				
 				self.cacheResponse(location, response);
 			});

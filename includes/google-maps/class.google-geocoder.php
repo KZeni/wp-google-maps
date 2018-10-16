@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class GoogleGeocoder
 {
@@ -33,7 +33,7 @@ class GoogleGeocoder
 		
 		$json = json_decode($result);
 
-		do_action( 'wpgmza_google_maps_geocoded_result', $json );
+		do_action( 'map-block_google_maps_geocoded_result', $json );
 		
 		if(!$json)
 		{
@@ -54,7 +54,7 @@ class GoogleGeocoder
 		
 		$location = $result->geometry->location;
 
-		do_action( 'wpgmza_google_maps_geocoded_result_location', $location );
+		do_action( 'map-block_google_maps_geocoded_result_location', $location );
 		
 		return (object)array(
 			'lat' => $location->lat, 

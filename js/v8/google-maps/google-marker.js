@@ -1,14 +1,14 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleMarker
- * @requires WPGMZA.Marker
- * @pro-requires WPGMZA.ProMarker
+ * @requires map-block.Marker
+ * @pro-requires map-block.ProMarker
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.GoogleMarker = function(row)
+	map-block.GoogleMarker = function(row)
 	{
 		var self = this;
 		
@@ -19,11 +19,11 @@ jQuery(function($) {
 		{
 			for(var name in row)
 			{
-				if(row[name] instanceof WPGMZA.LatLng)
+				if(row[name] instanceof map-block.LatLng)
 				{
 					settings[name] = row[name].toGoogleLatLng();
 				}
-				else if(row[name] instanceof WPGMZA.Map)
+				else if(row[name] instanceof map-block.Map)
 				{
 					// Do nothing (ignore)
 				}
@@ -33,7 +33,7 @@ jQuery(function($) {
 		}
 		
 		this.googleMarker = new google.maps.Marker(settings);
-		this.googleMarker.wpgmzaMarker = this;
+		this.googleMarker.map-blockMarker = this;
 		
 		this.googleMarker.setPosition(new google.maps.LatLng({
 			lat: parseFloat(this.lat),
@@ -71,14 +71,14 @@ jQuery(function($) {
 		this.trigger("init");
 	}
 	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProMarker;
+	if(map-block.isProVersion())
+		Parent = map-block.ProMarker;
 	else
-		Parent = WPGMZA.Marker;
-	WPGMZA.GoogleMarker.prototype = Object.create(Parent.prototype);
-	WPGMZA.GoogleMarker.prototype.constructor = WPGMZA.GoogleMarker;
+		Parent = map-block.Marker;
+	map-block.GoogleMarker.prototype = Object.create(Parent.prototype);
+	map-block.GoogleMarker.prototype.constructor = map-block.GoogleMarker;
 	
-	WPGMZA.GoogleMarker.prototype.setLabel = function(label)
+	map-block.GoogleMarker.prototype.setLabel = function(label)
 	{
 		if(!label)
 		{
@@ -91,14 +91,14 @@ jQuery(function($) {
 		});
 		
 		if(!this.googleMarker.getIcon())
-			this.googleMarker.setIcon(WPGMZA.settings.default_marker_icon);
+			this.googleMarker.setIcon(map-block.settings.default_marker_icon);
 	}
 	
 	/**
 	 * Sets the position of the marker
 	 * @return void
 	 */
-	WPGMZA.GoogleMarker.prototype.setPosition = function(latLng)
+	map-block.GoogleMarker.prototype.setPosition = function(latLng)
 	{
 		Parent.prototype.setPosition.call(this, latLng);
 		this.googleMarker.setPosition({
@@ -111,7 +111,7 @@ jQuery(function($) {
 	 * Sets the position offset of a marker
 	 * @return void
 	 */
-	WPGMZA.GoogleMarker.prototype.setOffset = function(x, y)
+	map-block.GoogleMarker.prototype.setOffset = function(x, y)
 	{
 		var self = this;
 		var icon = this.googleMarker.getIcon();
@@ -140,7 +140,7 @@ jQuery(function($) {
 		img.src = params.url;
 	}
 	
-	WPGMZA.GoogleMarker.prototype.setOptions = function(options)
+	map-block.GoogleMarker.prototype.setOptions = function(options)
 	{
 		this.googleMarker.setOptions(options);
 	}
@@ -149,7 +149,7 @@ jQuery(function($) {
 	 * Set the marker animation
 	 * @return void
 	 */
-	WPGMZA.GoogleMarker.prototype.setAnimation = function(animation)
+	map-block.GoogleMarker.prototype.setAnimation = function(animation)
 	{
 		Parent.prototype.setAnimation.call(this, animation);
 		this.googleMarker.setAnimation(animation);
@@ -159,14 +159,14 @@ jQuery(function($) {
 	 * Sets the visibility of the marker
 	 * @return void
 	 */
-	WPGMZA.GoogleMarker.prototype.setVisible = function(visible)
+	map-block.GoogleMarker.prototype.setVisible = function(visible)
 	{
 		Parent.prototype.setVisible.call(this, visible);
 		
 		this.googleMarker.setVisible(visible);
 	}
 	
-	WPGMZA.GoogleMarker.prototype.setDraggable = function(draggable)
+	map-block.GoogleMarker.prototype.setDraggable = function(draggable)
 	{
 		this.googleMarker.setDraggable(draggable);
 	}

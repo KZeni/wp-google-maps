@@ -1,17 +1,17 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLPolyline
- * @requires WPGMZA.Polyline
+ * @requires map-block.Polyline
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.OLPolyline = function(row, olFeature)
+	map-block.OLPolyline = function(row, olFeature)
 	{
 		var self = this;
 		
-		WPGMZA.Polyline.call(this, row);
+		map-block.Polyline.call(this, row);
 		
 		this.olStyle = new ol.style.Style();
 		
@@ -50,29 +50,29 @@ jQuery(function($) {
 		});
 		
 		this.layer.getSource().getFeatures()[0].setProperties({
-			wpgmzaPolyling: this
+			map-blockPolyling: this
 		});
 	}
 	
-	Parent = WPGMZA.Polyline;
+	Parent = map-block.Polyline;
 		
-	WPGMZA.OLPolyline.prototype = Object.create(Parent.prototype);
-	WPGMZA.OLPolyline.prototype.constructor = WPGMZA.OLPolyline;
+	map-block.OLPolyline.prototype = Object.create(Parent.prototype);
+	map-block.OLPolyline.prototype.constructor = map-block.OLPolyline;
 	
-	WPGMZA.OLPolyline.prototype.getStyleFromSettings = function()
+	map-block.OLPolyline.prototype.getStyleFromSettings = function()
 	{
 		var params = {};
 		
 		if(this.settings.strokeOpacity)
 			params.stroke = new ol.style.Stroke({
-				color: WPGMZA.hexOpacityToRGBA(this.settings.strokeColor, this.settings.strokeOpacity),
+				color: map-block.hexOpacityToRGBA(this.settings.strokeColor, this.settings.strokeOpacity),
 				width: parseInt(this.settings.strokeWeight)
 			});
 			
 		return params;
 	}
 	
-	WPGMZA.OLPolyline.prototype.updateStyleFromSettings = function()
+	map-block.OLPolyline.prototype.updateStyleFromSettings = function()
 	{
 		// Re-create the style - working on it directly doesn't cause a re-render
 		var params = this.getStyleFromSettings();
@@ -80,12 +80,12 @@ jQuery(function($) {
 		this.layer.setStyle(this.olStyle);
 	}
 	
-	WPGMZA.OLPolyline.prototype.setEditable = function(editable)
+	map-block.OLPolyline.prototype.setEditable = function(editable)
 	{
 		
 	}
 	
-	WPGMZA.OLPolyline.prototype.setPoints = function(points)
+	map-block.OLPolyline.prototype.setPoints = function(points)
 	{
 		if(this.olFeature)
 			this.layer.getSource().removeFeature(this.olFeature);
@@ -105,7 +105,7 @@ jQuery(function($) {
 		this.layer.getSource().addFeature(this.olFeature);
 	}
 	
-	WPGMZA.OLPolyline.prototype.toJSON = function()
+	map-block.OLPolyline.prototype.toJSON = function()
 	{
 		var result = Parent.prototype.toJSON.call(this);
 		var coordinates = this.olFeature.getGeometry().getCoordinates();

@@ -1,30 +1,30 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module LatLngBounds
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
-	WPGMZA.LatLngBounds = function(southWest, northEast)
+	map-block.LatLngBounds = function(southWest, northEast)
 	{
 		
 	}
 	
-	WPGMZA.LatLngBounds.prototype.isInInitialState = function()
+	map-block.LatLngBounds.prototype.isInInitialState = function()
 	{
 		return (this.north == undefined && this.south == undefined && this.west == undefined && this.east == undefined);
 	}
 	
-	WPGMZA.LatLngBounds.prototype.extend = function(latLng)
+	map-block.LatLngBounds.prototype.extend = function(latLng)
 	{
 		if(this.isInInitialState())
 		{
-			this.north = this.south = this.west = this.east = new WPGMZA.LatLng(latLng);
+			this.north = this.south = this.west = this.east = new map-block.LatLng(latLng);
 			return;
 		}
 		
-		if(!(latLng instanceof WPGMZA.LatLng))
-			latLng = new WPGMZA.LatLng(latLng);
+		if(!(latLng instanceof map-block.LatLng))
+			latLng = new map-block.LatLng(latLng);
 		
 		if(latLng.lat < this.north)
 			this.north = latLng.lat;

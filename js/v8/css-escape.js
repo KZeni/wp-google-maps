@@ -1,7 +1,7 @@
 /**
- * @module WPGMZA.CSS
- * @namespace WPGMZA
- * @requires WPGMZA
+ * @module map-block.CSS
+ * @namespace map-block
+ * @requires map-block
  * @summary Polyfill for CSS.escape, with thanks to @mathias
  */
 

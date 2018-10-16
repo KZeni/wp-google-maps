@@ -1,14 +1,14 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLMarker
- * @requires WPGMZA.Marker
- * @pro-requires WPGMZA.ProMarker
+ * @requires map-block.Marker
+ * @pro-requires map-block.ProMarker
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.OLMarker = function(row)
+	map-block.OLMarker = function(row)
 	{
 		var self = this;
 		
@@ -19,8 +19,8 @@ jQuery(function($) {
 			parseFloat(this.lat)
 		]);
 		
-		this.element = $("<div class='ol-marker'><img src='" + WPGMZA.settings.default_marker_icon + "'/></div>")[0];
-		this.element.wpgmzaMarker = this;
+		this.element = $("<div class='ol-marker'><img src='" + map-block.settings.default_marker_icon + "'/></div>")[0];
+		this.element.map-blockMarker = this;
 		
 		$(this.element).on("mouseover", function(event) {
 			self.dispatchEvent("mouseover");
@@ -47,19 +47,19 @@ jQuery(function($) {
 		this.trigger("init");
 	}
 	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProMarker;
+	if(map-block.isProVersion())
+		Parent = map-block.ProMarker;
 	else
-		Parent = WPGMZA.Marker;
-	WPGMZA.OLMarker.prototype = Object.create(Parent.prototype);
-	WPGMZA.OLMarker.prototype.constructor = WPGMZA.OLMarker;
+		Parent = map-block.Marker;
+	map-block.OLMarker.prototype = Object.create(Parent.prototype);
+	map-block.OLMarker.prototype.constructor = map-block.OLMarker;
 	
-	WPGMZA.OLMarker.prototype.addLabel = function()
+	map-block.OLMarker.prototype.addLabel = function()
 	{
 		this.setLabel(this.getLabelText());
 	}
 	
-	WPGMZA.OLMarker.prototype.setLabel = function(label)
+	map-block.OLMarker.prototype.setLabel = function(label)
 	{
 		if(!label)
 		{
@@ -78,14 +78,14 @@ jQuery(function($) {
 		this.label.html(label);
 	}
 	
-	WPGMZA.OLMarker.prototype.setVisible = function(visible)
+	map-block.OLMarker.prototype.setVisible = function(visible)
 	{
 		Parent.prototype.setVisible(visible);
 		
 		this.overlay.getElement().style.display = (visible ? "block" : "none");
 	}
 	
-	WPGMZA.OLMarker.prototype.setPosition = function(latLng)
+	map-block.OLMarker.prototype.setPosition = function(latLng)
 	{
 		Parent.prototype.setPosition.call(this, latLng);
 		
@@ -97,34 +97,34 @@ jQuery(function($) {
 		this.overlay.setPosition(origin);
 	}
 	
-	WPGMZA.OLMarker.prototype.setOffset = function(x, y)
+	map-block.OLMarker.prototype.setOffset = function(x, y)
 	{
 		this.element.style.position = "relative";
 		this.element.style.left = x + "px";
 		this.element.style.top = y + "px";
 	}
 	
-	WPGMZA.OLMarker.prototype.setAnimation = function(anim)
+	map-block.OLMarker.prototype.setAnimation = function(anim)
 	{
 		Parent.prototype.setAnimation.call(this, anim);
 		
 		switch(anim)
 		{
-			case WPGMZA.Marker.ANIMATION_NONE:
+			case map-block.Marker.ANIMATION_NONE:
 				$(this.element).removeAttr("data-anim");
 				break;
 			
-			case WPGMZA.Marker.ANIMATION_BOUNCE:
+			case map-block.Marker.ANIMATION_BOUNCE:
 				$(this.element).attr("data-anim", "bounce");
 				break;
 			
-			case WPGMZA.Marker.ANIMATION_DROP:
+			case map-block.Marker.ANIMATION_DROP:
 				$(this.element).attr("data-anim", "drop");
 				break;
 		}
 	}
 	
-	WPGMZA.OLMarker.prototype.setDraggable = function(draggable)
+	map-block.OLMarker.prototype.setDraggable = function(draggable)
 	{
 		var self = this;
 		
@@ -154,12 +154,12 @@ jQuery(function($) {
 			$(this.element).draggable({disabled: true});
 	}
 	
-	WPGMZA.OLMarker.prototype.onDragStart = function(event)
+	map-block.OLMarker.prototype.onDragStart = function(event)
 	{
 		this.isBeingDragged = true;
 	}
 		
-	WPGMZA.OLMarker.prototype.onDragEnd = function(event)
+	map-block.OLMarker.prototype.onDragEnd = function(event)
 	{
 		var offset = {
 			top:	parseFloat( $(this.element).css("top").match(/-?\d+/)[0] ),
@@ -185,9 +185,9 @@ jQuery(function($) {
 		this.trigger({type: "dragend", latLng: latLngAfterDrag});
 	}
 	
-	WPGMZA.OLMarker.prototype.onElementClick = function(event)
+	map-block.OLMarker.prototype.onElementClick = function(event)
 	{
-		var self = event.currentTarget.wpgmzaMarker;
+		var self = event.currentTarget.map-blockMarker;
 		
 		if(self.isBeingDragged)
 			return; // Don't dispatch click event after a drag
@@ -200,7 +200,7 @@ jQuery(function($) {
 	 * Binds / rebinds the click listener. This must be bound after draggable is initialized,
 	 * this solves the click listener firing before dragend
 	 */
-	WPGMZA.OLMarker.prototype.rebindClickListener = function()
+	map-block.OLMarker.prototype.rebindClickListener = function()
 	{
 		$(this.element).off("click", this.onElementClick);
 		$(this.element).on("click", this.onElementClick);

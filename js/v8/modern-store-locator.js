@@ -1,7 +1,7 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module ModernStoreLocator
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
@@ -11,54 +11,54 @@ jQuery(function($) {
 	 * in a new element so we can apply new styles.
 	 * @return Object
 	 */
-	WPGMZA.ModernStoreLocator = function(map_id)
+	map-block.ModernStoreLocator = function(map_id)
 	{
 		var self = this;
 		var original;
 		
-		WPGMZA.assertInstanceOf(this, "ModernStoreLocator");
+		map-block.assertInstanceOf(this, "ModernStoreLocator");
 		
-		if(WPGMZA.isProVersion())
-			original = $(".wpgmza_sl_search_button[mid='" + map_id + "']").closest(".wpgmza_sl_main_div");
+		if(map-block.isProVersion())
+			original = $(".map-block_sl_search_button[mid='" + map_id + "']").closest(".map-block_sl_main_div");
 		else
-			original = $(".wpgmza_sl_search_button").closest(".wpgmza_sl_main_div");
+			original = $(".map-block_sl_search_button").closest(".map-block_sl_main_div");
 		
 		if(!original.length)
 			return;
 		
 		// Build / re-arrange elements
-		this.element = $("<div class='wpgmza-modern-store-locator'><div class='wpgmza-inner wpgmza-modern-hover-opaque'/></div>")[0];
+		this.element = $("<div class='map-block-modern-store-locator'><div class='map-block-inner map-block-modern-hover-opaque'/></div>")[0];
 		
-		var inner = $(this.element).find(".wpgmza-inner");
+		var inner = $(this.element).find(".map-block-inner");
 		
 		var titleSearch = $(original).find("[id='nameInput_" + map_id + "']");
 		if(titleSearch.length)
 		{
-			var placeholder = wpgmaps_localize[map_id].other_settings.store_locator_name_string;
+			var placeholder = map-blockaps_localize[map_id].other_settings.store_locator_name_string;
 			if(placeholder && placeholder.length)
 				titleSearch.attr("placeholder", placeholder);
 			inner.append(titleSearch);
 		}
 		
 		var addressInput;
-		if(WPGMZA.isProVersion())
+		if(map-block.isProVersion())
 			addressInput = $(original).find(".addressInput");
 		else
 			addressInput = $(original).find("#addressInput");
 		
-		if(wpgmaps_localize[map_id].other_settings.store_locator_query_string && wpgmaps_localize[map_id].other_settings.store_locator_query_string.length)
-			addressInput.attr("placeholder", wpgmaps_localize[map_id].other_settings.store_locator_query_string);
+		if(map-blockaps_localize[map_id].other_settings.store_locator_query_string && map-blockaps_localize[map_id].other_settings.store_locator_query_string.length)
+			addressInput.attr("placeholder", map-blockaps_localize[map_id].other_settings.store_locator_query_string);
 		
 		inner.append(addressInput);
 		
-		inner.append($(original).find("select.wpgmza_sl_radius_select"));
-		// inner.append($(original).find(".wpgmza_filter_select_" + map_id));
+		inner.append($(original).find("select.map-block_sl_radius_select"));
+		// inner.append($(original).find(".map-block_filter_select_" + map_id));
 		
 		// Buttons
-		this.searchButton = $(original).find( ".wpgmza_sl_search_button" );
+		this.searchButton = $(original).find( ".map-block_sl_search_button" );
 		inner.append(this.searchButton);
 		
-		this.resetButton = $(original).find( ".wpgmza_sl_reset_button_div" );
+		this.resetButton = $(original).find( ".map-block_sl_reset_button_div" );
 		inner.append(this.resetButton);
 		
 		this.resetButton.on("click", function(event) {
@@ -67,7 +67,7 @@ jQuery(function($) {
 		
 		this.resetButton.hide();
 		
-		if(WPGMZA.isProVersion())
+		if(map-block.isProVersion())
 		{
 			this.searchButton.on("click", function(event) {
 				if($("addressInput_" + map_id).val() == 0)
@@ -83,10 +83,10 @@ jQuery(function($) {
 		}
 		
 		// Distance type
-		inner.append($("#wpgmza_distance_type_" + map_id));
+		inner.append($("#map-block_distance_type_" + map_id));
 		
 		// Categories
-		var container = $(original).find(".wpgmza_cat_checkbox_holder");
+		var container = $(original).find(".map-block_cat_checkbox_holder");
 		var ul = $(container).children("ul");
 		var items = $(container).find("li");
 		var numCategories = 0;
@@ -99,21 +99,21 @@ jQuery(function($) {
 		items.each(function(index, el) {
 			var id = $(el).attr("class").match(/\d+/);
 			
-			for(var category_id in wpgmza_category_data) {
+			for(var category_id in map-block_category_data) {
 				
 				if(id == category_id) {
-					var src = wpgmza_category_data[category_id].image;
-					var icon = $('<div class="wpgmza-chip-icon"/>');
+					var src = map-block_category_data[category_id].image;
+					var icon = $('<div class="map-block-chip-icon"/>');
 					
 					icon.css({
 						"background-image": "url('" + src + "')",
-						"width": $("#wpgmza_cat_checkbox_" + category_id + " + label").height() + "px"
+						"width": $("#map-block_cat_checkbox_" + category_id + " + label").height() + "px"
 					});
 					icons.push(icon);
 					
                     if(src != null && src != ""){
 					   //$(el).find("label").prepend(icon);
-                       $("#wpgmza_cat_checkbox_" + category_id + " + label").prepend(icon);
+                       $("#map-block_cat_checkbox_" + category_id + " + label").prepend(icon);
                     }
 					
 					numCategories++;
@@ -128,7 +128,7 @@ jQuery(function($) {
 
 		
 		if(numCategories) {
-			this.optionsButton = $('<span class="wpgmza_store_locator_options_button"><i class="fas fa-list"></i></span>');
+			this.optionsButton = $('<span class="map-block_store_locator_options_button"><i class="fas fa-list"></i></span>');
 			$(this.searchButton).before(this.optionsButton);
 		}
 		
@@ -140,16 +140,16 @@ jQuery(function($) {
 				$(icon).closest("label").css({"padding-left": height + 8 + "px"});
 			});
 			
-			$(container).css("width", $(self.element).find(".wpgmza-inner").outerWidth() + "px");
+			$(container).css("width", $(self.element).find(".map-block-inner").outerWidth() + "px");
 			
 		}, 1000);
 		
-		$(this.element).find(".wpgmza_store_locator_options_button").on("click", function(event) {
+		$(this.element).find(".map-block_store_locator_options_button").on("click", function(event) {
 			
-			if(container.hasClass("wpgmza-open"))
-				container.removeClass("wpgmza-open");
+			if(container.hasClass("map-block-open"))
+				container.removeClass("map-block-open");
 			else
-				container.addClass("wpgmza-open");
+				container.addClass("map-block-open");
 			
 		});
 		
@@ -166,12 +166,12 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.ModernStoreLocator.createInstance = function(map_id)
+	map-block.ModernStoreLocator.createInstance = function(map_id)
 	{
-		if(WPGMZA.settings.engine == "google-maps")
-			return new WPGMZA.GoogleModernStoreLocator(map_id);
+		if(map-block.settings.engine == "google-maps")
+			return new map-block.GoogleModernStoreLocator(map_id);
 		else
-			return new WPGMZA.OLModernStoreLocator(map_id);
+			return new map-block.OLModernStoreLocator(map_id);
 	}
 	
 });

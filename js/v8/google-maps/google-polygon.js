@@ -1,14 +1,14 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GooglePolygon
- * @requires WPGMZA.Polygon
- * @pro-requires WPGMZA.ProPolygon
+ * @requires map-block.Polygon
+ * @pro-requires map-block.ProPolygon
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.GooglePolygon = function(row, googlePolygon)
+	map-block.GooglePolygon = function(row, googlePolygon)
 	{
 		var self = this;
 		
@@ -29,26 +29,26 @@ jQuery(function($) {
 			}
 		}
 		
-		this.googlePolygon.wpgmzaPolygon = this;
+		this.googlePolygon.map-blockPolygon = this;
 			
 		google.maps.event.addListener(this.googlePolygon, "click", function() {
 			self.dispatchEvent({type: "click"});
 		});
 	}
 	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProPolygon;
+	if(map-block.isProVersion())
+		Parent = map-block.ProPolygon;
 	else
-		Parent = WPGMZA.Polygon;
+		Parent = map-block.Polygon;
 		
-	WPGMZA.GooglePolygon.prototype = Object.create(Parent.prototype);
-	WPGMZA.GooglePolygon.prototype.constructor = WPGMZA.GooglePolygon;
+	map-block.GooglePolygon.prototype = Object.create(Parent.prototype);
+	map-block.GooglePolygon.prototype.constructor = map-block.GooglePolygon;
 	
 	/**
 	 * Returns true if the polygon is editable
 	 * @return void
 	 */
-	WPGMZA.GooglePolygon.prototype.getEditable = function()
+	map-block.GooglePolygon.prototype.getEditable = function()
 	{
 		return this.googlePolygon.getOptions().editable;
 	}
@@ -57,7 +57,7 @@ jQuery(function($) {
 	 * Sets the editable state of the polygon
 	 * @return void
 	 */
-	WPGMZA.GooglePolygon.prototype.setEditable = function(value)
+	map-block.GooglePolygon.prototype.setEditable = function(value)
 	{
 		this.googlePolygon.setOptions({editable: value});
 	}
@@ -66,9 +66,9 @@ jQuery(function($) {
 	 * Returns the polygon represented by a JSON object
 	 * @return object
 	 */
-	WPGMZA.GooglePolygon.prototype.toJSON = function()
+	map-block.GooglePolygon.prototype.toJSON = function()
 	{
-		var result = WPGMZA.Polygon.prototype.toJSON.call(this);
+		var result = map-block.Polygon.prototype.toJSON.call(this);
 		
 		result.points = [];
 		

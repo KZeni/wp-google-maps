@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class Factory
 {
@@ -9,9 +9,9 @@ class Factory
 		$class = get_called_class();
 		$args = func_get_args();
 		$count = count($args);
-		$filter = "wpgmza_create_$class";
+		$filter = "map-block_create_$class";
 
-		if($class == 'WPGMZA\Factory')
+		if($class == 'map-block\Factory')
 			throw new \Exception('Factory createInstance would return abstract Factory');
 		
 		if(empty($args))
@@ -21,7 +21,7 @@ class Factory
 		
 		$override = call_user_func_array('apply_filters', $filter_args);
 		
-		if($override instanceof \WPGMZA\Factory)
+		if($override instanceof \map-block\Factory)
 			return $override;
 		
 		$reflect = new \ReflectionClass($class);

@@ -1,14 +1,14 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLMap
- * @requires WPGMZA.Map
- * @pro-requires WPGMZA.ProMap
+ * @requires map-block.Map
+ * @pro-requires map-block.ProMap
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.OLMap = function(element, options)
+	map-block.OLMap = function(element, options)
 	{
 		var self = this;
 		
@@ -34,11 +34,11 @@ jQuery(function($) {
 			
 			// NB: The true and false values are flipped because these settings represent the "disabled" state when true
 			if(interaction instanceof ol.interaction.DragPan)
-				interaction.setActive( (this.settings.wpgmza_settings_map_draggable == "yes" ? false : true) );
+				interaction.setActive( (this.settings.map-block_settings_map_draggable == "yes" ? false : true) );
 			else if(interaction instanceof ol.interaction.DoubleClickZoom)
-				interaction.setActive( (this.settings.wpgmza_settings_map_clickzoom ? false : true) );
+				interaction.setActive( (this.settings.map-block_settings_map_clickzoom ? false : true) );
 			else if(interaction instanceof ol.interaction.MouseWheelZoom)
-				interaction.setActive( (this.settings.wpgmza_settings_map_scroll == "yes" ? false : true) );
+				interaction.setActive( (this.settings.map-block_settings_map_scroll == "yes" ? false : true) );
 			
 		}, this);
 		
@@ -46,12 +46,12 @@ jQuery(function($) {
 		this.olMap.getControls().forEach(function(control) {
 			
 			// NB: The true and false values are flipped because these settings represent the "disabled" state when true
-			if(control instanceof ol.control.Zoom && WPGMZA.settings.wpgmza_settings_map_zoom == "yes")
+			if(control instanceof ol.control.Zoom && map-block.settings.map-block_settings_map_zoom == "yes")
 				this.olMap.removeControl(control);
 			
 		}, this);
 		
-		if(WPGMZA.settings.wpgmza_settings_map_full_screen_control != "yes")
+		if(map-block.settings.map-block_settings_map_full_screen_control != "yes")
 			this.olMap.addControl(new ol.control.FullScreen());
 		
 		// Marker layer
@@ -132,29 +132,29 @@ jQuery(function($) {
 		});
 		
 		// Dispatch event
-		if(!WPGMZA.isProVersion())
+		if(!map-block.isProVersion())
 		{
 			this.dispatchEvent("created");
-			WPGMZA.events.dispatchEvent({type: "mapcreated", map: this});
+			map-block.events.dispatchEvent({type: "mapcreated", map: this});
 		}
 	}
 
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProMap;
+	if(map-block.isProVersion())
+		Parent = map-block.ProMap;
 	else
-		Parent = WPGMZA.Map;
+		Parent = map-block.Map;
 	
-	WPGMZA.OLMap.prototype = Object.create(Parent.prototype);
-	WPGMZA.OLMap.prototype.constructor = WPGMZA.OLMap;
+	map-block.OLMap.prototype = Object.create(Parent.prototype);
+	map-block.OLMap.prototype.constructor = map-block.OLMap;
 	
-	WPGMZA.OLMap.prototype.getTileLayer = function()
+	map-block.OLMap.prototype.getTileLayer = function()
 	{
 		return new ol.layer.Tile({
 			source: new ol.source.OSM()
 		});
 	}
 	
-	WPGMZA.OLMap.prototype.wrapLongitude = function()
+	map-block.OLMap.prototype.wrapLongitude = function()
 	{
 		var center = this.getCenter();
 		
@@ -169,7 +169,7 @@ jQuery(function($) {
 		this.setCenter(center);
 	}
 	
-	WPGMZA.OLMap.prototype.getCenter = function()
+	map-block.OLMap.prototype.getCenter = function()
 	{
 		var lonLat = ol.proj.toLonLat(
 			this.olMap.getView().getCenter()
@@ -180,11 +180,11 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.OLMap.prototype.setCenter = function(latLng)
+	map-block.OLMap.prototype.setCenter = function(latLng)
 	{
 		var view = this.olMap.getView();
 		
-		WPGMZA.Map.prototype.setCenter.call(this, latLng);
+		map-block.Map.prototype.setCenter.call(this, latLng);
 		
 		view.setCenter(ol.proj.fromLonLat([
 			latLng.lng,
@@ -196,7 +196,7 @@ jQuery(function($) {
 		this.onBoundsChanged();
 	}
 	
-	WPGMZA.OLMap.prototype.getBounds = function()
+	map-block.OLMap.prototype.getBounds = function()
 	{
 		var bounds = this.olMap.getView().calculateExtent(this.olMap.getSize());
 		
@@ -219,7 +219,7 @@ jQuery(function($) {
 	 * Fit to given boundaries
 	 * @return void
 	 */
-	WPGMZA.OLMap.prototype.fitBounds = function(southWest, northEast)
+	map-block.OLMap.prototype.fitBounds = function(southWest, northEast)
 	{
 		this.olMap.getView().fitExtent(
 			[southWest.lng, southWest.lat, northEast.lng, northEast.lat],
@@ -227,7 +227,7 @@ jQuery(function($) {
 		);
 	}
 	
-	WPGMZA.OLMap.prototype.panTo = function(latLng)
+	map-block.OLMap.prototype.panTo = function(latLng)
 	{
 		var view = this.olMap.getView();
 		view.animate({
@@ -239,37 +239,37 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.OLMap.prototype.getZoom = function()
+	map-block.OLMap.prototype.getZoom = function()
 	{
 		return Math.round( this.olMap.getView().getZoom() ) + 1;
 	}
 	
-	WPGMZA.OLMap.prototype.setZoom = function(value)
+	map-block.OLMap.prototype.setZoom = function(value)
 	{
 		this.olMap.getView().setZoom(value);
 	}
 	
-	WPGMZA.OLMap.prototype.getMinZoom = function()
+	map-block.OLMap.prototype.getMinZoom = function()
 	{
 		return this.olMap.getView().getMinZoom();
 	}
 	
-	WPGMZA.OLMap.prototype.setMinZoom = function(value)
+	map-block.OLMap.prototype.setMinZoom = function(value)
 	{
 		this.olMap.getView().setMinZoom(value);
 	}
 	
-	WPGMZA.OLMap.prototype.getMaxZoom = function()
+	map-block.OLMap.prototype.getMaxZoom = function()
 	{
 		return this.olMap.getView().getMaxZoom();
 	}
 	
-	WPGMZA.OLMap.prototype.setMaxZoom = function(value)
+	map-block.OLMap.prototype.setMaxZoom = function(value)
 	{
 		this.olMap.getView().setMaxZoom(value);
 	}
 	
-	WPGMZA.OLMap.prototype.setOptions = function(options)
+	map-block.OLMap.prototype.setOptions = function(options)
 	{
 		Parent.prototype.setOptions.call(this, options);
 		
@@ -282,63 +282,63 @@ jQuery(function($) {
 	/**
 	 * TODO: Consider moving all these functions to their respective classes, same on google map (DO IT!!! It's very misleading having them here)
 	 */
-	WPGMZA.OLMap.prototype.addMarker = function(marker)
+	map-block.OLMap.prototype.addMarker = function(marker)
 	{
 		this.olMap.addOverlay(marker.overlay);
 		
 		Parent.prototype.addMarker.call(this, marker);
 	}
 	
-	WPGMZA.OLMap.prototype.removeMarker = function(marker)
+	map-block.OLMap.prototype.removeMarker = function(marker)
 	{
 		this.olMap.removeOverlay(marker.overlay);
 		
 		Parent.prototype.removeMarker.call(this, marker);
 	}
 	
-	WPGMZA.OLMap.prototype.addPolygon = function(polygon)
+	map-block.OLMap.prototype.addPolygon = function(polygon)
 	{
 		this.olMap.addLayer(polygon.layer);
 		
 		Parent.prototype.addPolygon.call(this, polygon);
 	}
 	
-	WPGMZA.OLMap.prototype.removePolygon = function(polygon)
+	map-block.OLMap.prototype.removePolygon = function(polygon)
 	{
 		this.olMap.removeLayer(polygon.layer);
 		
 		Parent.prototype.removePolygon.call(this, polygon);
 	}
 	
-	WPGMZA.OLMap.prototype.addPolyline = function(polyline)
+	map-block.OLMap.prototype.addPolyline = function(polyline)
 	{
 		this.olMap.addLayer(polyline.layer);
 		
 		Parent.prototype.addPolyline.call(this, polyline);
 	}
 	
-	WPGMZA.OLMap.prototype.removePolyline = function(polyline)
+	map-block.OLMap.prototype.removePolyline = function(polyline)
 	{
 		this.olMap.removeLayer(polyline.layer);
 		
 		Parent.prototype.removePolyline.call(this, polyline);
 	}
 	
-	WPGMZA.OLMap.prototype.addCircle = function(circle)
+	map-block.OLMap.prototype.addCircle = function(circle)
 	{
 		this.olMap.addLayer(circle.layer);
 		
 		Parent.prototype.addCircle.call(this, circle);
 	}
 	
-	WPGMZA.OLMap.prototype.removeCircle = function(circle)
+	map-block.OLMap.prototype.removeCircle = function(circle)
 	{
 		this.olMap.removeLayer(circle.layer);
 		
 		Parent.prototype.removeCircle.call(this, circle);
 	}
 	
-	WPGMZA.OLMap.prototype.pixelsToLatLng = function(x, y)
+	map-block.OLMap.prototype.pixelsToLatLng = function(x, y)
 	{
 		if(y == undefined)
 		{
@@ -366,7 +366,7 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.OLMap.prototype.latLngToPixels = function(latLng)
+	map-block.OLMap.prototype.latLngToPixels = function(latLng)
 	{
 		var coord = ol.proj.fromLonLat([latLng.lng, latLng.lat]);
 		var pixel = this.olMap.getPixelFromCoordinate(coord);
@@ -383,7 +383,7 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.OLMap.prototype.enableBicycleLayer = function(value)
+	map-block.OLMap.prototype.enableBicycleLayer = function(value)
 	{
 		if(value)
 		{
@@ -405,14 +405,14 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.OLMap.prototype.onElementResized = function(event)
+	map-block.OLMap.prototype.onElementResized = function(event)
 	{
 		this.olMap.updateSize();
 	}
 	
-	WPGMZA.OLMap.prototype.onRightClick = function(event)
+	map-block.OLMap.prototype.onRightClick = function(event)
 	{
-		if($(event.target).closest(".ol-marker, .wpgmza_modern_infowindow, .wpgmza-modern-store-locator").length)
+		if($(event.target).closest(".ol-marker, .map-block_modern_infowindow, .map-block-modern-store-locator").length)
 			return true;
 		
 		var parentOffset = $(this.element).offset();

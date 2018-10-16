@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class Crud implements \IteratorAggregate, \JsonSerializable
 {

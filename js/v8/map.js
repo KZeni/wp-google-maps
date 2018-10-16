@@ -1,7 +1,7 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Map
- * @requires WPGMZA.EventDispatcher
+ * @requires map-block.EventDispatcher
  */
 jQuery(function($) {
 	
@@ -9,13 +9,13 @@ jQuery(function($) {
 	 * Constructor
 	 * @param element to contain map
 	 */
-	WPGMZA.Map = function(element, options)
+	map-block.Map = function(element, options)
 	{
 		var self = this;
 		
-		WPGMZA.assertInstanceOf(this, "Map");
+		map-block.assertInstanceOf(this, "Map");
 		
-		WPGMZA.EventDispatcher.call(this);
+		map-block.EventDispatcher.call(this);
 		
 		if(!(element instanceof HTMLElement))
 			throw new Error("Argument must be a HTMLElement");
@@ -24,9 +24,9 @@ jQuery(function($) {
 		if(!/\d+/.test(this.id))
 			throw new Error("Map ID must be an integer");
 		
-		WPGMZA.maps.push(this);
+		map-block.maps.push(this);
 		this.element = element;
-		this.element.wpgmzaMap = this;
+		this.element.map-blockMap = this;
 		
 		this.engineElement = element;
 		
@@ -38,32 +38,32 @@ jQuery(function($) {
 		this.loadSettings(options);
 	}
 	
-	WPGMZA.Map.prototype = Object.create(WPGMZA.EventDispatcher.prototype);
-	WPGMZA.Map.prototype.constructor = WPGMZA.Map;
+	map-block.Map.prototype = Object.create(map-block.EventDispatcher.prototype);
+	map-block.Map.prototype.constructor = map-block.Map;
 	
-	WPGMZA.Map.getConstructor = function()
+	map-block.Map.getConstructor = function()
 	{
-		switch(WPGMZA.settings.engine)
+		switch(map-block.settings.engine)
 		{
 			case "open-layers":
-				if(WPGMZA.isProVersion())
-					return WPGMZA.OLProMap;
+				if(map-block.isProVersion())
+					return map-block.OLProMap;
 				
-				return WPGMZA.OLMap;
+				return map-block.OLMap;
 				break;
 			
 			default:
-				if(WPGMZA.isProVersion())
-					return WPGMZA.GoogleProMap;
+				if(map-block.isProVersion())
+					return map-block.GoogleProMap;
 				
-				return WPGMZA.GoogleMap;
+				return map-block.GoogleMap;
 				break;
 		}
 	}
 	
-	WPGMZA.Map.createInstance = function(element, options)
+	map-block.Map.createInstance = function(element, options)
 	{
-		var constructor = WPGMZA.Map.getConstructor();
+		var constructor = map-block.Map.getConstructor();
 		return new constructor(element, options);
 	}
 	
@@ -71,9 +71,9 @@ jQuery(function($) {
 	 * Loads the maps settings and sets some defaults
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.loadSettings = function(options)
+	map-block.Map.prototype.loadSettings = function(options)
 	{
-		var settings = new WPGMZA.MapSettings(this.element);
+		var settings = new map-block.MapSettings(this.element);
 		var other_settings = settings.other_settings;
 		
 		delete settings.other_settings;
@@ -90,10 +90,10 @@ jQuery(function($) {
 	}
 	
 	/**
-	 * This override should automatically dispatch a .wpgmza scoped event on the element
+	 * This override should automatically dispatch a .map-block scoped event on the element
 	 * TODO: Implement
 	 */
-	/*WPGMZA.Map.prototype.trigger = function(event)
+	/*map-block.Map.prototype.trigger = function(event)
 	{
 		
 	}*/
@@ -102,7 +102,7 @@ jQuery(function($) {
 	 * Sets options in bulk on map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.setOptions = function(options)
+	map-block.Map.prototype.setOptions = function(options)
 	{
 		for(var name in options)
 			this.settings[name] = options[name];
@@ -125,7 +125,7 @@ jQuery(function($) {
 	 * TODO: Move this to the distance class, or the LatLng class
 	 * @return void
 	 */
-	WPGMZA.Map.getGeographicDistance = function(lat1, lon1, lat2, lon2)
+	map-block.Map.getGeographicDistance = function(lat1, lon1, lat2, lon2)
 	{
 		var dLat = deg2rad(lat2-lat1);
 		var dLon = deg2rad(lon2-lon1); 
@@ -141,7 +141,7 @@ jQuery(function($) {
 		return d;
 	}
 	
-	WPGMZA.Map.prototype.setCenter = function(latLng)
+	map-block.Map.prototype.setCenter = function(latLng)
 	{
 		if(!("lat" in latLng && "lng" in latLng))
 			throw new Error("Argument is not an object with lat and lng");
@@ -151,7 +151,7 @@ jQuery(function($) {
 	 * Sets the dimensions of the map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.setDimensions = function(width, height)
+	map-block.Map.prototype.setDimensions = function(width, height)
 	{
 		$(this.element).css({
 			width: width
@@ -167,10 +167,10 @@ jQuery(function($) {
 	 * Adds the specified marker to this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.addMarker = function(marker)
+	map-block.Map.prototype.addMarker = function(marker)
 	{
-		if(!(marker instanceof WPGMZA.Marker))
-			throw new Error("Argument must be an instance of WPGMZA.Marker");
+		if(!(marker instanceof map-block.Marker))
+			throw new Error("Argument must be an instance of map-block.Marker");
 		
 		marker.map = this;
 		marker.parent = this;
@@ -184,10 +184,10 @@ jQuery(function($) {
 	 * Removes the specified marker from this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.removeMarker = function(marker)
+	map-block.Map.prototype.removeMarker = function(marker)
 	{
-		if(!(marker instanceof WPGMZA.Marker))
-			throw new Error("Argument must be an instance of WPGMZA.Marker");
+		if(!(marker instanceof map-block.Marker))
+			throw new Error("Argument must be an instance of map-block.Marker");
 		
 		if(marker.map !== this)
 			throw new Error("Wrong map error");
@@ -200,7 +200,7 @@ jQuery(function($) {
 		marker.dispatchEvent({type: "removed"});
 	}
 	
-	WPGMZA.Map.prototype.getMarkerByID = function(id)
+	map-block.Map.prototype.getMarkerByID = function(id)
 	{
 		for(var i = 0; i < this.markers.length; i++)
 		{
@@ -211,7 +211,7 @@ jQuery(function($) {
 		return null;
 	}
 	
-	WPGMZA.Map.prototype.removeMarkerByID = function(id)
+	map-block.Map.prototype.removeMarkerByID = function(id)
 	{
 		var marker = this.getMarkerByID(id);
 		
@@ -225,10 +225,10 @@ jQuery(function($) {
 	 * Adds the specified polygon to this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.addPolygon = function(polygon)
+	map-block.Map.prototype.addPolygon = function(polygon)
 	{
-		if(!(polygon instanceof WPGMZA.Polygon))
-			throw new Error("Argument must be an instance of WPGMZA.Polygon");
+		if(!(polygon instanceof map-block.Polygon))
+			throw new Error("Argument must be an instance of map-block.Polygon");
 		
 		polygon.map = this;
 		
@@ -240,10 +240,10 @@ jQuery(function($) {
 	 * Removes the specified polygon from this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.deletePolygon = function(polygon)
+	map-block.Map.prototype.deletePolygon = function(polygon)
 	{
-		if(!(polygon instanceof WPGMZA.Polygon))
-			throw new Error("Argument must be an instance of WPGMZA.Polygon");
+		if(!(polygon instanceof map-block.Polygon))
+			throw new Error("Argument must be an instance of map-block.Polygon");
 		
 		if(polygon.map !== this)
 			throw new Error("Wrong map error");
@@ -254,7 +254,7 @@ jQuery(function($) {
 		this.dispatchEvent({type: "polygonremoved", polygon: polygon});
 	}
 	
-	WPGMZA.Map.prototype.getPolygonByID = function(id)
+	map-block.Map.prototype.getPolygonByID = function(id)
 	{
 		for(var i = 0; i < this.polygons.length; i++)
 		{
@@ -265,7 +265,7 @@ jQuery(function($) {
 		return null;
 	}
 	
-	WPGMZA.Map.prototype.deletePolygonByID = function(id)
+	map-block.Map.prototype.deletePolygonByID = function(id)
 	{
 		var polygon = this.getPolygonByID(id);
 		
@@ -279,7 +279,7 @@ jQuery(function($) {
 	 * Gets a polyline by ID
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.getPolylineByID = function(id)
+	map-block.Map.prototype.getPolylineByID = function(id)
 	{
 		for(var i = 0; i < this.polylines.length; i++)
 		{
@@ -294,10 +294,10 @@ jQuery(function($) {
 	 * Adds the specified polyline to this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.addPolyline = function(polyline)
+	map-block.Map.prototype.addPolyline = function(polyline)
 	{
-		if(!(polyline instanceof WPGMZA.Polyline))
-			throw new Error("Argument must be an instance of WPGMZA.Polyline");
+		if(!(polyline instanceof map-block.Polyline))
+			throw new Error("Argument must be an instance of map-block.Polyline");
 		
 		polyline.map = this;
 		
@@ -309,10 +309,10 @@ jQuery(function($) {
 	 * Removes the specified polyline from this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.deletePolyline = function(polyline)
+	map-block.Map.prototype.deletePolyline = function(polyline)
 	{
-		if(!(polyline instanceof WPGMZA.Polyline))
-			throw new Error("Argument must be an instance of WPGMZA.Polyline");
+		if(!(polyline instanceof map-block.Polyline))
+			throw new Error("Argument must be an instance of map-block.Polyline");
 		
 		if(polyline.map !== this)
 			throw new Error("Wrong map error");
@@ -323,7 +323,7 @@ jQuery(function($) {
 		this.dispatchEvent({type: "polylineremoved", polyline: polyline});
 	}
 	
-	WPGMZA.Map.prototype.getPolylineByID = function(id)
+	map-block.Map.prototype.getPolylineByID = function(id)
 	{
 		for(var i = 0; i < this.polylines.length; i++)
 		{
@@ -334,7 +334,7 @@ jQuery(function($) {
 		return null;
 	}
 	
-	WPGMZA.Map.prototype.deletePolylineByID = function(id)
+	map-block.Map.prototype.deletePolylineByID = function(id)
 	{
 		var polyline = this.getPolylineByID(id);
 		
@@ -348,10 +348,10 @@ jQuery(function($) {
 	 * Adds the specified circle to this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.addCircle = function(circle)
+	map-block.Map.prototype.addCircle = function(circle)
 	{
-		if(!(circle instanceof WPGMZA.Circle))
-			throw new Error("Argument must be an instance of WPGMZA.Circle");
+		if(!(circle instanceof map-block.Circle))
+			throw new Error("Argument must be an instance of map-block.Circle");
 		
 		circle.map = this;
 		
@@ -363,10 +363,10 @@ jQuery(function($) {
 	 * Removes the specified circle from this map
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.removeCircle = function(circle)
+	map-block.Map.prototype.removeCircle = function(circle)
 	{
-		if(!(circle instanceof WPGMZA.Circle))
-			throw new Error("Argument must be an instance of WPGMZA.Circle");
+		if(!(circle instanceof map-block.Circle))
+			throw new Error("Argument must be an instance of map-block.Circle");
 		
 		if(circle.map !== this)
 			throw new Error("Wrong map error");
@@ -377,7 +377,7 @@ jQuery(function($) {
 		this.dispatchEvent({type: "circleremoved", circle: circle});
 	}
 	
-	WPGMZA.Map.prototype.getCircleByID = function(id)
+	map-block.Map.prototype.getCircleByID = function(id)
 	{
 		for(var i = 0; i < this.circles.length; i++)
 		{
@@ -388,7 +388,7 @@ jQuery(function($) {
 		return null;
 	}
 	
-	WPGMZA.Map.prototype.deleteCircleByID = function(id)
+	map-block.Map.prototype.deleteCircleByID = function(id)
 	{
 		var circle = this.getCircleByID(id);
 		
@@ -402,7 +402,7 @@ jQuery(function($) {
 	 * Nudges the map viewport by the given pixel coordinates
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.nudge = function(x, y)
+	map-block.Map.prototype.nudge = function(x, y)
 	{
 		var pixels = this.latLngToPixels(this.getCenter());
 		
@@ -421,7 +421,7 @@ jQuery(function($) {
 	 * Triggered when the window resizes
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.onWindowResize = function(event)
+	map-block.Map.prototype.onWindowResize = function(event)
 	{
 		
 	}
@@ -430,12 +430,12 @@ jQuery(function($) {
 	 * Listener for when the engine map div is resized
 	 * @return void
 	 */
-	WPGMZA.Map.prototype.onElementResized = function(event)
+	map-block.Map.prototype.onElementResized = function(event)
 	{
 		
 	}
 	
-	WPGMZA.Map.prototype.onBoundsChanged = function(event)
+	map-block.Map.prototype.onBoundsChanged = function(event)
 	{
 		// Native events
 		this.trigger("boundschanged");
@@ -444,7 +444,7 @@ jQuery(function($) {
 		this.trigger("bounds_changed");
 	}
 	
-	WPGMZA.Map.prototype.onIdle = function(event)
+	map-block.Map.prototype.onIdle = function(event)
 	{
 		$(this.element).trigger("idle");
 	}
@@ -453,11 +453,11 @@ jQuery(function($) {
 		function createMaps()
 		{
 			// TODO: Test that this works for maps off screen (which borks google)
-			$(".wpgmza-map").each(function(index, el) {
-				if(!el.wpgmzaMap)
+			$(".map-block-map").each(function(index, el) {
+				if(!el.map-blockMap)
 				{
-					WPGMZA.runCatchableTask(function() {
-						WPGMZA.Map.createInstance(el);
+					map-block.runCatchableTask(function() {
+						map-block.Map.createInstance(el);
 					}, el);
 				}
 			});

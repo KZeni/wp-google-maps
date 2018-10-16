@@ -1,6 +1,6 @@
 jQuery(function($) {
 
-	var mapid = jQuery("#wpgmza_id").val();
+	var mapid = jQuery("#map-block_id").val();
 
 	var data = {
 		action: 'track_usage',

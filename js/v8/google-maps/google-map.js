@@ -1,8 +1,8 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleMap
- * @requires WPGMZA.Map
- * @pro-requires WPGMZA.ProMap
+ * @requires map-block.Map
+ * @pro-requires map-block.ProMap
  */
 jQuery(function($) {
 	var Parent;
@@ -11,7 +11,7 @@ jQuery(function($) {
 	 * Constructor
 	 * @param element to contain the map
 	 */
-	WPGMZA.GoogleMap = function(element, options)
+	map-block.GoogleMap = function(element, options)
 	{
 		var self = this;
 		
@@ -19,7 +19,7 @@ jQuery(function($) {
 		
 		if(!window.google)
 		{
-			var status = WPGMZA.googleAPIStatus;
+			var status = map-block.googleAPIStatus;
 			var message = "Google API not loaded";
 			
 			if(status && status.message)
@@ -30,7 +30,7 @@ jQuery(function($) {
 				return;
 			}
 			
-			$(element).html("<div class='notice notice-error'><p>" + WPGMZA.localized_strings.google_api_not_loaded + "<pre>" + message + "</pre></p></div>");
+			$(element).html("<div class='notice notice-error'><p>" + map-block.localized_strings.google_api_not_loaded + "<pre>" + message + "</pre></p></div>");
 			
 			throw new Error(message);
 		}
@@ -41,21 +41,21 @@ jQuery(function($) {
 			this.setOptions(options);
 
 		google.maps.event.addListener(this.googleMap, "click", function(event) {
-			var wpgmzaEvent = new WPGMZA.Event("click");
-			wpgmzaEvent.latLng = {
+			var map-blockEvent = new map-block.Event("click");
+			map-blockEvent.latLng = {
 				lat: event.latLng.lat(),
 				lng: event.latLng.lng()
 			};
-			self.dispatchEvent(wpgmzaEvent);
+			self.dispatchEvent(map-blockEvent);
 		});
 		
 		google.maps.event.addListener(this.googleMap, "rightclick", function(event) {
-			var wpgmzaEvent = new WPGMZA.Event("rightclick");
-			wpgmzaEvent.latLng = {
+			var map-blockEvent = new map-block.Event("rightclick");
+			map-blockEvent.latLng = {
 				lat: event.latLng.lat(),
 				lng: event.latLng.lng()
 			};
-			self.dispatchEvent(wpgmzaEvent);
+			self.dispatchEvent(map-blockEvent);
 		});
 		
 		google.maps.event.addListener(this.googleMap, "dragend", function(event) {
@@ -73,31 +73,31 @@ jQuery(function($) {
 		});
 		
 		// Dispatch event
-		if(!WPGMZA.isProVersion())
+		if(!map-block.isProVersion())
 		{
 			this.dispatchEvent("created");
-			WPGMZA.events.dispatchEvent({type: "mapcreated", map: this});
+			map-block.events.dispatchEvent({type: "mapcreated", map: this});
 		}
 	}
 	
 	// If we're running the Pro version, inherit from ProMap, otherwise, inherit from Map
-	if(WPGMZA.isProVersion())
+	if(map-block.isProVersion())
 	{
-		Parent = WPGMZA.ProMap;
-		WPGMZA.GoogleMap.prototype = Object.create(WPGMZA.ProMap.prototype);
+		Parent = map-block.ProMap;
+		map-block.GoogleMap.prototype = Object.create(map-block.ProMap.prototype);
 	}
 	else
 	{
-		Parent = WPGMZA.Map;
-		WPGMZA.GoogleMap.prototype = Object.create(WPGMZA.Map.prototype);
+		Parent = map-block.Map;
+		map-block.GoogleMap.prototype = Object.create(map-block.Map.prototype);
 	}
-	WPGMZA.GoogleMap.prototype.constructor = WPGMZA.GoogleMap;
+	map-block.GoogleMap.prototype.constructor = map-block.GoogleMap;
 	
 	/**
 	 * Creates the Google Maps map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.loadGoogleMap = function()
+	map-block.GoogleMap.prototype.loadGoogleMap = function()
 	{
 		var self = this;
 		var options = this.settings.toGoogleMapsOptions();
@@ -116,17 +116,17 @@ jQuery(function($) {
 		this.showPointsOfInterest(this.settings.show_points_of_interest);
 		
 		// Move the loading wheel into the map element (it has to live outside in the HTML file because it'll be overwritten by Google otherwise)
-		$(this.engineElement).append($(this.element).find(".wpgmza-loader"));
+		$(this.engineElement).append($(this.element).find(".map-block-loader"));
 	}
 	
-	WPGMZA.GoogleMap.prototype.setOptions = function(options)
+	map-block.GoogleMap.prototype.setOptions = function(options)
 	{
 		Parent.prototype.setOptions.call(this, options);
 		
 		this.googleMap.setOptions(this.settings.toGoogleMapsOptions());
 		
 		var clone = $.extend({}, options);
-		if(clone.center instanceof WPGMZA.LatLng || typeof clone.center == "object")
+		if(clone.center instanceof map-block.LatLng || typeof clone.center == "object")
 			clone.center = {
 				lat: parseFloat(clone.center.lat),
 				lng: parseFloat(clone.center.lng)
@@ -139,7 +139,7 @@ jQuery(function($) {
 	 * Adds the specified marker to this map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.addMarker = function(marker)
+	map-block.GoogleMap.prototype.addMarker = function(marker)
 	{
 		marker.googleMarker.setMap(this.googleMap);
 		
@@ -150,7 +150,7 @@ jQuery(function($) {
 	 * Removes the specified marker from this map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.removeMarker = function(marker)
+	map-block.GoogleMap.prototype.removeMarker = function(marker)
 	{
 		marker.googleMarker.setMap(null);
 		
@@ -161,7 +161,7 @@ jQuery(function($) {
 	 * Adds the specified polygon to this map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.addPolygon = function(polygon)
+	map-block.GoogleMap.prototype.addPolygon = function(polygon)
 	{
 		polygon.googlePolygon.setMap(this.googleMap);
 		
@@ -172,7 +172,7 @@ jQuery(function($) {
 	 * Removes the specified polygon from this map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.removePolygon = function(polygon)
+	map-block.GoogleMap.prototype.removePolygon = function(polygon)
 	{
 		polygon.googlePolygon.setMap(null);
 		
@@ -183,7 +183,7 @@ jQuery(function($) {
 	 * Adds the specified polyline to this map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.addPolyline = function(polyline)
+	map-block.GoogleMap.prototype.addPolyline = function(polyline)
 	{
 		polyline.googlePolyline.setMap(this.googleMap);
 		
@@ -194,21 +194,21 @@ jQuery(function($) {
 	 * Removes the specified polygon from this map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.removePolyline = function(polyline)
+	map-block.GoogleMap.prototype.removePolyline = function(polyline)
 	{
 		polyline.googlePolyline.setMap(null);
 		
 		Parent.prototype.removePolyline.call(this, polyline);
 	}
 	
-	WPGMZA.GoogleMap.prototype.addCircle = function(circle)
+	map-block.GoogleMap.prototype.addCircle = function(circle)
 	{
 		circle.googleCircle.setMap(this.googleMap);
 		
 		Parent.prototype.addCircle.call(this, circle);
 	}
 	
-	WPGMZA.GoogleMap.prototype.removeCircle = function(circle)
+	map-block.GoogleMap.prototype.removeCircle = function(circle)
 	{
 		circle.googleCircle.setMap(null);
 		
@@ -219,7 +219,7 @@ jQuery(function($) {
 	 * Delegate for google maps getCenter
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.getCenter = function()
+	map-block.GoogleMap.prototype.getCenter = function()
 	{
 		var latLng = this.googleMap.getCenter();
 		
@@ -233,11 +233,11 @@ jQuery(function($) {
 	 * Delegate for google maps setCenter
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.setCenter = function(latLng)
+	map-block.GoogleMap.prototype.setCenter = function(latLng)
 	{
-		WPGMZA.Map.prototype.setCenter.call(this, latLng);
+		map-block.Map.prototype.setCenter.call(this, latLng);
 		
-		if(latLng instanceof WPGMZA.LatLng)
+		if(latLng instanceof map-block.LatLng)
 			this.googleMap.setCenter({
 				lat: latLng.lat,
 				lng: latLng.lng
@@ -250,9 +250,9 @@ jQuery(function($) {
 	 * Delegate for google maps setPan
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.panTo = function(latLng)
+	map-block.GoogleMap.prototype.panTo = function(latLng)
 	{
-		if(latLng instanceof WPGMZA.LatLng)
+		if(latLng instanceof map-block.LatLng)
 			this.googleMap.panTo({
 				lat: latLng.lat,
 				lng: latLng.lng
@@ -265,7 +265,7 @@ jQuery(function($) {
 	 * Delegate for google maps getCenter
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.getZoom = function()
+	map-block.GoogleMap.prototype.getZoom = function()
 	{
 		return this.googleMap.getZoom();
 	}
@@ -274,7 +274,7 @@ jQuery(function($) {
 	 * Delegate for google maps getZoom
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.setZoom = function(value)
+	map-block.GoogleMap.prototype.setZoom = function(value)
 	{
 		if(isNaN(value))
 			throw new Error("Value must not be NaN");
@@ -286,7 +286,7 @@ jQuery(function($) {
 	 * Gets the bounds
 	 * @return object
 	 */
-	WPGMZA.GoogleMap.prototype.getBounds = function()
+	map-block.GoogleMap.prototype.getBounds = function()
 	{
 		var bounds = this.googleMap.getBounds();
 		var northEast = bounds.getNorthEast();
@@ -308,11 +308,11 @@ jQuery(function($) {
 	 * Fit to given boundaries
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.fitBounds = function(southWest, northEast)
+	map-block.GoogleMap.prototype.fitBounds = function(southWest, northEast)
 	{
-		if(southWest instanceof WPGMZA.LatLng)
+		if(southWest instanceof map-block.LatLng)
 			southWest = {lat: southWest.lat, lng: southWest.lng};
-		if(northEast instanceof WPGMZA.LatLng)
+		if(northEast instanceof map-block.LatLng)
 			northEast = {lat: northEast.lat, lng: northEast.lng};
 		
 		this.googleMap.fitBounds(southWest, northEast);
@@ -322,7 +322,7 @@ jQuery(function($) {
 	 * Fit the map boundaries to visible markers
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.fitBoundsToVisibleMarkers = function()
+	map-block.GoogleMap.prototype.fitBoundsToVisibleMarkers = function()
 	{
 		var bounds = new google.maps.LatLngBounds();
 		for(var i = 0; i < this.markers.length; i++)
@@ -338,7 +338,7 @@ jQuery(function($) {
 	 * @param enable boolean, enable or not
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.enableBicycleLayer = function(enable)
+	map-block.GoogleMap.prototype.enableBicycleLayer = function(enable)
 	{
 		if(!this.bicycleLayer)
 			this.bicycleLayer = new google.maps.BicyclingLayer();
@@ -353,7 +353,7 @@ jQuery(function($) {
 	 * @param enable boolean, enable or not
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.enableTrafficLayer = function(enable)
+	map-block.GoogleMap.prototype.enableTrafficLayer = function(enable)
 	{
 		if(!this.trafficLayer)
 			this.trafficLayer = new google.maps.TrafficLayer();
@@ -368,7 +368,7 @@ jQuery(function($) {
 	 * @param enable boolean, enable or not
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.enablePublicTransportLayer = function(enable)
+	map-block.GoogleMap.prototype.enablePublicTransportLayer = function(enable)
 	{
 		if(!this.publicTransportLayer)
 			this.publicTransportLayer = new google.maps.TransitLayer();
@@ -383,7 +383,7 @@ jQuery(function($) {
 	 * @param show boolean, enable or not
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.showPointsOfInterest = function(show)
+	map-block.GoogleMap.prototype.showPointsOfInterest = function(show)
 	{
 		// TODO: This will bug the front end because there is textarea with theme data
 		var text = $("textarea[name='theme_data']").val();
@@ -409,7 +409,7 @@ jQuery(function($) {
 	 * Gets the min zoom of the map
 	 * @return int
 	 */
-	WPGMZA.GoogleMap.prototype.getMinZoom = function()
+	map-block.GoogleMap.prototype.getMinZoom = function()
 	{
 		return parseInt(this.settings.min_zoom);
 	}
@@ -418,7 +418,7 @@ jQuery(function($) {
 	 * Sets the min zoom of the map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.setMinZoom = function(value)
+	map-block.GoogleMap.prototype.setMinZoom = function(value)
 	{
 		this.googleMap.setOptions({
 			minZoom: value,
@@ -430,7 +430,7 @@ jQuery(function($) {
 	 * Gets the min zoom of the map
 	 * @return int
 	 */
-	WPGMZA.GoogleMap.prototype.getMaxZoom = function()
+	map-block.GoogleMap.prototype.getMaxZoom = function()
 	{
 		return parseInt(this.settings.max_zoom);
 	}
@@ -439,7 +439,7 @@ jQuery(function($) {
 	 * Sets the min zoom of the map
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.setMaxZoom = function(value)
+	map-block.GoogleMap.prototype.setMaxZoom = function(value)
 	{
 		this.googleMap.setOptions({
 			minZoom: this.getMinZoom(),
@@ -447,7 +447,7 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.GoogleMap.prototype.latLngToPixels = function(latLng)
+	map-block.GoogleMap.prototype.latLngToPixels = function(latLng)
 	{
 		var map = this.googleMap;
 		var nativeLatLng = new google.maps.LatLng({
@@ -464,7 +464,7 @@ jQuery(function($) {
 		};
 	}
 	
-	WPGMZA.GoogleMap.prototype.pixelsToLatLng = function(x, y)
+	map-block.GoogleMap.prototype.pixelsToLatLng = function(x, y)
 	{
 		if(y == undefined)
 		{
@@ -493,7 +493,7 @@ jQuery(function($) {
 	 * Handle the map element resizing
 	 * @return void
 	 */
-	WPGMZA.GoogleMap.prototype.onElementResized = function(event)
+	map-block.GoogleMap.prototype.onElementResized = function(event)
 	{
 		if(!this.googleMap)
 			return;

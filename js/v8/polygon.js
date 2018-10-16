@@ -1,53 +1,53 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Polygon
- * @requires WPGMZA.MapObject
+ * @requires map-block.MapObject
  */
 jQuery(function($) {
-	WPGMZA.Polygon = function(row, enginePolygon)
+	map-block.Polygon = function(row, enginePolygon)
 	{
 		var self = this;
 		
-		WPGMZA.assertInstanceOf(this, "Polygon");
+		map-block.assertInstanceOf(this, "Polygon");
 		
 		this.paths = null;
 		this.title = null;
 		this.name = null;
 		this.link = null;
 		
-		WPGMZA.MapObject.apply(this, arguments);
+		map-block.MapObject.apply(this, arguments);
 	}
 	
-	WPGMZA.Polygon.prototype = Object.create(WPGMZA.MapObject.prototype);
-	WPGMZA.Polygon.prototype.constructor = WPGMZA.Polygon;
+	map-block.Polygon.prototype = Object.create(map-block.MapObject.prototype);
+	map-block.Polygon.prototype.constructor = map-block.Polygon;
 	
-	WPGMZA.Polygon.getConstructor = function()
+	map-block.Polygon.getConstructor = function()
 	{
-		switch(WPGMZA.settings.engine)
+		switch(map-block.settings.engine)
 		{
 			case "open-layers":
-				if(WPGMZA.isProVersion())
-					return WPGMZA.OLProPolygon;
-				return WPGMZA.OLPolygon;
+				if(map-block.isProVersion())
+					return map-block.OLProPolygon;
+				return map-block.OLPolygon;
 				break;
 			
 			default:
-				if(WPGMZA.isProVersion())
-					return WPGMZA.GoogleProPolygon;
-				return WPGMZA.GooglePolygon;
+				if(map-block.isProVersion())
+					return map-block.GoogleProPolygon;
+				return map-block.GooglePolygon;
 				break;
 		}
 	}
 	
-	WPGMZA.Polygon.createInstance = function(row, engineObject)
+	map-block.Polygon.createInstance = function(row, engineObject)
 	{
-		var constructor = WPGMZA.Polygon.getConstructor();
+		var constructor = map-block.Polygon.getConstructor();
 		return new constructor(row, engineObject);
 	}
 	
-	WPGMZA.Polygon.prototype.toJSON = function()
+	map-block.Polygon.prototype.toJSON = function()
 	{
-		var result = WPGMZA.MapObject.prototype.toJSON.call(this);
+		var result = map-block.MapObject.prototype.toJSON.call(this);
 		
 		$.extend(result, {
 			name:		this.name,

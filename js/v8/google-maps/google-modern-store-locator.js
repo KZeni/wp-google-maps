@@ -1,17 +1,17 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleModernStoreLocator
- * @requires WPGMZA.ModernStoreLocator
+ * @requires map-block.ModernStoreLocator
  */
 jQuery(function($) {
 	
-	WPGMZA.GoogleModernStoreLocator = function(map_id)
+	map-block.GoogleModernStoreLocator = function(map_id)
 	{
-		WPGMZA.ModernStoreLocator.call(this, map_id);
+		map-block.ModernStoreLocator.call(this, map_id);
 		
 		var googleMap;
 		
-		if(WPGMZA.isProVersion())
+		if(map-block.isProVersion())
 			googleMap = MYMAP[map_id].map.googleMap;
 		else
 			googleMap = MYMAP.map.googleMap;
@@ -19,7 +19,7 @@ jQuery(function($) {
 		googleMap.controls[google.maps.ControlPosition.TOP_CENTER].push(this.element);
 	}
 	
-	WPGMZA.GoogleModernStoreLocator.prototype = Object.create(WPGMZA.ModernStoreLocator.prototype);
-	WPGMZA.GoogleModernStoreLocator.prototype.constructor = WPGMZA.GoogleModernStoreLocator;
+	map-block.GoogleModernStoreLocator.prototype = Object.create(map-block.ModernStoreLocator.prototype);
+	map-block.GoogleModernStoreLocator.prototype.constructor = map-block.GoogleModernStoreLocator;
 	
 });

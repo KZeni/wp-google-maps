@@ -1,64 +1,64 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Circle
- * @requires WPGMZA.MapObject
+ * @requires map-block.MapObject
  */
 jQuery(function($) {
 	
-	var Parent = WPGMZA.MapObject;
+	var Parent = map-block.MapObject;
 	
 	/**
 	 * @class Circle
 	 * @summary Represents a generic circle. <b>Please do not instantiate this object directly, use createInstance</b>
-	 * @return {WPGMZA.Circle}
+	 * @return {map-block.Circle}
 	 */
-	WPGMZA.Circle = function(options, engineCircle)
+	map-block.Circle = function(options, engineCircle)
 	{
 		var self = this;
 		
-		WPGMZA.assertInstanceOf(this, "Circle");
+		map-block.assertInstanceOf(this, "Circle");
 		
-		this.center = new WPGMZA.LatLng();
+		this.center = new map-block.LatLng();
 		this.radius = 100;
 		
 		Parent.apply(this, arguments);
 	}
 	
-	WPGMZA.Circle.prototype = Object.create(Parent.prototype);
-	WPGMZA.Circle.prototype.constructor = WPGMZA.Circle;
+	map-block.Circle.prototype = Object.create(Parent.prototype);
+	map-block.Circle.prototype.constructor = map-block.Circle;
 	
 	/**
 	 * @function createInstance
 	 * @summary Creates an instance of a circle, <b>please always use this function rather than calling the constructor directly</b>
 	 * @param {object} options Options for the object (optional)
 	 */
-	WPGMZA.Circle.createInstance = function(options)
+	map-block.Circle.createInstance = function(options)
 	{
 		var constructor;
 		
-		if(WPGMZA.settings.engine == "google-maps")
-			constructor = WPGMZA.GoogleCircle;
+		if(map-block.settings.engine == "google-maps")
+			constructor = map-block.GoogleCircle;
 		else
-			constructor = WPGMZA.OLCircle;
+			constructor = map-block.OLCircle;
 		
 		return new constructor(options);
 	}
 	
 	/**
 	 * @function getCenter
-	 * @returns {WPGMZA.LatLng}
+	 * @returns {map-block.LatLng}
 	 */
-	WPGMZA.Circle.prototype.getCenter = function()
+	map-block.Circle.prototype.getCenter = function()
 	{
 		return this.center.clone();
 	}
 	
 	/**
 	 * @function setCenter
-	 * @param {object|WPGMZA.LatLng} latLng either a literal or as a WPGMZA.LatLng
+	 * @param {object|map-block.LatLng} latLng either a literal or as a map-block.LatLng
 	 * @returns {void}
 	 */
-	WPGMZA.Circle.prototype.setCenter = function(latLng)
+	map-block.Circle.prototype.setCenter = function(latLng)
 	{
 		this.center.lat = latLng.lat;
 		this.center.lng = latLng.lng;
@@ -67,9 +67,9 @@ jQuery(function($) {
 	/**
 	 * @function getRadius
 	 * @summary Returns the circles radius in kilometers
-	 * @returns {WPGMZA.LatLng}
+	 * @returns {map-block.LatLng}
 	 */
-	WPGMZA.Circle.prototype.getRadius = function()
+	map-block.Circle.prototype.getRadius = function()
 	{
 		return this.radius;
 	}
@@ -79,7 +79,7 @@ jQuery(function($) {
 	 * @param {number} The radius
 	 * @returns {void}
 	 */
-	WPGMZA.Circle.prototype.setRadius = function(radius)
+	map-block.Circle.prototype.setRadius = function(radius)
 	{
 		this.radius = radius;
 	}
@@ -87,20 +87,20 @@ jQuery(function($) {
 	/**
 	 * @function getMap
 	 * @summary Returns the map that this circle is being displayed on
-	 * @return {WPGMZA.Map}
+	 * @return {map-block.Map}
 	 */
-	WPGMZA.Circle.prototype.getMap = function()
+	map-block.Circle.prototype.getMap = function()
 	{
 		return this.map;
 	}
 	
 	/**
 	 * @function setMap
-	 * @param {WPGMZA.Map} The target map
+	 * @param {map-block.Map} The target map
 	 * @summary Puts this circle on a map
 	 * @return {void}
 	 */
-	WPGMZA.Circle.prototype.setMap = function(map)
+	map-block.Circle.prototype.setMap = function(map)
 	{
 		if(this.map)
 			this.map.removeCircle(this);

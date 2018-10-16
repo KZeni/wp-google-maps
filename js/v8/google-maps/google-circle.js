@@ -1,15 +1,15 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleCircle
- * @requires WPGMZA.Circle
+ * @requires map-block.Circle
  */
 jQuery(function($) {
 	
-	WPGMZA.GoogleCircle = function(options, googleCircle)
+	map-block.GoogleCircle = function(options, googleCircle)
 	{
 		var self = this;
 		
-		WPGMZA.Circle.call(this, options, googleCircle);
+		map-block.Circle.call(this, options, googleCircle);
 		
 		if(googleCircle)
 		{
@@ -18,7 +18,7 @@ jQuery(function($) {
 		else
 		{
 			this.googleCircle = new google.maps.Circle();
-			this.googleCircle.wpgmzaCircle = this;
+			this.googleCircle.map-blockCircle = this;
 		}
 		
 		google.maps.event.addListener(this.googleCircle, "click", function() {
@@ -46,7 +46,7 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.GoogleCircle.prototype = Object.create(WPGMZA.Circle.prototype);
-	WPGMZA.GoogleCircle.prototype.constructor = WPGMZA.GoogleCircle;
+	map-block.GoogleCircle.prototype = Object.create(map-block.Circle.prototype);
+	map-block.GoogleCircle.prototype.constructor = map-block.GoogleCircle;
 	
 });

@@ -1,14 +1,14 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLPolygon
- * @requires WPGMZA.Polygon
- * @pro-requires WPGMZA.ProPolygon
+ * @requires map-block.Polygon
+ * @pro-requires map-block.ProPolygon
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.OLPolygon = function(row, olFeature)
+	map-block.OLPolygon = function(row, olFeature)
 	{
 		var self = this;
 		
@@ -50,36 +50,36 @@ jQuery(function($) {
 		});
 		
 		this.layer.getSource().getFeatures()[0].setProperties({
-			wpgmzaPolygon: this
+			map-blockPolygon: this
 		});
 	}
 	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProPolygon;
+	if(map-block.isProVersion())
+		Parent = map-block.ProPolygon;
 	else
-		Parent = WPGMZA.Polygon;
+		Parent = map-block.Polygon;
 	
-	WPGMZA.OLPolygon.prototype = Object.create(Parent.prototype);
-	WPGMZA.OLPolygon.prototype.constructor = WPGMZA.OLPolygon;
+	map-block.OLPolygon.prototype = Object.create(Parent.prototype);
+	map-block.OLPolygon.prototype.constructor = map-block.OLPolygon;
 
-	WPGMZA.OLPolygon.prototype.getStyleFromSettings = function()
+	map-block.OLPolygon.prototype.getStyleFromSettings = function()
 	{
 		var params = {};
 				
 		if(this.settings.strokeOpacity)
 			params.stroke = new ol.style.Stroke({
-				color: WPGMZA.hexOpacityToRGBA(this.settings.strokeColor, this.settings.strokeOpacity)
+				color: map-block.hexOpacityToRGBA(this.settings.strokeColor, this.settings.strokeOpacity)
 			});
 		
 		if(this.settings.fillOpacity)
 			params.fill = new ol.style.Fill({
-				color: WPGMZA.hexOpacityToRGBA(this.settings.fillColor, this.settings.fillOpacity)
+				color: map-block.hexOpacityToRGBA(this.settings.fillColor, this.settings.fillOpacity)
 			});
 			
 		return params;
 	}
 	
-	WPGMZA.OLPolygon.prototype.updateStyleFromSettings = function()
+	map-block.OLPolygon.prototype.updateStyleFromSettings = function()
 	{
 		// Re-create the style - working on it directly doesn't cause a re-render
 		var params = this.getStyleFromSettings();
@@ -87,12 +87,12 @@ jQuery(function($) {
 		this.layer.setStyle(this.olStyle);
 	}
 	
-	WPGMZA.OLPolygon.prototype.setEditable = function(editable)
+	map-block.OLPolygon.prototype.setEditable = function(editable)
 	{
 		
 	}
 	
-	WPGMZA.OLPolygon.prototype.toJSON = function()
+	map-block.OLPolygon.prototype.toJSON = function()
 	{
 		var result = Parent.prototype.toJSON.call(this);
 		var coordinates = this.olFeature.getGeometry().getCoordinates()[0];

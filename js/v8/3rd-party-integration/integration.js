@@ -1,11 +1,11 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Integration
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
-	WPGMZA.Integration = {};
-	WPGMZA.integrationModules = {};
+	map-block.Integration = {};
+	map-block.integrationModules = {};
 	
 });

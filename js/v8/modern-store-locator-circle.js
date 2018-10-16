@@ -1,7 +1,7 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module ModernStoreLocatorCircle
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
@@ -9,11 +9,11 @@ jQuery(function($) {
 	 * This module is the modern store locator circle
 	 * @constructor
 	 */
-	WPGMZA.ModernStoreLocatorCircle = function(map_id, settings) {
+	map-block.ModernStoreLocatorCircle = function(map_id, settings) {
 		var self = this;
 		var map;
 		
-		if(WPGMZA.isProVersion())
+		if(map-block.isProVersion())
 			map = this.map = MYMAP[map_id].map;
 		else
 			map = this.map = MYMAP.map;
@@ -28,7 +28,7 @@ jQuery(function($) {
 		this.initCanvasLayer();
 		
 		this.settings = {
-			center: new WPGMZA.LatLng(0, 0),
+			center: new map-block.LatLng(0, 0),
 			radius: 1,
 			color: "#63AFF2",
 			
@@ -62,28 +62,28 @@ jQuery(function($) {
 			this.setOptions(settings);
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.createInstance = function(map, settings) {
+	map-block.ModernStoreLocatorCircle.createInstance = function(map, settings) {
 		
-		if(WPGMZA.settings.engine == "google-maps")
-			return new WPGMZA.GoogleModernStoreLocatorCircle(map, settings);
+		if(map-block.settings.engine == "google-maps")
+			return new map-block.GoogleModernStoreLocatorCircle(map, settings);
 		else
-			return new WPGMZA.OLModernStoreLocatorCircle(map, settings);
+			return new map-block.OLModernStoreLocatorCircle(map, settings);
 		
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.initCanvasLayer = function() {
+	map-block.ModernStoreLocatorCircle.prototype.initCanvasLayer = function() {
 		
 	}
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.onResize = function(event) { 
+	map-block.ModernStoreLocatorCircle.prototype.onResize = function(event) { 
 		this.draw();
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.onUpdate = function(event) { 
+	map-block.ModernStoreLocatorCircle.prototype.onUpdate = function(event) { 
 		this.draw();
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.setOptions = function(options) {
+	map-block.ModernStoreLocatorCircle.prototype.setOptions = function(options) {
 		for(var name in options)
 		{
 			var functionName = "set" + name.substr(0, 1).toUpperCase() + name.substr(1);
@@ -95,31 +95,31 @@ jQuery(function($) {
 		}
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getResolutionScale = function() {
+	map-block.ModernStoreLocatorCircle.prototype.getResolutionScale = function() {
 		return window.devicePixelRatio || 1;
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getCenter = function() {
+	map-block.ModernStoreLocatorCircle.prototype.getCenter = function() {
 		return this.getPosition();
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.setCenter = function(value) {
+	map-block.ModernStoreLocatorCircle.prototype.setCenter = function(value) {
 		this.setPosition(value);
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getPosition = function() {
+	map-block.ModernStoreLocatorCircle.prototype.getPosition = function() {
 		return this.settings.center;
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.setPosition = function(position) {
+	map-block.ModernStoreLocatorCircle.prototype.setPosition = function(position) {
 		this.settings.center = position;
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getRadius = function() {
+	map-block.ModernStoreLocatorCircle.prototype.getRadius = function() {
 		return this.settings.radius;
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.setRadius = function(radius) {
+	map-block.ModernStoreLocatorCircle.prototype.setRadius = function(radius) {
 		
 		if(isNaN(radius))
 			throw new Error("Invalid radius");
@@ -127,11 +127,11 @@ jQuery(function($) {
 		this.settings.radius = radius;
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getVisible = function(visible) {
+	map-block.ModernStoreLocatorCircle.prototype.getVisible = function(visible) {
 		return this.settings.visible;
 	};
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.setVisible = function(visible) {
+	map-block.ModernStoreLocatorCircle.prototype.setVisible = function(visible) {
 		this.settings.visible = visible;
 	};
 	
@@ -139,28 +139,28 @@ jQuery(function($) {
 	 * This function transforms a km radius into canvas space
 	 * @return number
 	 */
-	WPGMZA.ModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
+	map-block.ModernStoreLocatorCircle.prototype.getTransformedRadius = function(km)
 	{
 		throw new Error("Abstract function called");
 	}
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getContext = function(type)
+	map-block.ModernStoreLocatorCircle.prototype.getContext = function(type)
 	{
 		throw new Error("Abstract function called");
 	}
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
+	map-block.ModernStoreLocatorCircle.prototype.getCanvasDimensions = function()
 	{
 		throw new Error("Abstract function called");
 	}
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.validateSettings = function()
+	map-block.ModernStoreLocatorCircle.prototype.validateSettings = function()
 	{
-		if(!WPGMZA.isHexColorString(this.settings.color))
+		if(!map-block.isHexColorString(this.settings.color))
 			this.settings.color = "#63AFF2";
 	}
 	
-	WPGMZA.ModernStoreLocatorCircle.prototype.draw = function() {
+	map-block.ModernStoreLocatorCircle.prototype.draw = function() {
 		
 		this.validateSettings();
 		
@@ -208,10 +208,10 @@ jQuery(function($) {
 		context.translate(offset.x, offset.y);
 
         // Get center and project to pixel space
-		var center = new WPGMZA.LatLng(this.settings.center);
+		var center = new map-block.LatLng(this.settings.center);
 		var worldPoint = this.getCenterPixels();
 		
-		var rgba = WPGMZA.hexToRgba(settings.color);
+		var rgba = map-block.hexToRgba(settings.color);
 		var ringSpacing = this.getTransformedRadius(settings.radius) / (settings.numInnerRings + 1);
 		
 		// TODO: Implement gradients for color and opacity
@@ -232,12 +232,12 @@ jQuery(function($) {
 		// Spokes
 		var radius = this.getTransformedRadius(settings.radius) + (ringSpacing * settings.numOuterRings) + 1;
 		var grad = context.createRadialGradient(0, 0, 0, 0, 0, radius);
-		var rgba = WPGMZA.hexToRgba(settings.color);
-		var start = WPGMZA.rgbaToString(rgba), end;
+		var rgba = map-block.hexToRgba(settings.color);
+		var start = map-block.rgbaToString(rgba), end;
 		var spokeAngle;
 		
 		rgba.a = 0;
-		end = WPGMZA.rgbaToString(rgba);
+		end = map-block.rgbaToString(rgba);
 		
 		grad.addColorStop(0, start);
 		grad.addColorStop(1, end);
@@ -277,7 +277,7 @@ jQuery(function($) {
 			if(settings.innerRingFade)
 				rgba.a = 1 - (i - 1) / settings.numInnerRings;
 			
-			context.strokeStyle = WPGMZA.rgbaToString(rgba);
+			context.strokeStyle = map-block.rgbaToString(rgba);
 			
 			context.beginPath();
 			context.arc(worldPoint.x, worldPoint.y, radius, 0, 2 * Math.PI);
@@ -301,7 +301,7 @@ jQuery(function($) {
 			if(settings.innerRingFade)
 				rgba.a = 1 - i / settings.numOuterRings;
 			
-			context.strokeStyle = WPGMZA.rgbaToString(rgba);
+			context.strokeStyle = map-block.rgbaToString(rgba);
 			
 			context.beginPath();
 			context.arc(worldPoint.x, worldPoint.y, radius, 0, 2 * Math.PI);

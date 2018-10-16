@@ -1,23 +1,23 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module MapSettings
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
-	WPGMZA.MapSettings = function(element)
+	map-block.MapSettings = function(element)
 	{
 		var str = element.getAttribute("data-settings");
 		var json = JSON.parse(str);
 		
 		//var id = $(element).attr("data-map-id");
-		//var json = JSON.parse(window["wpgmza_map_settings_" + id]);
+		//var json = JSON.parse(window["map-block_map_settings_" + id]);
 		
-		WPGMZA.assertInstanceOf(this, "MapSettings");
+		map-block.assertInstanceOf(this, "MapSettings");
 		
-		for(var key in WPGMZA.settings)
+		for(var key in map-block.settings)
 		{
-			var value = WPGMZA.settings[key];
+			var value = map-block.settings[key];
 			
 			this[key] = value;
 		}
@@ -33,7 +33,7 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.MapSettings.prototype.toOLViewOptions = function()
+	map-block.MapSettings.prototype.toOLViewOptions = function()
 	{
 		var options = {
 			center: ol.proj.fromLonLat([-119.4179, 36.7783]),
@@ -52,7 +52,7 @@ jQuery(function($) {
 		if(typeof this.start_location == "string")
 		{
 			var coords = this.start_location.replace(/^\(|\)$/g, "").split(",");
-			if(WPGMZA.isLatLngString(this.start_location))
+			if(map-block.isLatLngString(this.start_location))
 				options.center = ol.proj.fromLonLat([
 					parseFloat(coords[1]),
 					parseFloat(coords[0])
@@ -86,7 +86,7 @@ jQuery(function($) {
 		return options;
 	}
 	
-	WPGMZA.MapSettings.prototype.toGoogleMapsOptions = function()
+	map-block.MapSettings.prototype.toGoogleMapsOptions = function()
 	{
 		var self = this;
 		var latLngCoords = (this.start_location && this.start_location.length ? this.start_location.split(",") : [36.7783, -119.4179]);
@@ -133,17 +133,17 @@ jQuery(function($) {
 			options.maxZoom = parseInt(this.max_zoom);
 		
 		// These settings are all inverted because the checkbox being set means "disabled"
-		options.zoomControl				= !(this.wpgmza_settings_map_zoom == 'yes');
-        options.panControl				= !(this.wpgmza_settings_map_pan == 'yes');
-        options.mapTypeControl			= !(this.wpgmza_settings_map_type == 'yes');
-        options.streetViewControl		= !(this.wpgmza_settings_map_streetview == 'yes');
-        options.fullscreenControl		= !(this.wpgmza_settings_map_full_screen_control == 'yes');
+		options.zoomControl				= !(this.map-block_settings_map_zoom == 'yes');
+        options.panControl				= !(this.map-block_settings_map_pan == 'yes');
+        options.mapTypeControl			= !(this.map-block_settings_map_type == 'yes');
+        options.streetViewControl		= !(this.map-block_settings_map_streetview == 'yes');
+        options.fullscreenControl		= !(this.map-block_settings_map_full_screen_control == 'yes');
         
-        options.draggable				= !(this.wpgmza_settings_map_draggable == 'yes');
-        options.disableDoubleClickZoom	= !(this.wpgmza_settings_map_clickzoom == 'yes');
-        options.scrollwheel				= !(this.wpgmza_settings_map_scroll == 'yes');
+        options.draggable				= !(this.map-block_settings_map_draggable == 'yes');
+        options.disableDoubleClickZoom	= !(this.map-block_settings_map_clickzoom == 'yes');
+        options.scrollwheel				= !(this.map-block_settings_map_scroll == 'yes');
 		
-		if(this.wpgmza_force_greedy_gestures == "greedy" || this.wpgmza_force_greedy_gestures == "yes")
+		if(this.map-block_force_greedy_gestures == "greedy" || this.map-block_force_greedy_gestures == "yes")
 			options.gestureHandling = "greedy";
 		else
 			options.gestureHandling = "cooperative";

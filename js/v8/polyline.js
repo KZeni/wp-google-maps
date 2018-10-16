@@ -1,51 +1,51 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Polyline
- * @requires WPGMZA.MapObject
+ * @requires map-block.MapObject
  */
 jQuery(function($) {
-	WPGMZA.Polyline = function(row, googlePolyline)
+	map-block.Polyline = function(row, googlePolyline)
 	{
 		var self = this;
 		
-		WPGMZA.assertInstanceOf(this, "Polyline");
+		map-block.assertInstanceOf(this, "Polyline");
 		
 		this.title = null;
 		
-		WPGMZA.MapObject.apply(this, arguments);
+		map-block.MapObject.apply(this, arguments);
 	}
 	
-	WPGMZA.Polyline.prototype = Object.create(WPGMZA.MapObject.prototype);
-	WPGMZA.Polyline.prototype.constructor = WPGMZA.Polyline;
+	map-block.Polyline.prototype = Object.create(map-block.MapObject.prototype);
+	map-block.Polyline.prototype.constructor = map-block.Polyline;
 	
-	WPGMZA.Polyline.getConstructor = function()
+	map-block.Polyline.getConstructor = function()
 	{
-		switch(WPGMZA.settings.engine)
+		switch(map-block.settings.engine)
 		{
 			case "open-layers":
-				return WPGMZA.OLPolyline;
+				return map-block.OLPolyline;
 				break;
 			
 			default:
-				return WPGMZA.GooglePolyline;
+				return map-block.GooglePolyline;
 				break;
 		}
 	}
 	
-	WPGMZA.Polyline.createInstance = function(row, engineObject)
+	map-block.Polyline.createInstance = function(row, engineObject)
 	{
-		var constructor = WPGMZA.Polyline.getConstructor();
+		var constructor = map-block.Polyline.getConstructor();
 		return new constructor(row, engineObject);
 	}
 	
-	WPGMZA.Polyline.prototype.getPoints = function()
+	map-block.Polyline.prototype.getPoints = function()
 	{
 		return this.toJSON().points;
 	}
 	
-	WPGMZA.Polyline.prototype.toJSON = function()
+	map-block.Polyline.prototype.toJSON = function()
 	{
-		var result = WPGMZA.MapObject.prototype.toJSON.call(this);
+		var result = map-block.MapObject.prototype.toJSON.call(this);
 		
 		result.title = this.title;
 		

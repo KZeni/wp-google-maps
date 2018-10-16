@@ -1,8 +1,8 @@
 <?php
 
-namespace WPGMZA\Integration;
+namespace map-block\Integration;
 
-if(!class_exists('WPGMZA\\Integration\\WPMigrateDB'))
+if(!class_exists('map-block\\Integration\\WPMigrateDB'))
 {
 	class WPMigrateDB
 	{
@@ -21,4 +21,4 @@ if(!class_exists('WPGMZA\\Integration\\WPMigrateDB'))
 	}
 }
 
-$wpgmza_wp_migration_db_module = new WPMigrateDB();
+$map-block_wp_migration_db_module = new WPMigrateDB();

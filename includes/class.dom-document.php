@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 require_once(plugin_dir_path(__FILE__) . 'class.dom-element.php');
 
@@ -16,7 +16,7 @@ class DOMDocument extends \DOMDocument
 	{
 		\DOMDocument::__construct($version, $encoding);
 		
-		$this->registerNodeClass('DOMElement', 'WPGMZA\DOMElement');
+		$this->registerNodeClass('DOMElement', 'map-block\DOMElement');
 		$this->onReady();
 	}
 	
@@ -156,7 +156,7 @@ class DOMDocument extends \DOMDocument
 			$instance = new $class_name();
 			
 			if(!($instance instanceof DOMDocument))
-				throw new \Exception('Class must be an instance of WPGMZA\\DOMDocument');
+				throw new \Exception('Class must be an instance of map-block\\DOMDocument');
 			
 			$node->import($instance);
 			

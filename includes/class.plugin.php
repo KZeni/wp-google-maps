@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class Plugin
 {
@@ -37,7 +37,7 @@ class Plugin
 		
 		$this->mysqlVersion = $wpdb->get_var('SELECT VERSION()');
 		
-		$this->legacySettings = get_option('WPGMZA_OTHER_SETTINGS');
+		$this->legacySettings = get_option('map-block_OTHER_SETTINGS');
 		if(!$this->legacySettings)
 			$this->legacySettings = array();
 		
@@ -46,14 +46,14 @@ class Plugin
 		// $temp = GlobalSettings::createInstance();
 		
 		// Legacy compatibility
-		global $wpgmza_pro_version;
+		global $map-block_pro_version;
 		
 		// TODO: This should be in default settings, this code is duplicaetd
-		if(!empty($wpgmza_pro_version) && version_compare(trim($wpgmza_pro_version), '7.10.00', '<'))
+		if(!empty($map-block_pro_version) && version_compare(trim($map-block_pro_version), '7.10.00', '<'))
 		{
 			$self = $this;
 			
-			$settings['wpgmza_maps_engine'] = $settings['engine'] = 'google-maps';
+			$settings['map-block_maps_engine'] = $settings['engine'] = 'google-maps';
 			
 			add_filter('wpgooglemaps_filter_map_div_output', function($output) use ($self) {
 				
@@ -73,10 +73,10 @@ class Plugin
 		$this->restAPI = new RestAPI();
 		$this->gutenbergIntegration = Integration\Gutenberg::createInstance();
 		
-		if(!empty($this->settings->wpgmza_maps_engine))
-			$this->settings->engine = $this->settings->wpgmza_maps_engine;
+		if(!empty($this->settings->map-block_maps_engine))
+			$this->settings->engine = $this->settings->map-block_maps_engine;
 		
-		if(!empty($_COOKIE['wpgmza-developer-mode']))
+		if(!empty($_COOKIE['map-block-developer-mode']))
 			$this->settings->developer_mode = true;
 		
 		foreach(Plugin::$enqueueScriptActions as $action)
@@ -105,8 +105,8 @@ class Plugin
 				
 			case "gdprCompliance":
 				// Temporary shim
-				global $wpgmzaGDPRCompliance;
-				return $wpgmzaGDPRCompliance;
+				global $map-blockGDPRCompliance;
+				return $map-blockGDPRCompliance;
 				break;
 		}
 		
@@ -140,12 +140,12 @@ class Plugin
 	
 	public function getDefaultSettings()
 	{
-		//$defaultEngine = (empty($this->legacySettings['wpgmza_maps_engine']) || $this->legacySettings['wpgmza_maps_engine'] != 'google-maps' ? 'open-layers' : 'google-maps');
+		//$defaultEngine = (empty($this->legacySettings['map-block_maps_engine']) || $this->legacySettings['map-block_maps_engine'] != 'google-maps' ? 'open-layers' : 'google-maps');
 		$defaultEngine = 'google-maps';
 		
-		return apply_filters('wpgmza_plugin_get_default_settings', array(
+		return apply_filters('map-block_plugin_get_default_settings', array(
 			'engine' 				=> $defaultEngine,
-			'google_maps_api_key'	=> get_option('wpgmza_google_maps_api_key'),
+			'google_maps_api_key'	=> get_option('map-block_google_maps_api_key'),
 			'default_marker_icon'	=> "//maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png",
 			'developer_mode'		=> !empty($this->legacySettings['developer_mode'])
 		));
@@ -153,7 +153,7 @@ class Plugin
 	
 	public function getLocalizedData()
 	{
-		global $wpgmzaGDPRCompliance;
+		global $map-blockGDPRCompliance;
 		
 		$document = new DOMDocument();
 		$document->loadPHPFile(plugin_dir_path(__DIR__) . 'html/google-maps-api-error-dialog.html.php');
@@ -162,12 +162,12 @@ class Plugin
 		$strings = new Strings();
 		
 		$settings = clone $this->settings;
-		if(isset($settings->wpgmza_settings_ugm_email_address))
-			unset($settings->wpgmza_settings_ugm_email_address);
+		if(isset($settings->map-block_settings_ugm_email_address))
+			unset($settings->map-block_settings_ugm_email_address);
 		
-		return apply_filters('wpgmza_plugin_get_localized_data', array(
+		return apply_filters('map-block_plugin_get_localized_data', array(
 			'ajaxurl' 				=> admin_url('admin-ajax.php'),
-			'resturl'				=> get_rest_url(null, 'wpgmza/v1'),
+			'resturl'				=> get_rest_url(null, 'map-block/v1'),
 			
 			'html'					=> array(
 				'googleMapsAPIErrorDialog' => $googleMapsAPIErrorDialogHTML
@@ -178,7 +178,7 @@ class Plugin
 			'userCanAdministrator'	=> (current_user_can('administrator') ? 1 : 0),
 			
 			'localized_strings'		=> $strings->getLocalizedStrings(),
-			'api_consent_html'		=> $wpgmzaGDPRCompliance->getConsentPromptHTML(),
+			'api_consent_html'		=> $map-blockGDPRCompliance->getConsentPromptHTML(),
 			'basic_version'			=> $this->getBasicVersion(),
 			'_isProVersion'			=> $this->isProVersion(),
 			'is_admin'				=> (is_admin() ? 1 : 0)
@@ -192,30 +192,30 @@ class Plugin
 		
 		switch($_GET['page'])
 		{
-			case 'wp-google-maps-menu':
+			case 'map-block-menu':
 				if(isset($_GET['action']) && $_GET['action'] == 'edit')
 					return Plugin::PAGE_MAP_EDIT;
 				
 				return Plugin::PAGE_MAP_LIST;
 				break;
 				
-			case 'wp-google-maps-menu-settings':
+			case 'map-block-menu-settings':
 				return Plugin::PAGE_SETTINGS;
 				break;
 				
-			case 'wp-google-maps-menu-support':
+			case 'map-block-menu-support':
 				return Plugin::PAGE_SUPPORT;
 				break;
 				
-			case 'wp-google-maps-menu-categories':
+			case 'map-block-menu-categories':
 				return Plugin::PAGE_CATEGORIES;
 				break;
 				
-			case 'wp-google-maps-menu-advanced':
+			case 'map-block-menu-advanced':
 				return Plugin::PAGE_ADVANCED;
 				break;
 				
-			case 'wp-google-maps-menu-custom-fields':
+			case 'map-block-menu-custom-fields':
 				return Plugin::PAGE_CUSTOM_FIELDS;
 				break;
 		}
@@ -230,7 +230,7 @@ class Plugin
 	
 	public function isInDeveloperMode()
 	{
-		return !(empty($this->settings->developer_mode) && !isset($_COOKIE['wpgmza-developer-mode']));
+		return !(empty($this->settings->developer_mode) && !isset($_COOKIE['map-block-developer-mode']));
 	}
 	
 	public function isProVersion()
@@ -252,8 +252,8 @@ class Plugin
 	
 	public function onLoadTextDomainMOFile($mofile, $domain)
 	{
-		if($domain == 'wp-google-maps')
-			$mofile = plugin_dir_path(__DIR__) . 'languages/wp-google-maps-' . get_locale() . '.mo';
+		if($domain == 'map-block')
+			$mofile = plugin_dir_path(__DIR__) . 'languages/map-block-' . get_locale() . '.mo';
 		
 		return $mofile;
 	}
@@ -261,14 +261,14 @@ class Plugin
 
 function create_plugin_instance()
 {
-	if(defined('WPGMZA_PRO_VERSION'))
+	if(defined('map-block_PRO_VERSION'))
 		return new ProPlugin();
 	
 	return new Plugin();
 }
 
 add_action('plugins_loaded', function() {
-	global $wpgmza;
-	add_filter('wpgmza_create_plugin_instance', 'WPGMZA\\create_plugin_instance', 10, 0);
-	$wpgmza = apply_filters('wpgmza_create_plugin_instance', null);
+	global $map-block;
+	add_filter('map-block_create_plugin_instance', 'map-block\\create_plugin_instance', 10, 0);
+	$map-block = apply_filters('map-block_create_plugin_instance', null);
 });

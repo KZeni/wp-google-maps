@@ -1,18 +1,18 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Marker
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	/**
 	 * Constructor
 	 * @param json to load (optional)
 	 */
-	WPGMZA.Marker = function(row)
+	map-block.Marker = function(row)
 	{
 		var self = this;
 		
-		WPGMZA.assertInstanceOf(this, "Marker");
+		map-block.assertInstanceOf(this, "Marker");
 		
 		this.lat = "36.778261";
 		this.lng = "-119.4179323999";
@@ -24,7 +24,7 @@ jQuery(function($) {
 		this.approved = 1;
 		this.pic = null;
 		
-		WPGMZA.MapObject.apply(this, arguments);
+		map-block.MapObject.apply(this, arguments);
 		
 		if(row && row.heatmap)
 			return; // Don't listen for these events on heatmap markers.
@@ -43,8 +43,8 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.Marker.prototype = Object.create(WPGMZA.MapObject.prototype);
-	WPGMZA.Marker.prototype.constructor = WPGMZA.Marker;
+	map-block.Marker.prototype = Object.create(map-block.MapObject.prototype);
+	map-block.Marker.prototype.constructor = map-block.Marker;
 	
 	/**
 	 * Gets the constructor. You can use this instead of hard coding the parent class when inheriting,
@@ -52,39 +52,39 @@ jQuery(function($) {
 	 * combination of the four.
 	 * @return function
 	 */
-	WPGMZA.Marker.getConstructor = function()
+	map-block.Marker.getConstructor = function()
 	{
-		switch(WPGMZA.settings.engine)
+		switch(map-block.settings.engine)
 		{
 			case "open-layers":
-				if(WPGMZA.isProVersion())
-					return WPGMZA.OLProMarker;
-				return WPGMZA.OLMarker;
+				if(map-block.isProVersion())
+					return map-block.OLProMarker;
+				return map-block.OLMarker;
 				break;
 				
 			default:
-				if(WPGMZA.isProVersion())
-					return WPGMZA.GoogleProMarker;
-				return WPGMZA.GoogleMarker;
+				if(map-block.isProVersion())
+					return map-block.GoogleProMarker;
+				return map-block.GoogleMarker;
 				break;
 		}
 	}
 	
-	WPGMZA.Marker.createInstance = function(row)
+	map-block.Marker.createInstance = function(row)
 	{
-		var constructor = WPGMZA.Marker.getConstructor();
+		var constructor = map-block.Marker.getConstructor();
 		return new constructor(row);
 	}
 	
-	WPGMZA.Marker.ANIMATION_NONE			= "0";
-	WPGMZA.Marker.ANIMATION_BOUNCE			= "1";
-	WPGMZA.Marker.ANIMATION_DROP			= "2";
+	map-block.Marker.ANIMATION_NONE			= "0";
+	map-block.Marker.ANIMATION_BOUNCE			= "1";
+	map-block.Marker.ANIMATION_DROP			= "2";
 	
-	WPGMZA.Marker.prototype.onAdded = function(event)
+	map-block.Marker.prototype.onAdded = function(event)
 	{
 		var self = this;
 		
-		// this.infoWindow = WPGMZA.InfoWindow.createInstance(this);
+		// this.infoWindow = map-block.InfoWindow.createInstance(this);
 		
 		this.addEventListener("click", function(event) {
 			self.onClick(event);
@@ -106,7 +106,7 @@ jQuery(function($) {
 	 * This function will hide the last info the user interacted with
 	 * @return void
 	 */
-	WPGMZA.Marker.prototype.hidePreviousInteractedInfoWindow = function()
+	map-block.Marker.prototype.hidePreviousInteractedInfoWindow = function()
 	{
 		if(!this.map.lastInteractedMarker)
 			return;
@@ -114,30 +114,30 @@ jQuery(function($) {
 		this.map.lastInteractedMarker.infoWindow.close();
 	}
 	
-	WPGMZA.Marker.prototype.openInfoWindow = function()
+	map-block.Marker.prototype.openInfoWindow = function()
 	{
 		//this.hidePreviousInteractedInfoWindow();
 		//this.infoWindow.open(this.map, this);
 		//this.map.lastInteractedMarker = this;
 	}
 	
-	WPGMZA.Marker.prototype.onClick = function(event)
+	map-block.Marker.prototype.onClick = function(event)
 	{
 		
 	}
 	
-	WPGMZA.Marker.prototype.onSelect = function(event)
+	map-block.Marker.prototype.onSelect = function(event)
 	{
 		this.openInfoWindow();
 	}
 	
-	WPGMZA.Marker.prototype.onMouseOver = function(event)
+	map-block.Marker.prototype.onMouseOver = function(event)
 	{
-		if(this.map.settings.info_window_open_by == WPGMZA.InfoWindow.OPEN_BY_HOVER)
+		if(this.map.settings.info_window_open_by == map-block.InfoWindow.OPEN_BY_HOVER)
 			this.openInfoWindow();
 	}
 	
-	WPGMZA.Marker.prototype.getIcon = function()
+	map-block.Marker.prototype.getIcon = function()
 	{
 		function stripProtocol(url)
 		{
@@ -147,14 +147,14 @@ jQuery(function($) {
 			return url.replace(/^http(s?):/, "");
 		}
 		
-		return stripProtocol(WPGMZA.settings.default_marker_icon);
+		return stripProtocol(map-block.settings.default_marker_icon);
 	}
 	
 	/**
 	 * Gets the position of the marker
 	 * @return object
 	 */
-	WPGMZA.Marker.prototype.getPosition = function()
+	map-block.Marker.prototype.getPosition = function()
 	{
 		return {
 			lat: parseFloat(this.lat),
@@ -166,9 +166,9 @@ jQuery(function($) {
 	 * Sets the position of the marker
 	 * @return void
 	 */
-	WPGMZA.Marker.prototype.setPosition = function(latLng)
+	map-block.Marker.prototype.setPosition = function(latLng)
 	{
-		if(latLng instanceof WPGMZA.LatLng)
+		if(latLng instanceof map-block.LatLng)
 		{
 			this.lat = latLng.lat;
 			this.lng = latLng.lng;
@@ -184,7 +184,7 @@ jQuery(function($) {
 	 * Set the marker animation
 	 * @return void
 	 */
-	WPGMZA.Marker.prototype.getAnimation = function(animation)
+	map-block.Marker.prototype.getAnimation = function(animation)
 	{
 		return this.settings.animation;
 	}
@@ -193,7 +193,7 @@ jQuery(function($) {
 	 * Set the marker animation
 	 * @return void
 	 */
-	WPGMZA.Marker.prototype.setAnimation = function(animation)
+	map-block.Marker.prototype.setAnimation = function(animation)
 	{
 		this.settings.animation = animation;
 	}
@@ -202,7 +202,7 @@ jQuery(function($) {
 	 * Get the marker visibility
 	 * @return void
 	 */
-	WPGMZA.Marker.prototype.getVisible = function(visible)
+	map-block.Marker.prototype.getVisible = function(visible)
 	{
 		
 	}
@@ -211,13 +211,13 @@ jQuery(function($) {
 	 * Set the marker visibility. This is used by the store locator etc. and is not a setting
 	 * @return void
 	 */
-	WPGMZA.Marker.prototype.setVisible = function(visible)
+	map-block.Marker.prototype.setVisible = function(visible)
 	{
 		if(!visible && this.infoWindow)
 			this.infoWindow.close();
 	}
 	
-	WPGMZA.Marker.prototype.setMap = function(map)
+	map-block.Marker.prototype.setMap = function(map)
 	{
 		if(!map)
 		{
@@ -230,22 +230,22 @@ jQuery(function($) {
 		map.addMarker(this);
 	}
 	
-	WPGMZA.Marker.prototype.getDraggable = function()
+	map-block.Marker.prototype.getDraggable = function()
 	{
 		
 	}
 	
-	WPGMZA.Marker.prototype.setDraggable = function(draggable)
+	map-block.Marker.prototype.setDraggable = function(draggable)
 	{
 		
 	}
 	
-	WPGMZA.Marker.prototype.setOptions = function()
+	map-block.Marker.prototype.setOptions = function()
 	{
 		
 	}
 	
-	WPGMZA.Marker.prototype.panIntoView = function()
+	map-block.Marker.prototype.panIntoView = function()
 	{
 		if(!this.map)
 			throw new Error("Marker hasn't been added to a map");
@@ -257,9 +257,9 @@ jQuery(function($) {
 	 * Returns the marker as a JSON object
 	 * @return object
 	 */
-	WPGMZA.Marker.prototype.toJSON = function()
+	map-block.Marker.prototype.toJSON = function()
 	{
-		var result = WPGMZA.MapObject.prototype.toJSON.call(this);
+		var result = map-block.MapObject.prototype.toJSON.call(this);
 		var position = this.getPosition();
 		
 		$.extend(result, {

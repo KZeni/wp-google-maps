@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class AutoLoader
 {
@@ -109,10 +109,10 @@ class AutoLoader
 	
 	public function registerClassesInPath($path)
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		//$cacheFile = $relative . 'includes/auto-loader-cache.json';
-		//$useCache = empty($wpgmza->settings->developer_mode) && file_exists($cacheFile);
+		//$useCache = empty($map-block->settings->developer_mode) && file_exists($cacheFile);
 		
 		$classesByFilename = $this->getClassesInPathByFilename($path);
 			
@@ -127,7 +127,7 @@ class AutoLoader
 	
 	public function callback($class)
 	{
-		$pattern = "/^(\\\\?)WPGMZA/";
+		$pattern = "/^(\\\\?)map-block/";
 		
 		if(!preg_match($pattern, $class, $m))
 			return;
@@ -145,8 +145,8 @@ class AutoLoader
 	
 }
 
-global $wpgmza_auto_loader;
-$wpgmza_auto_loader = new AutoLoader();
-$wpgmza_auto_loader->registerClassesInPath(__DIR__);
+global $map-block_auto_loader;
+$map-block_auto_loader = new AutoLoader();
+$map-block_auto_loader->registerClassesInPath(__DIR__);
 
-spl_autoload_register(array($wpgmza_auto_loader, 'callback'));
+spl_autoload_register(array($map-block_auto_loader, 'callback'));

@@ -1,10 +1,10 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class RestAPI
 {
-	const NS = 'wpgmza/v1';
+	const NS = 'map-block/v1';
 	
 	public function __construct()
 	{
@@ -30,17 +30,17 @@ class RestAPI
 	public function markers($request)
 	{
 		global $wpdb;
-		global $wpgmza_tblname;
+		global $map-block_tblname;
 		
 		$route = $request->get_route();
 		
-		if(preg_match('#/wpgmza/v1/markers/(\d+)#', $route, $m))
+		if(preg_match('#/map-block/v1/markers/(\d+)#', $route, $m))
 		{
 			$marker = new Marker($m[1]);
 			return $marker;
 		}
 		
-		$results = $wpdb->get_results("SELECT * FROM $wpgmza_tblname");
+		$results = $wpdb->get_results("SELECT * FROM $map-block_tblname");
 		
 		// TODO: Select all custom field data too, in one query, and add that to the marker data in the following loop. Ideally we could add a bulk get function to the CRUD classes which takes IDs?
 		

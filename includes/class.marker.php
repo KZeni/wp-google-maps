@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 require_once(plugin_dir_path(__FILE__) . '/class.crud.php');
 
@@ -12,15 +12,15 @@ class Marker extends Crud implements \JsonSerializable
 	{
 		global $wpdb;
 		
-		Crud::__construct("{$wpdb->prefix}wpgmza", $id_or_fields);
+		Crud::__construct("{$wpdb->prefix}map-block", $id_or_fields);
 		
-		if(class_exists('WPGMZA\\CustomMarkerFields'))
-			$this->custom_fields = apply_filters('wpgmza_get_marker_custom_fields', $this->id);
+		if(class_exists('map-block\\CustomMarkerFields'))
+			$this->custom_fields = apply_filters('map-block_get_marker_custom_fields', $this->id);
 	}
 	
 	public static function create_instance($id_or_fields=-1)
 	{
-		return apply_filters('wpgmza_create_marker_instance', $id_or_fields);
+		return apply_filters('map-block_create_marker_instance', $id_or_fields);
 	}
 	
 	public function jsonSerialize()
@@ -36,10 +36,10 @@ class Marker extends Crud implements \JsonSerializable
 	
 	protected function get_placeholder_by_type($type)
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		if($type == 'point')
-			return "{$wpgmza->spatialFunctionPrefix}GeomFromText(%s)";
+			return "{$map-block->spatialFunctionPrefix}GeomFromText(%s)";
 		
 		return Crud::get_placeholder_by_type($type);
 	}
@@ -87,7 +87,7 @@ class Marker extends Crud implements \JsonSerializable
 }
 
 // You can remove this filter and add your own delegate to subclass Marker
-add_filter('wpgmza_create_marker_instance', 'WPGMZA\\create_marker_instance_delegate', 10, 1);
+add_filter('map-block_create_marker_instance', 'map-block\\create_marker_instance_delegate', 10, 1);
 
 function create_marker_instance_delegate($id)
 {

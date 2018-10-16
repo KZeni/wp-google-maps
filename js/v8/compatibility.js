@@ -1,16 +1,16 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Compatibility
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
-	WPGMZA.Compatibility = function()
+	map-block.Compatibility = function()
 	{
 		this.preventDocumentWriteGoogleMapsAPI();
 	}
 	
-	WPGMZA.Compatibility.prototype.preventDocumentWriteGoogleMapsAPI = function()
+	map-block.Compatibility.prototype.preventDocumentWriteGoogleMapsAPI = function()
 	{
 		var old = document.write;
 		
@@ -23,6 +23,6 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.compatiblityModule = new WPGMZA.Compatibility();
+	map-block.compatiblityModule = new map-block.Compatibility();
 	
 });

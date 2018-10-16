@@ -1,23 +1,23 @@
 jQuery(function($){
 	jQuery(window).on("load", function(){
-		if(typeof wpgmaps_localize !== "undefined"){
-			for(var i in wpgmaps_localize){
-				var mapid = wpgmaps_localize[i]['id'];
+		if(typeof map-blockaps_localize !== "undefined"){
+			for(var i in map-blockaps_localize){
+				var mapid = map-blockaps_localize[i]['id'];
 				
-				if(window.wpgmza_circle_data_array) {
+				if(window.map-block_circle_data_array) {
 					window.circle_array = [];
-					for(var circle_id in wpgmza_circle_data_array){
-						if(wpgmza_circle_data_array[circle_id]['map_id'] === mapid){
-							add_circle(mapid, wpgmza_circle_data_array[circle_id]);
+					for(var circle_id in map-block_circle_data_array){
+						if(map-block_circle_data_array[circle_id]['map_id'] === mapid){
+							add_circle(mapid, map-block_circle_data_array[circle_id]);
 						}
 					}
 				}
 				
-				if(window.wpgmza_rectangle_data_array) {
+				if(window.map-block_rectangle_data_array) {
 					window.rectangle_array = [];
-					for(var rectangle_id in wpgmza_rectangle_data_array){
-						if(wpgmza_rectangle_data_array[rectangle_id]['map_id'] === mapid){
-							add_rectangle(mapid, wpgmza_rectangle_data_array[rectangle_id]);
+					for(var rectangle_id in map-block_rectangle_data_array){
+						if(map-block_rectangle_data_array[rectangle_id]['map_id'] === mapid){
+							add_rectangle(mapid, map-block_rectangle_data_array[rectangle_id]);
 						}
 					}
 				}

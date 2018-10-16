@@ -1,33 +1,33 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleAPIErrorHandler
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) { 
 
-	WPGMZA.GoogleAPIErrorHandler = function() {
+	map-block.GoogleAPIErrorHandler = function() {
 		
 		var self = this;
 		
 		// Don't do anything if Google isn't the selected API
-		if(WPGMZA.settings.engine != "google-maps")
+		if(map-block.settings.engine != "google-maps")
 			return;
 		
 		// Only allow on the map edit page, or front end if user has administrator role
-		if(!(WPGMZA.currentPage == "map-edit" || (WPGMZA.is_admin == 0 && WPGMZA.userCanAdministrator == 1)))
+		if(!(map-block.currentPage == "map-edit" || (map-block.is_admin == 0 && map-block.userCanAdministrator == 1)))
 			return;
 		
-		this.element = $(WPGMZA.html.googleMapsAPIErrorDialog);
+		this.element = $(map-block.html.googleMapsAPIErrorDialog);
 		
-		if(WPGMZA.is_admin == 1)
-			this.element.find(".wpgmza-front-end-only").remove();
+		if(map-block.is_admin == 1)
+			this.element.find(".map-block-front-end-only").remove();
 		
-		this.errorMessageList = this.element.find("#wpgmza-google-api-error-list");
+		this.errorMessageList = this.element.find("#map-block-google-api-error-list");
 		this.templateListItem = this.element.find("li.template").remove();
 		
 		this.messagesAlreadyDisplayed = {};
 		
-		if(WPGMZA.settings.developer_mode)
+		if(map-block.settings.developer_mode)
 			return;
 		
 		// Override error function
@@ -41,7 +41,7 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.GoogleAPIErrorHandler.prototype.onErrorMessage = function(message)
+	map-block.GoogleAPIErrorHandler.prototype.onErrorMessage = function(message)
 	{
 		var m;
 		var regexURL = /http(s)?:\/\/[^\s]+/gm;
@@ -57,17 +57,17 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.GoogleAPIErrorHandler.prototype.addErrorMessage = function(message, urls)
+	map-block.GoogleAPIErrorHandler.prototype.addErrorMessage = function(message, urls)
 	{
 		if(this.messagesAlreadyDisplayed[message])
 			return;
 		
 		var li = this.templateListItem.clone();
-		$(li).find(".wpgmza-message").html(message);
+		$(li).find(".map-block-message").html(message);
 		
-		var buttonContainer = $(li).find(".wpgmza-documentation-buttons");
+		var buttonContainer = $(li).find(".map-block-documentation-buttons");
 		
-		var buttonTemplate = $(li).find(".wpgmza-documentation-buttons>a");
+		var buttonTemplate = $(li).find(".map-block-documentation-buttons>a");
 		buttonTemplate.remove();
 		
 		if(urls && urls.length)
@@ -77,7 +77,7 @@ jQuery(function($) {
 				var url = urls[i];
 				var button = buttonTemplate.clone();
 				var icon = "fa-external-link";
-				var text = WPGMZA.localized_strings.documentation;
+				var text = map-block.localized_strings.documentation;
 				
 				button.attr("href", urls[i]);
 				
@@ -88,12 +88,12 @@ jQuery(function($) {
 				else if(url.match(/maps-no-account/))
 				{
 					icon = "fa-wrench"
-					text = WPGMZA.localized_strings.verify_project;
+					text = map-block.localized_strings.verify_project;
 				}
 				else if(url.match(/console\.developers\.google/))
 				{
 					icon = "fa-wrench";
-					text = WPGMZA.localized_strings.api_dashboard;
+					text = map-block.localized_strings.api_dashboard;
 				}
 				
 				$(button).find("i").addClass(icon);
@@ -123,6 +123,6 @@ jQuery(function($) {
 		this.messagesAlreadyDisplayed[message] = true;
 	}
 	
-	WPGMZA.googleAPIErrorHandler = new WPGMZA.GoogleAPIErrorHandler();
+	map-block.googleAPIErrorHandler = new map-block.GoogleAPIErrorHandler();
 
 });

@@ -1,7 +1,7 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module LatLng
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 
@@ -10,7 +10,7 @@ jQuery(function($) {
 	 * @param mixed A latLng literal, or latitude
 	 * @param mixed The latitude, where arg is a longitude
 	 */
-	WPGMZA.LatLng = function(arg, lng)
+	map-block.LatLng = function(arg, lng)
 	{
 		this._lat = 0;
 		this._lng = 0;
@@ -26,7 +26,7 @@ jQuery(function($) {
 			{
 				var m;
 				
-				if(!(m = arg.match(WPGMZA.LatLng.REGEXP)))
+				if(!(m = arg.match(map-block.LatLng.REGEXP)))
 					throw new Error("Invalid LatLng string");
 				
 				arg = {
@@ -48,9 +48,9 @@ jQuery(function($) {
 		}
 	}
 	
-	WPGMZA.LatLng.REGEXP = /^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/;
+	map-block.LatLng.REGEXP = /^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/;
 	
-	WPGMZA.LatLng.isValid = function(obj)
+	map-block.LatLng.isValid = function(obj)
 	{
 		if(typeof obj != "object")
 			return false;
@@ -61,7 +61,7 @@ jQuery(function($) {
 		return true;
 	}
 	
-	Object.defineProperty(WPGMZA.LatLng.prototype, "lat", {
+	Object.defineProperty(map-block.LatLng.prototype, "lat", {
 		get: function() {
 			return this._lat;
 		},
@@ -72,7 +72,7 @@ jQuery(function($) {
 		}
 	});
 	
-	Object.defineProperty(WPGMZA.LatLng.prototype, "lng", {
+	Object.defineProperty(map-block.LatLng.prototype, "lng", {
 		get: function() {
 			return this._lng;
 		},
@@ -83,20 +83,20 @@ jQuery(function($) {
 		}
 	});
 	
-	WPGMZA.LatLng.prototype.toString = function()
+	map-block.LatLng.prototype.toString = function()
 	{
 		return this._lat + ", " + this._lng;
 	}
 	
-	WPGMZA.LatLng.fromGoogleLatLng = function(googleLatLng)
+	map-block.LatLng.fromGoogleLatLng = function(googleLatLng)
 	{
-		return new WPGMZA.LatLng(
+		return new map-block.LatLng(
 			googleLatLng.lat(),
 			googleLatLng.lng()
 		);
 	}
 	
-	WPGMZA.LatLng.prototype.toGoogleLatLng = function()
+	map-block.LatLng.prototype.toGoogleLatLng = function()
 	{
 		return new google.maps.LatLng({
 			lat: this.lat,
@@ -110,7 +110,7 @@ jQuery(function($) {
 	 * @return void
 	 * With many thanks to Hu Kenneth - https://gis.stackexchange.com/questions/234473/get-a-lonlat-point-by-distance-or-between-2-lonlat-points
 	 */
-	WPGMZA.LatLng.prototype.moveByDistance = function(kilometers, heading)
+	map-block.LatLng.prototype.moveByDistance = function(kilometers, heading)
 	{
 		var radius 		= 6371;
 		

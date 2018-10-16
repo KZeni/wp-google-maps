@@ -1,20 +1,20 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module MapObject
- * @requires WPGMZA.EventDispatcher
+ * @requires map-block.EventDispatcher
  */
 jQuery(function($) {
 	
-	WPGMZA.MapObject = function(row)
+	map-block.MapObject = function(row)
 	{
 		var self = this;
 		
-		WPGMZA.assertInstanceOf(this, "MapObject");
+		map-block.assertInstanceOf(this, "MapObject");
 		
-		WPGMZA.EventDispatcher.call(this);
+		map-block.EventDispatcher.call(this);
 		
 		this.id = -1;
-		this.guid = WPGMZA.guid();
+		this.guid = map-block.guid();
 		this.modified = true;
 		this.settings = {};
 		
@@ -51,10 +51,10 @@ jQuery(function($) {
 		}		
 	}
 	
-	WPGMZA.MapObject.prototype = Object.create(WPGMZA.EventDispatcher.prototype);
-	WPGMZA.MapObject.prototype.constructor = WPGMZA.MapObject;
+	map-block.MapObject.prototype = Object.create(map-block.EventDispatcher.prototype);
+	map-block.MapObject.prototype.constructor = map-block.MapObject;
 	
-	WPGMZA.MapObject.prototype.parseGeometry = function(string)
+	map-block.MapObject.prototype.parseGeometry = function(string)
 	{
 		var stripped, pairs, coords, results = [];
 		stripped = string.replace(/[^ ,\d\.\-+e]/g, "");
@@ -72,7 +72,7 @@ jQuery(function($) {
 		return results;
 	}
 	
-	WPGMZA.MapObject.prototype.toJSON = function()
+	map-block.MapObject.prototype.toJSON = function()
 	{
 		return {
 			id: this.id,

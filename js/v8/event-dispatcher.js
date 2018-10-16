@@ -1,18 +1,18 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module EventDispatcher
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
-	WPGMZA.EventDispatcher = function()
+	map-block.EventDispatcher = function()
 	{
-		WPGMZA.assertInstanceOf(this, "EventDispatcher");
+		map-block.assertInstanceOf(this, "EventDispatcher");
 		
 		this._listenersByType = [];
 	}
 
-	WPGMZA.EventDispatcher.prototype.addEventListener = function(type, listener, thisObject, useCapture)
+	map-block.EventDispatcher.prototype.addEventListener = function(type, listener, thisObject, useCapture)
 	{
 		var arr;
 		
@@ -40,9 +40,9 @@ jQuery(function($) {
 		arr.push(obj);
 	}
 
-	WPGMZA.EventDispatcher.prototype.on = WPGMZA.EventDispatcher.prototype.addEventListener;
+	map-block.EventDispatcher.prototype.on = map-block.EventDispatcher.prototype.addEventListener;
 
-	WPGMZA.EventDispatcher.prototype.removeEventListener = function(type, listener, thisObject, useCapture)
+	map-block.EventDispatcher.prototype.removeEventListener = function(type, listener, thisObject, useCapture)
 	{
 		var arr, index, obj;
 
@@ -66,23 +66,23 @@ jQuery(function($) {
 		}
 	}
 
-	WPGMZA.EventDispatcher.prototype.off = WPGMZA.EventDispatcher.prototype.removeEventListener;
+	map-block.EventDispatcher.prototype.off = map-block.EventDispatcher.prototype.removeEventListener;
 
-	WPGMZA.EventDispatcher.prototype.hasEventListener = function(type)
+	map-block.EventDispatcher.prototype.hasEventListener = function(type)
 	{
 		return (_listenersByType[type] ? true : false);
 	}
 
-	WPGMZA.EventDispatcher.prototype.dispatchEvent = function(event)
+	map-block.EventDispatcher.prototype.dispatchEvent = function(event)
 	{
-		if(!(event instanceof WPGMZA.Event))
+		if(!(event instanceof map-block.Event))
 		{
 			if(typeof event == "string")
-				event = new WPGMZA.Event(event);
+				event = new map-block.Event(event);
 			else
 			{
 				var src = event;
-				event = new WPGMZA.Event();
+				event = new map-block.Event();
 				for(var name in src)
 					event[name] = src[name];
 			}
@@ -94,17 +94,17 @@ jQuery(function($) {
 		for(var obj = this.parent; obj != null; obj = obj.parent)
 			path.unshift(obj);
 		
-		event.phase = WPGMZA.Event.CAPTURING_PHASE;
+		event.phase = map-block.Event.CAPTURING_PHASE;
 		for(var i = 0; i < path.length && !event._cancelled; i++)
 			path[i]._triggerListeners(event);
 			
 		if(event._cancelled)
 			return;
 			
-		event.phase = WPGMZA.Event.AT_TARGET;
+		event.phase = map-block.Event.AT_TARGET;
 		this._triggerListeners(event);
 			
-		event.phase = WPGMZA.Event.BUBBLING_PHASE;
+		event.phase = map-block.Event.BUBBLING_PHASE;
 		for(i = path.length - 1; i >= 0 && !event._cancelled; i--)
 			path[i]._triggerListeners(event);
 		
@@ -117,7 +117,7 @@ jQuery(function($) {
 				var value = event[key];
 				
 				if(key == "type")
-					value += ".wpgmza";
+					value += ".map-block";
 				
 				customEvent[key] = value;
 			}
@@ -126,9 +126,9 @@ jQuery(function($) {
 		}
 	}
 
-	WPGMZA.EventDispatcher.prototype.trigger = WPGMZA.EventDispatcher.prototype.dispatchEvent;
+	map-block.EventDispatcher.prototype.trigger = map-block.EventDispatcher.prototype.dispatchEvent;
 
-	WPGMZA.EventDispatcher.prototype._triggerListeners = function(event)
+	map-block.EventDispatcher.prototype._triggerListeners = function(event)
 	{
 		var arr, obj;
 		
@@ -139,13 +139,13 @@ jQuery(function($) {
 		{
 			obj = arr[i];
 			
-			if(event.phase == WPGMZA.Event.CAPTURING_PHASE && !obj.useCapture)
+			if(event.phase == map-block.Event.CAPTURING_PHASE && !obj.useCapture)
 				continue;
 				
 			obj.listener.call(arr[i].thisObject, event);
 		}
 	}
 
-	WPGMZA.events = new WPGMZA.EventDispatcher();
+	map-block.events = new map-block.EventDispatcher();
 
 });

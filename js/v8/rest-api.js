@@ -1,30 +1,30 @@
 /**
- * @module WPGMZA.RestAPI
- * @namespace WPGMZA
- * @requires WPGMZA
+ * @module map-block.RestAPI
+ * @namespace map-block
+ * @requires map-block
  * @summary Wrapped for the rest API
  */
 jQuery(function($) {
 	
-	WPGMZA.RestAPI = function()
+	map-block.RestAPI = function()
 	{
-		WPGMZA.RestAPI.URL = WPGMZA.resturl;
+		map-block.RestAPI.URL = map-block.resturl;
 	}
 	
-	WPGMZA.RestAPI.createInstance = function() 
+	map-block.RestAPI.createInstance = function() 
 	{
-		return new WPGMZA.RestAPI();
+		return new map-block.RestAPI();
 	}
 	
-	WPGMZA.RestAPI.prototype.call = function(route, params)
+	map-block.RestAPI.prototype.call = function(route, params)
 	{
 		if(typeof route != "string" || !route.match(/^\//))
 			throw new Error("Invalid route");
 		
-		if(WPGMZA.RestAPI.URL.match(/\/$/))
+		if(map-block.RestAPI.URL.match(/\/$/))
 			route = route.replace(/^\//, "");
 		
-		$.ajax(WPGMZA.RestAPI.URL + route, params);
+		$.ajax(map-block.RestAPI.URL + route, params);
 	}
 	
 });

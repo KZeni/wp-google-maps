@@ -1,7 +1,7 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Version
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 
@@ -19,7 +19,7 @@ jQuery(function($) {
 		return true;
 	}
 	
-	WPGMZA.Version = function()
+	map-block.Version = function()
 	{
 		
 	}
@@ -37,7 +37,7 @@ jQuery(function($) {
 	 *
 	 *  Taken from http://stackoverflow.com/a/6832721/11236
 	 */
-	WPGMZA.Version.compare = function(v1, v2)
+	map-block.Version.compare = function(v1, v2)
 	{
 		var v1parts = v1.split('.');
 		var v2parts = v2.split('.');

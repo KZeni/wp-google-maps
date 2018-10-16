@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 // TODO: Extend Factory
 class GoogleMapsLoader
@@ -23,7 +23,7 @@ class GoogleMapsLoader
 	 */
 	protected function getGoogleMapsAPIParams()
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		// Locale
 		$locale = get_locale();
@@ -71,17 +71,17 @@ class GoogleMapsLoader
 		*/
 		
 		// API Key
-		//if(!empty($wpgmza->settings->google_maps_api_key))
-			//$params['key'] = $wpgmza->settings->google_maps_api_key;
+		//if(!empty($map-block->settings->google_maps_api_key))
+			//$params['key'] = $map-block->settings->google_maps_api_key;
 		
-		//if($wpgmza->getCurrentPage() == 'map-edit')
+		//if($map-block->getCurrentPage() == 'map-edit')
 			//$params['libraries'] = 'drawing';
 		
-		$key = get_option('wpgmza_google_maps_api_key');
+		$key = get_option('map-block_google_maps_api_key');
 		if(!empty($key))
 			$params['key'] = $key;
 
-		$params = apply_filters( 'wpgmza_google_maps_api_params', $params );
+		$params = apply_filters( 'map-block_google_maps_api_params', $params );
 		
 		return $params;
 	}
@@ -92,7 +92,7 @@ class GoogleMapsLoader
 	 */
 	public function loadGoogleMaps()
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		if(GoogleMapsLoader::$googleAPILoadCalled)
 			return;
@@ -108,7 +108,7 @@ class GoogleMapsLoader
 		
 		$url = '//maps.google' . $suffix . '/maps/api/js?' . http_build_query($params);
 		
-		wp_enqueue_script('wpgmza_api_call', $url);
+		wp_enqueue_script('map-block_api_call', $url);
 		
 		GoogleMapsLoader::$googleAPILoadCalled = true;
 		
@@ -119,7 +119,7 @@ class GoogleMapsLoader
 	{
 		if(preg_match('/maps\.google/i', $src))
 		{
-			if($handle != 'wpgmza_api_call') {
+			if($handle != 'map-block_api_call') {
 				return '';
 			}
 			

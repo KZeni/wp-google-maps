@@ -2,7 +2,7 @@
 
 // See https://docs.google.com/document/d/16NdGw4C4cd5Q20OwQDGpMB_GiYnojz0Mrug-QRS5zoE/edit#
 
-namespace WPGMZA;
+namespace map-block;
 
 class MarkerFilter
 {
@@ -13,9 +13,9 @@ class MarkerFilter
 	
 	public static function createInstance()
 	{
-		// TODO: Change this to use $wpgmza->isProVersion()
+		// TODO: Change this to use $map-block->isProVersion()
 		
-		if(class_exists('WPGMZA\\ProMarkerFilter'))
+		if(class_exists('map-block\\ProMarkerFilter'))
 			return new ProMarkerFilter();
 		
 		return new MarkerFilter();

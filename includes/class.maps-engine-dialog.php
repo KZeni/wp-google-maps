@@ -1,17 +1,17 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class MapsEngineDialog
 {
 	public static function post()
 	{
-		$settings = get_option('WPGMZA_OTHER_SETTINGS');
+		$settings = get_option('map-block_OTHER_SETTINGS');
 		
-		$settings['wpgmza_maps_engine'] = $_POST['engine'];
-		$settings['wpgmza_maps_engine_dialog_done'] = true;
+		$settings['map-block_maps_engine'] = $_POST['engine'];
+		$settings['map-block_maps_engine_dialog_done'] = true;
 		
-		update_option('WPGMZA_OTHER_SETTINGS', $settings);
+		update_option('map-block_OTHER_SETTINGS', $settings);
 		
 		wp_send_json(array('success' => 1));
 		exit;
@@ -20,55 +20,55 @@ class MapsEngineDialog
 	public function html()
 	{
 		?>
-		<div id="wpgmza-maps-engine-dialog" style="display: none;">
+		<div id="map-block-maps-engine-dialog" style="display: none;">
 			<h1>
 				<?php
-				_e('Choose a maps engine', 'wp-google-maps');
+				_e('Choose a maps engine', 'map-block');
 				?>
 			</h1>
 			
-			<div class="wpgmza-inner">
+			<div class="map-block-inner">
 				<div>
 					<input type="radio" 
-						name="wpgmza_maps_engine"
-						id="wpgmza_maps_engine_open-layers"
+						name="map-block_maps_engine"
+						id="map-block_maps_engine_open-layers"
 						value="open-layers"
 						/>
-					<label for="wpgmza_maps_engine_open-layers">
+					<label for="map-block_maps_engine_open-layers">
 						<div>
 							<!--<h3>
 								<?php
-								_e('OpenLayers', 'wp-google-maps');
+								_e('OpenLayers', 'map-block');
 								?>
 							</h3>-->
 							
-							<img class="wpgmza-engine-logo" src="<?php echo plugin_dir_url(__DIR__) . 'images/OpenLayers_logo.svg.png'?>"/>
+							<img class="map-block-engine-logo" src="<?php echo plugin_dir_url(__DIR__) . 'images/OpenLayers_logo.svg.png'?>"/>
 							
 							<ul>
 								<li>
-									<?php _e('No API keys required', 'wp-google-maps'); ?>
+									<?php _e('No API keys required', 'map-block'); ?>
 								</li>
 							</ul>
 							
 							<ul>
 								<li>
-									<?php _e('Limited functionality', 'wp-google-maps'); ?>
+									<?php _e('Limited functionality', 'map-block'); ?>
 								</li>
 							</ul>
 						</div>
 						
-						<!--<p class="wpgmza-centered">
+						<!--<p class="map-block-centered">
 							<button class="button button-primary" data-maps-engine="open-layers">
 								<?php
-								_e('Use OpenLayers', 'wp-google-maps');
+								_e('Use OpenLayers', 'map-block');
 								?>
 								
 							</button>
 						</p>-->
 						
-						<p class="wpgmza-mock-radio wpgmza-centered">
-							<span class="wpgmza-mock-radio-button"></span>
-							<img class="wpgmza-mock-radio-label" 
+						<p class="map-block-mock-radio map-block-centered">
+							<span class="map-block-mock-radio-button"></span>
+							<img class="map-block-mock-radio-label" 
 								src="<?php echo plugin_dir_url(__DIR__); ?>images/openlayers_logo.png"
 								/>
 						</p>
@@ -77,44 +77,44 @@ class MapsEngineDialog
 				
 				<div>
 					<input type="radio" 
-						name="wpgmza_maps_engine"
-						id="wpgmza_maps_engine_google-maps"
+						name="map-block_maps_engine"
+						id="map-block_maps_engine_google-maps"
 						value="google-maps"
 						/>
-					<label for="wpgmza_maps_engine_google-maps">
+					<label for="map-block_maps_engine_google-maps">
 						<div>
 							<!--<h3>
 								<?php
-								_e('Google Maps', 'wp-google-maps');
+								_e('Google Maps', 'map-block');
 								?>
 							</h3>-->
 							
-							<img class="wpgmza-engine-logo" src="<?php echo plugin_dir_url(__DIR__) . 'images/icons8-google-maps-500.png'?>"/>
+							<img class="map-block-engine-logo" src="<?php echo plugin_dir_url(__DIR__) . 'images/icons8-google-maps-500.png'?>"/>
 							
-							<!--<ul class="wpgmza-pros">
+							<!--<ul class="map-block-pros">
 								<li>
-									<?php _e('Full functionality', 'wp-google-maps'); ?>
+									<?php _e('Full functionality', 'map-block'); ?>
 								</li>
 							</ul>-->
 							
 							<ul>
 								<li>
-									<?php _e('API Key required', 'wp-google-maps'); ?>
+									<?php _e('API Key required', 'map-block'); ?>
 								</li>
 							</ul>
 						</div>
 					
-						<!--<p class="wpgmza-centered">
+						<!--<p class="map-block-centered">
 							<button class="button button-primary" data-maps-engine="google-maps">
 								<?php
-								_e('Use Google Maps', 'wp-google-maps');
+								_e('Use Google Maps', 'map-block');
 								?>
 							</button>
 						</p>-->
 						
-						<p class="wpgmza-mock-radio wpgmza-centered">
-							<span class="wpgmza-mock-radio-button"></span>
-							<img class="wpgmza-mock-radio-label" 
+						<p class="map-block-mock-radio map-block-centered">
+							<span class="map-block-mock-radio-button"></span>
+							<img class="map-block-mock-radio-label" 
 								src="<?php echo plugin_dir_url(__DIR__); ?>images/Google_maps_logo.png"
 								/>
 						</p>
@@ -122,17 +122,17 @@ class MapsEngineDialog
 				</div>
 			</div>
 			
-			<p class="wpgmza-centered">
-				<button class="button button-primary" id="wpgmza-confirm-engine" disabled>
+			<p class="map-block-centered">
+				<button class="button button-primary" id="map-block-confirm-engine" disabled>
 					<?php
-					_e('Select Engine', 'wp-google-maps');
+					_e('Select Engine', 'map-block');
 					?>
 				</button>
 			</p>
 			
 			<!--<footer>
-				<img src="<?php echo plugin_dir_url(__DIR__); ?>images/WP-google-maps-logo-1-B-transparent.png" 
-					alt="<?php _e('WP Google Maps', 'wp-google-maps'); ?>"
+				<img src="<?php echo plugin_dir_url(__DIR__); ?>images/map-block-logo-1-B-transparent.png" 
+					alt="<?php _e('Map Block', 'map-block'); ?>"
 					/>
 				<img src="<?php echo plugin_dir_url(__DIR__); ?>images/codecabin.png"
 					alt="by CODECABIN_"
@@ -143,4 +143,4 @@ class MapsEngineDialog
 	}
 }
 
-add_action('wp_ajax_wpgmza_maps_engine_dialog_set_engine', array('WPGMZA\\MapsEngineDialog', 'post'));
+add_action('wp_ajax_map-block_maps_engine_dialog_set_engine', array('map-block\\MapsEngineDialog', 'post'));

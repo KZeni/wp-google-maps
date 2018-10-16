@@ -1,24 +1,24 @@
 // TODO: Move this file into /js and out of /includes which is for PHP
 jQuery(function($){
 	jQuery(window).on("load", function(){
-		if(typeof wpgmza_backwards_compat_v6_marker_tab_headings !== "undefined"){
-			$("#wpgmaps_tabs_markers > ul").append(wpgmza_backwards_compat_v6_marker_tab_headings);
-			$("#wpgmaps_tabs_markers").append(wpgmza_backwards_compat_v6_marker_tab_content);
+		if(typeof map-block_backwards_compat_v6_marker_tab_headings !== "undefined"){
+			$("#map-blockaps_tabs_markers > ul").append(map-block_backwards_compat_v6_marker_tab_headings);
+			$("#map-blockaps_tabs_markers").append(map-block_backwards_compat_v6_marker_tab_content);
 
-			$("#wpgmaps_tabs_markers").tabs("refresh");
+			$("#map-blockaps_tabs_markers").tabs("refresh");
 		}
 
 		if(typeof MYMAP !== "undefined"){
-			if(window.wpgmza_circle_data_array) {
+			if(window.map-block_circle_data_array) {
 				window.circle_array = [];
-				for(var circle_id in wpgmza_circle_data_array)
-					add_circle(1, wpgmza_circle_data_array[circle_id]);
+				for(var circle_id in map-block_circle_data_array)
+					add_circle(1, map-block_circle_data_array[circle_id]);
 			}
 			
-			if(window.wpgmza_rectangle_data_array) {
+			if(window.map-block_rectangle_data_array) {
 				window.rectangle_array = [];
-				for(var rectangle_id in wpgmza_rectangle_data_array)
-					add_rectangle(1, wpgmza_rectangle_data_array[rectangle_id]);
+				for(var rectangle_id in map-block_rectangle_data_array)
+					add_rectangle(1, map-block_rectangle_data_array[rectangle_id]);
 			}
 		}
 	});

@@ -1,8 +1,8 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
-if(class_exists('WPGMZA\\GoogleMapsAPILoader'))
+if(class_exists('map-block\\GoogleMapsAPILoader'))
 	return;
 
 class GoogleMapsAPILoader
@@ -24,15 +24,15 @@ class GoogleMapsAPILoader
 	{
 		if(empty(GoogleMapsAPILoader::$settings))
 		{
-			global $wpgmza;
-			GoogleMapsAPILoader::$settings = (array)$wpgmza->settings;
+			global $map-block;
+			GoogleMapsAPILoader::$settings = (array)$map-block->settings;
 		}
 		
 		$include_allowed = $this->isIncludeAllowed($status);
 		$isAllowed = $this->isIncludeAllowed($status);
 		
-		wp_enqueue_script('wpgmza_data', plugin_dir_url(__DIR__) . 'wpgmza_data.js');
-		wp_localize_script('wpgmza_data', 'wpgmza_google_api_status', (array)$status);
+		wp_enqueue_script('map-block_data', plugin_dir_url(__DIR__) . 'map-block_data.js');
+		wp_localize_script('map-block_data', 'map-block_google_api_status', (array)$status);
 	}
 	
 	public static function _createInstance()
@@ -79,24 +79,24 @@ class GoogleMapsAPILoader
 		);
 		
 		// API Key
-		$key = get_option('wpgmza_google_maps_api_key');
+		$key = get_option('map-block_google_maps_api_key');
 		
 		if($key)
 			$params['key'] = $key;
 		else if(is_admin())
-			$params['key'] = get_option('wpgmza_temp_api');
+			$params['key'] = get_option('map-block_temp_api');
 		
 		// API Version
 		$settings = (array)GoogleMapsAPILoader::$settings;
 		
-		if(!empty($settings['wpgmza_api_version']))
-			$params['v'] = $settings['wpgmza_api_version'];
+		if(!empty($settings['map-block_api_version']))
+			$params['v'] = $settings['map-block_api_version'];
 		
 		// Libraries
 		$libraries = array('geometry', 'places', 'visualization');
 		$params['libraries'] = implode(',', $libraries);
 		
-		$params = apply_filters( 'wpgmza_google_maps_api_params', $params );
+		$params = apply_filters( 'map-block_google_maps_api_params', $params );
 		
 		return $params;
 	}
@@ -124,10 +124,10 @@ class GoogleMapsAPILoader
 
 		$url = '//maps.google' . $suffix . '/maps/api/js?' . http_build_query($params);
 		
-		wp_register_script('wpgmza_api_call', $url);
+		wp_register_script('map-block_api_call', $url);
 		
 		// Are we always enqueuing?
-		if(!empty($settings['wpgmza_load_engine_api_condition']) && $settings['wpgmza_load_engine_api_condition'] == 'always')
+		if(!empty($settings['map-block_load_engine_api_condition']) && $settings['map-block_load_engine_api_condition'] == 'always')
 			$this->enqueueGoogleMaps();
 		
 		// Are we always enqueuing on this page?
@@ -137,7 +137,7 @@ class GoogleMapsAPILoader
 		GoogleMapsAPILoader::$googleAPILoadCalled = true;
 		
 		// Block other plugins from including the API
-		if(!empty($settings['wpgmza_prevent_other_plugins_and_theme_loading_api']))
+		if(!empty($settings['map-block_prevent_other_plugins_and_theme_loading_api']))
 			add_filter('script_loader_tag', array($this, 'preventOtherGoogleMapsTag'), 9999999, 3);
 	}
 	
@@ -146,7 +146,7 @@ class GoogleMapsAPILoader
 		if(!$this->isIncludeAllowed())
 			return;
 		
-		wp_enqueue_script('wpgmza_api_call');
+		wp_enqueue_script('map-block_api_call');
 	}
 	
 	public function isPageIncluded($page_id)
@@ -154,10 +154,10 @@ class GoogleMapsAPILoader
 		global $post;
 		$settings = (array)GoogleMapsAPILoader::$settings;
 		
-		if(empty($settings['wpgmza_always_include_engine_api_on_pages']))
+		if(empty($settings['map-block_always_include_engine_api_on_pages']))
 			return false;
 		
-		if(!preg_match_all('/\d+/', $settings['wpgmza_always_include_engine_api_on_pages'], $m))
+		if(!preg_match_all('/\d+/', $settings['map-block_always_include_engine_api_on_pages'], $m))
 			return false;
 		
 		if(empty($m[0]))
@@ -172,10 +172,10 @@ class GoogleMapsAPILoader
 	{
 		$settings = (array)GoogleMapsAPILoader::$settings;
 		
-		if(empty($settings['wpgmza_always_exclude_engine_api_on_pages']))
+		if(empty($settings['map-block_always_exclude_engine_api_on_pages']))
 			return false;
 		
-		if(!preg_match_all('/\d+/', $settings['wpgmza_always_exclude_engine_api_on_pages'], $m))
+		if(!preg_match_all('/\d+/', $settings['map-block_always_exclude_engine_api_on_pages'], $m))
 			return false;
 			
 		if(empty($m[0]))
@@ -188,7 +188,7 @@ class GoogleMapsAPILoader
 	
 	public function isIncludeAllowed(&$status=null)
 	{
-		global $wpgmza;
+		global $map-block;
 		global $post;
 		
 		$status = (object)array(
@@ -196,13 +196,13 @@ class GoogleMapsAPILoader
 			'code' => null
 		);
 		
-		$settings = (array)$wpgmza->settings;
+		$settings = (array)$map-block->settings;
 		
 		// Correction for Pro <= 7.10.04
-		if(!empty($settings['wpgmza_maps_engine']) && $settings['wpgmza_maps_engine'] == 'open-street-map')
-			$settings['wpgmza_maps_engine'] = 'open-layers';
+		if(!empty($settings['map-block_maps_engine']) && $settings['map-block_maps_engine'] == 'open-street-map')
+			$settings['map-block_maps_engine'] = 'open-layers';
 		
-		if(!empty($settings['wpgmza_settings_remove_api']))
+		if(!empty($settings['map-block_settings_remove_api']))
 		{
 			$status->message = 'Remove API checked in settings';
 			$status->code = GoogleMapsAPILoader::REMOVE_API_CHECKED;
@@ -211,8 +211,8 @@ class GoogleMapsAPILoader
 		}
 		
 		if(!is_admin() && 
-			!empty($settings['wpgmza_gdpr_require_consent_before_load']) && 
-			!isset($_COOKIE['wpgmza-api-consent-given']))
+			!empty($settings['map-block_gdpr_require_consent_before_load']) && 
+			!isset($_COOKIE['map-block-api-consent-given']))
 		{
 			$status->message = 'User consent not given';
 			$status->code = GoogleMapsAPILoader::USER_CONSENT_NOT_GIVEN;
@@ -220,7 +220,7 @@ class GoogleMapsAPILoader
 			return false;
 		}
 		
-		if(!empty($settings['wpgmza_maps_engine']) && $settings['wpgmza_maps_engine'] == 'open-layers')
+		if(!empty($settings['map-block_maps_engine']) && $settings['map-block_maps_engine'] == 'open-layers')
 		{
 			$status->message = 'Engine is not google-maps';
 			$status->code = GoogleMapsAPILoader::ENGINE_NOT_GOOGLE_MAPS;
@@ -247,8 +247,8 @@ class GoogleMapsAPILoader
 			}
 		}
 			
-		if(!empty($settings['wpgmza_load_engine_api_condition']))
-			switch($settings['wpgmza_load_engine_api_condition'])
+		if(!empty($settings['map-block_load_engine_api_condition']))
+			switch($settings['map-block_load_engine_api_condition'])
 			{
 				case 'never':
 					$status->message = 'Never load API chosen in settings';
@@ -288,7 +288,7 @@ class GoogleMapsAPILoader
 			if(!$this->isIncludeAllowed($status))
 				return '';
 			
-			if($handle != 'wpgmza_api_call')
+			if($handle != 'map-block_api_call')
 				return '';
 			
 			if(!preg_match('/\?.+$/', $src))

@@ -1,9 +1,9 @@
 "use strict";
 
 /**
- * @namespace WPGMZA.Integration
+ * @namespace map-block.Integration
  * @module Gutenberg
- * @requires WPGMZA.Integration
+ * @requires map-block.Integration
  * @requires wp-i18n
  * @requires wp-blocks
  * @requires wp-editor
@@ -33,15 +33,15 @@ jQuery(function ($) {
 	    RichText = _wp$components.RichText;
 
 
-	WPGMZA.Integration.Gutenberg = function () {
-		registerBlockType('gutenberg-wpgmza/block', this.getBlockDefinition());
+	map-block.Integration.Gutenberg = function () {
+		registerBlockType('gutenberg-map-block/block', this.getBlockDefinition());
 	};
 
-	WPGMZA.Integration.Gutenberg.prototype.getBlockTitle = function () {
-		return __("WP Google Maps");
+	map-block.Integration.Gutenberg.prototype.getBlockTitle = function () {
+		return __("Map Block");
 	};
 
-	WPGMZA.Integration.Gutenberg.prototype.getBlockInspectorControls = function (props) {
+	map-block.Integration.Gutenberg.prototype.getBlockInspectorControls = function (props) {
 		return React.createElement(
 			InspectorControls,
 			{ key: "inspector" },
@@ -49,16 +49,16 @@ jQuery(function ($) {
 		);
 	};
 
-	WPGMZA.Integration.Gutenberg.prototype.getBlockAttributes = function () {
+	map-block.Integration.Gutenberg.prototype.getBlockAttributes = function () {
 		return {};
 	};
 
-	WPGMZA.Integration.Gutenberg.prototype.getBlockDefinition = function (props) {
+	map-block.Integration.Gutenberg.prototype.getBlockDefinition = function (props) {
 		var _this = this;
 
 		return {
 
-			title: __("WP Google Maps"),
+			title: __("Map Block"),
 			description: __('The easiest to use Google Maps plugin! Create custom Google Maps with high quality markers containing locations, descriptions, images and links. Add your customized map to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss.'),
 			category: 'common',
 			icon: 'location-alt',
@@ -68,12 +68,12 @@ jQuery(function ($) {
 			edit: function edit(props) {
 				return [!!props.isSelected && _this.getBlockInspectorControls(props), React.createElement(
 					"div",
-					{ className: props.className + " wpgmza-gutenberg-block" },
+					{ className: props.className + " map-block-gutenberg-block" },
 					React.createElement(Dashicon, { icon: "location-alt" }),
 					React.createElement(
 						"span",
-						{ "class": "wpgmza-gutenberg-block-title" },
-						__("WP Google Maps")
+						{ "class": "map-block-gutenberg-block-title" },
+						__("Map Block")
 					)
 				)];
 			},
@@ -86,15 +86,15 @@ jQuery(function ($) {
 		};
 	};
 
-	WPGMZA.Integration.Gutenberg.getConstructor = function () {
-		return WPGMZA.Integration.Gutenberg;
+	map-block.Integration.Gutenberg.getConstructor = function () {
+		return map-block.Integration.Gutenberg;
 	};
 
-	WPGMZA.Integration.Gutenberg.createInstance = function () {
-		var constructor = WPGMZA.Integration.Gutenberg.getConstructor();
+	map-block.Integration.Gutenberg.createInstance = function () {
+		var constructor = map-block.Integration.Gutenberg.getConstructor();
 		return new constructor();
 	};
 
 	// Allow the Pro module to extend and create the module, only create here when Pro isn't loaded
-	if (!WPGMZA.isProVersion()) WPGMZA.integrationModules.gutenberg = WPGMZA.Integration.Gutenberg.createInstance();
+	if (!map-block.isProVersion()) map-block.integrationModules.gutenberg = map-block.Integration.Gutenberg.createInstance();
 });

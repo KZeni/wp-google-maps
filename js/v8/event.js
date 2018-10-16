@@ -1,18 +1,18 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Event
- * @requires WPGMZA
+ * @requires map-block
  */ 
 jQuery(function($) {
 		
-	WPGMZA.Event = function(options)
+	map-block.Event = function(options)
 	{
 		if(typeof options == "string")
 			this.type = options;
 		
 		this.bubbles		= true;
 		this.cancelable		= true;
-		this.phase			= WPGMZA.Event.PHASE_CAPTURE;
+		this.phase			= map-block.Event.PHASE_CAPTURE;
 		this.target			= null;
 		
 		this._cancelled = false;
@@ -22,11 +22,11 @@ jQuery(function($) {
 				this[name] = options[name];
 	}
 
-	WPGMZA.Event.CAPTURING_PHASE		= 0;
-	WPGMZA.Event.AT_TARGET				= 1;
-	WPGMZA.Event.BUBBLING_PHASE			= 2;
+	map-block.Event.CAPTURING_PHASE		= 0;
+	map-block.Event.AT_TARGET				= 1;
+	map-block.Event.BUBBLING_PHASE			= 2;
 
-	WPGMZA.Event.prototype.stopPropagation = function()
+	map-block.Event.prototype.stopPropagation = function()
 	{
 		this._cancelled = true;
 	}

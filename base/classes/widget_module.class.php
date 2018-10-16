@@ -3,18 +3,18 @@
 if(!defined('ABSPATH'))
 	exit;
 
-class wpgmza_widget extends WP_Widget {
+class map-block_widget extends WP_Widget {
 
     /**
      * Widget Constructor
      */
     function __construct() {
         parent::__construct(
-            'wpgmza_map_widget', 
-            __('WP Google Maps', 'wp-google-maps'), 
+            'map-block_map_widget', 
+            __('Map Block', 'map-block'), 
             array(
-                'description' => __( 'Add your map as a widget', 'wp-google-maps' ),
-                'classname' => 'wpgmza_widget'
+                'description' => __( 'Add your map as a widget', 'map-block' ),
+                'classname' => 'map-block_widget'
             )
         );
     }
@@ -35,7 +35,7 @@ class wpgmza_widget extends WP_Widget {
         echo $args['before_title'] . $title . $args['after_title'];
         
 
-        echo do_shortcode("[wpgmza id='".$instance['selection']."']");
+        echo do_shortcode("[map-block id='".$instance['selection']."']");
         
     
         
@@ -61,14 +61,14 @@ class wpgmza_widget extends WP_Widget {
         }
         
         echo "<p>";
-        echo "<label for=\"".$this->get_field_id('title')."\">".__('Title', 'wp-google-maps')."</label>";
+        echo "<label for=\"".$this->get_field_id('title')."\">".__('Title', 'map-block')."</label>";
         echo "<input class=\"widefat\" id=\"".$this->get_field_id('title')."\" name=\"".$this->get_field_name('title')."\" type=\"text\" value=\"".$title."\" />";
         echo "</p>";
         
 
-        echo "<p><label for=\"".$this->get_field_id('selection')."\">".__('Select your map:', 'wp-google-maps')."</label>";
+        echo "<p><label for=\"".$this->get_field_id('selection')."\">".__('Select your map:', 'map-block')."</label>";
         echo "<select class='widefat' name='".$this->get_field_name('selection')."'>";
-        wpgmza_get_widget_select_field($selection);
+        map-block_get_widget_select_field($selection);
         echo "</select></p>";
    
     }
@@ -91,12 +91,12 @@ class wpgmza_widget extends WP_Widget {
 } 
 
 /**
- * Registers the 'wpgmza' widget
+ * Registers the 'map-block' widget
  *
  * @return void
  */
-function wpgmza_load_widget() {
-    register_widget( 'wpgmza_widget' );
+function map-block_load_widget() {
+    register_widget( 'map-block_widget' );
 }
 
 /**
@@ -104,13 +104,13 @@ function wpgmza_load_widget() {
  *
  * @return void
  */
-function wpgmza_get_widget_select_field($selection) {
+function map-block_get_widget_select_field($selection) {
     global $wpdb;
-    global $wpgmza_tblname_maps;
+    global $map-block_tblname_maps;
     
-    if (function_exists('wpgmza_get_widget_select_field_pro')) { wpgmza_get_widget_select_field_pro(); return; }
+    if (function_exists('map-block_get_widget_select_field_pro')) { map-block_get_widget_select_field_pro(); return; }
 
-    $results = $wpdb->get_results("SELECT * FROM $wpgmza_tblname_maps WHERE `active` = 0 ORDER BY `id` DESC ");
+    $results = $wpdb->get_results("SELECT * FROM $map-block_tblname_maps WHERE `active` = 0 ORDER BY `id` DESC ");
     
     foreach ( $results as $result ) {
         $sel = ( intval($selection) == $result->id ) ? "selected" : '';
@@ -121,4 +121,4 @@ function wpgmza_get_widget_select_field($selection) {
 
 
 }
-add_action( 'widgets_init', 'wpgmza_load_widget' );
+add_action( 'widgets_init', 'map-block_load_widget' );

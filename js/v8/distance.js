@@ -1,11 +1,11 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module Distance
- * @requires WPGMZA
+ * @requires map-block
  */
 jQuery(function($) {
 	
-	WPGMZA.Distance = {
+	map-block.Distance = {
 		
 		MILES:					true,
 		KILOMETERS:				false,
@@ -13,7 +13,7 @@ jQuery(function($) {
 		MILES_PER_KILOMETER:	0.621371,
 		KILOMETERS_PER_MILE:	1.60934,
 		
-		// TODO: Implement WPGMZA.settings.distance_units
+		// TODO: Implement map-block.settings.distance_units
 		
 		/**
 		 * Converts a UI distance (eg from a form control) to meters,
@@ -21,7 +21,7 @@ jQuery(function($) {
 		 */
 		uiToMeters: function(uiDistance)
 		{
-			return parseFloat(uiDistance) / (WPGMZA.settings.distance_units == WPGMZA.Distance.MILES ? WPGMZA.Distance.MILES_PER_KILOMETER : 1) * 1000;
+			return parseFloat(uiDistance) / (map-block.settings.distance_units == map-block.Distance.MILES ? map-block.Distance.MILES_PER_KILOMETER : 1) * 1000;
 		},
 		
 		/**
@@ -30,7 +30,7 @@ jQuery(function($) {
 		 */
 		uiToKilometers: function(uiDistance)
 		{
-			return WPGMZA.Distance.uiToMeters(uiDistance) * 0.001;
+			return map-block.Distance.uiToMeters(uiDistance) * 0.001;
 		},
 		
 		/**
@@ -39,13 +39,13 @@ jQuery(function($) {
 		 */
 		uiToMiles: function(uiDistance)
 		{
-			return WPGMZA.Distance.uiToKilometers(uiDistance) * WPGMZA.Distance.MILES_PER_KILOMETER;
+			return map-block.Distance.uiToKilometers(uiDistance) * map-block.Distance.MILES_PER_KILOMETER;
 		},
 		
 		kilometersToUI: function(km)
 		{
-			if(WPGMZA.settings.distance_units == WPGMZA.Distance.MILES)
-				return km * WPGMZA.Distance.MILES_PER_KILOMETER;
+			if(map-block.settings.distance_units == map-block.Distance.MILES)
+				return km * map-block.Distance.MILES_PER_KILOMETER;
 			return km;
 		}
 		

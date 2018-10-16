@@ -1,48 +1,63 @@
-<?php global $map-block_global_array; ?>
-<div class="wrap about-wrap">
-<p>&nbsp;</p>
-<h1><?php echo sprintf( __( "Welcome to Map Block version %s","map-block"), "7.0" ); ?></h1>
+<?php
 
-<div class="about-text"><?php _e("Build amazing maps through a simple interface and powerful functionality along with world class support.","map-block"); ?></div>
-
-<div class="map-block-badge" style=''></div>
-
-<a class="button-primary" style='padding:5px; padding-right:15px; padding-left:15px; height:inherit;' href="admin.php?page=map-block-menu&override=1"><?php echo __("Skip intro and create a map","map-block"); ?></a>
-<p>&nbsp;</p>
+class map-blockAPS_templates {
 
 
-<h2 class="nav-tab-wrapper wp-clearfix">
-	<a href="admin.php?page=map-block-menu&action=welcome_page" class="nav-tab  nav-tab-active"><?php _e("Welcome","map-block"); ?></a>
-	<a href="admin.php?page=map-block-menu&action=credits" class="nav-tab"><?php _e("Credits","map-block"); ?></a>
+    /**
+     * Includes Map Block V6 Welome Page
+     *
+     * @return void
+     */
+    function welcome_page_v6() {
+        include(dirname(dirname(__FILE__))."/includes/welcome.php");
+    }
 
-</h2>
+    /**
+     * Includes credits page
+     *
+     * @return void
+     */
+    function welcome_page_credits() {
+        include(dirname(dirname(__FILE__))."/includes/credits.php");
+    }
 
-    <div class="feature-section two-col">
-        <div class="col">
-        <h4><?php _e("Unlimited Markers","map-block"); ?></h4>
-        <p><?php _e("Create as many markers as you like","map-block"); ?></p>
-         <img src='<?php echo map-blockAPS_DIR; ?>base/assets/feature1.jpg' style="border:1px solid #ccc;" />              
-        </div>
-        <div class="col">
-        <h4><?php _e("Store Locator","map-block"); ?></h4>
-        <p><?php _e("Let users search for products, branches and stores near them","map-block"); ?></p>
-         <img src='<?php echo map-blockAPS_DIR; ?>base/assets/feature2.jpg?1=2' style="border:1px solid #ccc;" />
-        </div>
-    </div>
-    <div class="feature-section two-col">
-        <div class="col">
-        <h4><?php _e("Themes","map-block"); ?></h4>
-        <p><?php _e("Select from various <a href='http://map-blockaps.com/map-themes/' target='_BLANK'>map themes</a>, or make your own.","map-block"); ?></p>
-         <img src='<?php echo map-blockAPS_DIR; ?>base/assets/feature3.jpg' style="border:1px solid #ccc;" />
-        </div>
-        <div class="col">
-        <h4><?php _e("Polylines","map-block"); ?>, <?php _e("Polygons","map-block"); ?>, <?php _e("Circles","map-block"); ?>, <?php _e("and Squares","map-block"); ?></h4>
-        <p><?php _e("Add custom shapes such as polygons, polylines, circles and sqaures!","map-block"); ?></p>
-         <img src='<?php echo map-blockAPS_DIR; ?>base/assets/feature4.jpg' style="border:1px solid #ccc;" />              
-        </div>
-    </div>
+    /**
+     * Outputs Map Block V5 Welcome Page
+     *
+     * @return void
+     */
+    function welcome_page() {
+        global $map-block_global_array;
+?>    
 
 
+            <div class="wrap about-wrap">
+
+                <!-- <img src='<?php echo map-blockAPS_DIR; ?>base/assets/map-block-logo.png' style="float:right; width:250px;" /> -->
+                <h1><?php _e("Welcome to","map-block"); ?> <strong>Map Block</strong> <small>v6</small></h1>
+
+                <div class="about-text"><?php _e("Amazing maps. Simple interface. Powerful functionality. World Class Support.","map-block"); ?></div>
+
+                <h3><?php _e("What's new?","map-block"); ?></h3>
+
+                <div class="feature-section three-col">
+                    <div class="col">
+                    <h4><?php _e("Store Locator","map-block"); ?></h4>
+                    <p><?php _e("Let users search for products, branches and stores near them","map-block"); ?></p>
+                     <img src='<?php echo map-blockAPS_DIR; ?>base/assets/storelocator.jpg' style="border:1px solid #ccc;" />              
+                    </div>
+                    <div class="col">
+                    <h4><?php _e("Polygons","map-block"); ?></h4>
+                    <p><?php _e("Create service areas or coverage maps with polygons","map-block"); ?></p>
+                     <img src='<?php echo map-blockAPS_DIR; ?>base/assets/polygons.png' style="border:1px solid #ccc;" />              
+                    </div>
+                    <div class="col">
+                    <h4><?php _e("Polylines","map-block"); ?></h4>
+                    <p><?php _e("Create custom routes or outlines using polylines","map-block"); ?></p>
+                     <img src='<?php echo map-blockAPS_DIR; ?>base/assets/polylines.png' style="border:1px solid #ccc;" style='margin-bottom:20px;' />              
+                    </div>
+                </div>
+                
                 <hr />
                 
                 <div class="feature-section normal clear" >
@@ -80,7 +95,7 @@
                                         
                                         
                                     </ul></p>
-                                    <input class='button-primary' type='submit' name='map-block_save_feedback' value='<?php _e("Submit and create a map","map-block"); ?>'> 
+                                    <input type='submit' name='map-block_save_feedback' value='Submit'> 
                                     
                                 </form>-->
                                 </div>
@@ -101,7 +116,7 @@
                             </div>
                             <div class='col'>
                                 <h4><?php _e("Help me!","map-block"); ?></h4>
-                                <p><?php _e("Visit our","map-block"); ?> <a title='Support Desk' target='_blank' href='http://www.map-blockaps.com/support/'><?php _e("Support Desk","map-block"); ?></a> <?php _e("for quick and friendly help. We'll answer your request within 24hours.","map-block"); ?></p>
+                                <p><?php _e("Visit our","map-block"); ?> <a title='Support Forum' target='_blank' href='http://www.map-blockaps.com/forums/forum/support-forum/'><?php _e("Support Forum","map-block"); ?></a> <?php _e("for quick and friendly help. We'll answer your request within 24hours.","map-block"); ?></p>
                             </div>
                             <div class='col'>
                                 <h4><?php _e("Feedback","map-block"); ?></h4>
@@ -109,9 +124,15 @@
                             </div>
                         </div>
                         
-                <a class="button-primary" style='padding:5px; padding-right:15px; padding-left:15px; height:inherit;' href="admin.php?page=map-block-menu&override=1"><?php echo __("OK! Let's start","map-block"); ?></a>
+                <a class="button-primary" href="admin.php?page=map-block-menu&override=1"><?php echo __("OK! Let's start","map-block"); ?></a>
 
             </div>
-        </div>
+                </div>
+            </div>
+        
 
-</div>
+    <?php
+        
+    } 
+    
+}

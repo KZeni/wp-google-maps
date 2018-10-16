@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 require_once(plugin_dir_path(__FILE__) . 'class.selector-to-xpath.php');
 
@@ -47,7 +47,7 @@ class DOMElement extends \DOMElement
 			array_push($results, $list->item($i));
 		
 		if($sort)
-			usort($results, array('WPGMZA\DOMElement', 'sortByDOMPosition'));
+			usort($results, array('map-block\DOMElement', 'sortByDOMPosition'));
 		
 		return $results;
 	}
@@ -206,7 +206,7 @@ class DOMElement extends \DOMElement
 	 */
 	public function import($subject, $forcePHP=false)
 	{
-		global $wpgmza;
+		global $map-block;
 		
 		$node = null;
 		
@@ -249,7 +249,7 @@ class DOMElement extends \DOMElement
 				$temp = new DOMDocument('1.0', 'UTF-8');
 				$str = "<div id='domdocument-import-payload___'>" . $subject . "</div>";
 				
-				if(!empty($wpgmza->settings->developer_mode))
+				if(!empty($map-block->settings->developer_mode))
 					$temp->loadHTML($str);
 				else
 					@$temp->loadHTML($str);

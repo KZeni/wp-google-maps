@@ -1,11 +1,11 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleUICompatibility
- * @requires WPGMZA
+ * @requires map-block
  */ 
 jQuery(function($) {
 	
-	WPGMZA.GoogleUICompatibility = function()
+	map-block.GoogleUICompatibility = function()
 	{
 		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
 				   navigator.userAgent &&
@@ -14,12 +14,12 @@ jQuery(function($) {
 		
 		if(!isSafari)
 		{
-			var style = $("<style id='wpgmza-google-ui-compatiblity-fix'/>");
-			style.html(".wpgmza_map img:not(button img) { padding:0 !important; }");
+			var style = $("<style id='map-block-google-ui-compatiblity-fix'/>");
+			style.html(".map-block_map img:not(button img) { padding:0 !important; }");
 			$(document.head).append(style);
 		}
 	}
 	
-	WPGMZA.googleUICompatibility = new WPGMZA.GoogleUICompatibility();
+	map-block.googleUICompatibility = new map-block.GoogleUICompatibility();
 	
 });

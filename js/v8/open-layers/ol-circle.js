@@ -1,13 +1,13 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module OLCircle
- * @requires WPGMZA.Circle
+ * @requires map-block.Circle
  */
 jQuery(function($) {
 	
-	var Parent = WPGMZA.Circle;
+	var Parent = map-block.Circle;
 	
-	WPGMZA.OLCircle = function(options, olFeature)
+	map-block.OLCircle = function(options, olFeature)
 	{
 		var self = this;
 		
@@ -54,27 +54,27 @@ jQuery(function($) {
 		options.map.olMap.addLayer(vectorLayer3857);
 	}
 	
-	WPGMZA.OLCircle.prototype = Object.create(Parent.prototype);
-	WPGMZA.OLCircle.prototype.constructor = WPGMZA.OLCircle;
+	map-block.OLCircle.prototype = Object.create(Parent.prototype);
+	map-block.OLCircle.prototype.constructor = map-block.OLCircle;
 	
-	WPGMZA.OLCircle.prototype.getStyleFromSettings = function()
+	map-block.OLCircle.prototype.getStyleFromSettings = function()
 	{
 		var params = {};
 				
 		if(this.settings.strokeOpacity)
 			params.stroke = new ol.style.Stroke({
-				color: WPGMZA.hexOpacityToRGBA(this.settings.strokeColor, this.settings.strokeOpacity)
+				color: map-block.hexOpacityToRGBA(this.settings.strokeColor, this.settings.strokeOpacity)
 			});
 		
 		if(this.settings.fillOpacity)
 			params.fill = new ol.style.Fill({
-				color: WPGMZA.hexOpacityToRGBA(this.settings.fillColor, this.settings.fillOpacity)
+				color: map-block.hexOpacityToRGBA(this.settings.fillColor, this.settings.fillOpacity)
 			});
 			
 		return params;
 	}
 	
-	WPGMZA.OLCircle.prototype.updateStyleFromSettings = function()
+	map-block.OLCircle.prototype.updateStyleFromSettings = function()
 	{
 		// Re-create the style - working on it directly doesn't cause a re-render
 		var params = this.getStyleFromSettings();

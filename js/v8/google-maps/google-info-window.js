@@ -1,39 +1,39 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GoogleInfoWindow
- * @requires WPGMZA.InfoWindow
- * @pro-requires WPGMZA.ProInfoWindow
+ * @requires map-block.InfoWindow
+ * @pro-requires map-block.ProInfoWindow
  */
 jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.GoogleInfoWindow = function(mapObject)
+	map-block.GoogleInfoWindow = function(mapObject)
 	{
 		Parent.call(this, mapObject);
 		
 		this.setMapObject(mapObject);
 	}
 	
-	if(WPGMZA.isProVersion())
-		Parent = WPGMZA.ProInfoWindow;
+	if(map-block.isProVersion())
+		Parent = map-block.ProInfoWindow;
 	else
-		Parent = WPGMZA.InfoWindow;
+		Parent = map-block.InfoWindow;
 	
-	WPGMZA.GoogleInfoWindow.prototype = Object.create(Parent.prototype);
-	WPGMZA.GoogleInfoWindow.prototype.constructor = WPGMZA.GoogleInfoWindow;
+	map-block.GoogleInfoWindow.prototype = Object.create(Parent.prototype);
+	map-block.GoogleInfoWindow.prototype.constructor = map-block.GoogleInfoWindow;
 	
-	WPGMZA.GoogleInfoWindow.prototype.setMapObject = function(mapObject)
+	map-block.GoogleInfoWindow.prototype.setMapObject = function(mapObject)
 	{
-		if(mapObject instanceof WPGMZA.Marker)
+		if(mapObject instanceof map-block.Marker)
 			this.googleObject = mapObject.googleMarker;
-		else if(mapObject instanceof WPGMZA.Polygon)
+		else if(mapObject instanceof map-block.Polygon)
 			this.googleObject = mapObject.googlePolygon;
-		else if(mapObject instanceof WPGMZA.Polyline)
+		else if(mapObject instanceof map-block.Polyline)
 			this.googleObject = mapObject.googlePolyline;
 	}
 	
-	WPGMZA.GoogleInfoWindow.prototype.createGoogleInfoWindow = function()
+	map-block.GoogleInfoWindow.prototype.createGoogleInfoWindow = function()
 	{
 		if(this.googleInfoWindow)
 			return;
@@ -45,7 +45,7 @@ jQuery(function($) {
 	 * Opens the info window
 	 * @return boolean FALSE if the info window should not & will not open, TRUE if it will
 	 */
-	WPGMZA.GoogleInfoWindow.prototype.open = function(map, mapObject)
+	map-block.GoogleInfoWindow.prototype.open = function(map, mapObject)
 	{
 		var self = this;
 		
@@ -68,7 +68,7 @@ jQuery(function($) {
 		/*this.getContent(function(html) {
 			
 			// Wrap HTML with unique ID
-			var guid = WPGMZA.guid();
+			var guid = map-block.guid();
 			var html = "<div id='" + guid + "'>" + html + "</div>";
 			var div, intervalID;
 			
@@ -84,7 +84,7 @@ jQuery(function($) {
 				
 				if(div.find(".gm-style-iw").length)
 				{
-					div[0].wpgmzaMapObject = self.mapObject;
+					div[0].map-blockMapObject = self.mapObject;
 					
 					self.dispatchEvent("infowindowopen");
 					div.trigger("infowindowopen");
@@ -98,17 +98,17 @@ jQuery(function($) {
 		return true;
 	}
 	
-	WPGMZA.GoogleInfoWindow.prototype.close = function()
+	map-block.GoogleInfoWindow.prototype.close = function()
 	{
 		if(!this.googleInfoWindow)
 			return;
 		
-		WPGMZA.InfoWindow.prototype.close.call(this);
+		map-block.InfoWindow.prototype.close.call(this);
 		
 		this.googleInfoWindow.close();
 	}
 	
-	WPGMZA.GoogleInfoWindow.prototype.setContent = function(html)
+	map-block.GoogleInfoWindow.prototype.setContent = function(html)
 	{
 		Parent.prototype.setContent.call(this, html);
 		
@@ -119,7 +119,7 @@ jQuery(function($) {
 		this.googleInfoWindow.setContent(html);
 	}
 	
-	WPGMZA.GoogleInfoWindow.prototype.setOptions = function(options)
+	map-block.GoogleInfoWindow.prototype.setOptions = function(options)
 	{
 		Parent.prototype.setOptions.call(this, options);
 		

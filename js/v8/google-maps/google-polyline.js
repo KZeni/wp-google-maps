@@ -1,15 +1,15 @@
 /**
- * @namespace WPGMZA
+ * @namespace map-block
  * @module GooglePolyline
- * @requires WPGMZA.Polyline
+ * @requires map-block.Polyline
  */
 jQuery(function($) {
 	
-	WPGMZA.GooglePolyline = function(row, googlePolyline)
+	map-block.GooglePolyline = function(row, googlePolyline)
 	{
 		var self = this;
 		
-		WPGMZA.Polyline.call(this, row, googlePolyline);
+		map-block.Polyline.call(this, row, googlePolyline);
 		
 		if(googlePolyline)
 		{
@@ -18,7 +18,7 @@ jQuery(function($) {
 		else
 		{
 			this.googlePolyline = new google.maps.Polyline(this.settings);			
-			this.googlePolyline.wpgmzaPolyline = this;
+			this.googlePolyline.map-blockPolyline = this;
 			
 			if(row && row.points)
 			{
@@ -32,22 +32,22 @@ jQuery(function($) {
 		});
 	}
 	
-	WPGMZA.GooglePolyline.prototype = Object.create(WPGMZA.Polyline.prototype);
-	WPGMZA.GooglePolyline.prototype.constructor = WPGMZA.GooglePolyline;
+	map-block.GooglePolyline.prototype = Object.create(map-block.Polyline.prototype);
+	map-block.GooglePolyline.prototype.constructor = map-block.GooglePolyline;
 	
-	WPGMZA.GooglePolyline.prototype.setEditable = function(value)
+	map-block.GooglePolyline.prototype.setEditable = function(value)
 	{
 		this.googlePolyline.setOptions({editable: value});
 	}
 	
-	WPGMZA.GooglePolyline.prototype.setPoints = function(points)
+	map-block.GooglePolyline.prototype.setPoints = function(points)
 	{
 		this.googlePolyline.setOptions({path: points});
 	}
 	
-	WPGMZA.GooglePolyline.prototype.toJSON = function()
+	map-block.GooglePolyline.prototype.toJSON = function()
 	{
-		var result = WPGMZA.Polyline.prototype.toJSON.call(this);
+		var result = map-block.Polyline.prototype.toJSON.call(this);
 		
 		result.points = [];
 		

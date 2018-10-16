@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class ModalDialog extends DOMDocument
 {
@@ -12,6 +12,6 @@ class ModalDialog extends DOMDocument
 		wp_enqueue_style('remodal', plugin_dir_url(__DIR__) . 'lib/remodal.css');
 		wp_enqueue_style('remodal-default-theme', plugin_dir_url(__DIR__) . 'lib/remodal-default-theme.css');
 		
-		wp_enqueue_style('wpgmaps-style-pro', plugin_dir_url(__DIR__) . 'css/wpgmza_style_pro.css');
+		wp_enqueue_style('map-blockaps-style-pro', plugin_dir_url(__DIR__) . 'css/map-block_style_pro.css');
 	}
 }

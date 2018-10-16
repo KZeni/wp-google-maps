@@ -1,6 +1,6 @@
 <?php
 
-namespace WPGMZA;
+namespace map-block;
 
 class GlobalSettings
 {
@@ -18,7 +18,7 @@ class GlobalSettings
 	
 	public function reload()
 	{
-		$string = get_option('wpgmza_global_settings');
+		$string = get_option('map-block_global_settings');
 		if(empty($string))
 			$this->data = (object)array();
 		else
@@ -26,7 +26,7 @@ class GlobalSettings
 			$this->data = json_decode($string);
 			
 			if(!$this->data)
-				throw new \Exception('wpgmza_global_settings is not valid JSON');
+				throw new \Exception('map-block_global_settings is not valid JSON');
 		}
 	}
 	
@@ -44,7 +44,7 @@ class GlobalSettings
 	}
 
 	/**
-	 * Migrates old settings (< 7.11.*), merges WPGMZA_SETTINGS and WPGMZA_OTHER_SETTINGS into wpgmza_global_settings (JSON)
+	 * Migrates old settings (< 7.11.*), merges map-block_SETTINGS and map-block_OTHER_SETTINGS into map-block_global_settings (JSON)
 	 * @return void
 	 */
 	private function migrate()
@@ -52,12 +52,12 @@ class GlobalSettings
 		if(GlobalSettings::$migrationRequired)
 			return;
 		
-		$settings 			= get_option('WPGMZA_SETTINGS');
-		$other_settings		= get_option('WPGMZA_OTHER_SETTINGS');
+		$settings 			= get_option('map-block_SETTINGS');
+		$other_settings		= get_option('map-block_OTHER_SETTINGS');
 		
 		$json = json_encode( array_merge($settings, $other_settings) );
 		
-		update_option('wpgmza_global_settings', $json);
+		update_option('map-block_global_settings', $json);
 		
 		$this->reload();
 	}
